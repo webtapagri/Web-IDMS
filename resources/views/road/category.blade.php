@@ -51,6 +51,7 @@
 				<span class="text-semibold">Error!</span> {{ \Session::get('error') }}
 			</div>
 		@endif
+		
 		@if ($errors->any())
 			<div class="alert alert-danger no-border">
 				Terdapat error:
