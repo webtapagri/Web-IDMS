@@ -16,10 +16,15 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 	Route::group(['prefix'=>'api/master'], function () {
 		Route::get('/road-status', 				['as'=>'master.api_road_status', 'uses'=>'RoadController@api_status']);
 		Route::get('/sync-afd', 				['as'=>'master.api_sync_afd', 'uses'=>'MasterController@sync_afd']);
-		
+		Route::get('/sync-comp', 				['as'=>'master.api_sync_comp', 'uses'=>'MasterController@sync_comp']);
+		Route::get('/sync-block', 				['as'=>'master.api_sync_block', 'uses'=>'MasterController@sync_block']);
+		Route::get('/sync-est', 				['as'=>'master.api_sync_est', 'uses'=>'MasterController@sync_est']);		
 	});
 
 	Route::group(['prefix'=>'master'], function () {
+		Route::get('/company', 				['as'=>'master.company', 'uses'=>'MasterController@company']);
+		Route::get('/company-datatables', 				['as'=>'master.company_datatables', 'uses'=>'MasterController@company_datatables']);
+		
 		Route::get('/road-status', 				['as'=>'master.road_status', 'uses'=>'RoadController@status']);
 		Route::get('/road-status-datatables', 	['as'=>'master.road_status_datatables', 'uses'=>'RoadController@status_datatables']);
 		Route::get('/road-status-add', 			['as'=>'master.road_status_add', 'uses'=>'RoadController@add']);
@@ -32,7 +37,12 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::get('/road-category-datatables', 	['as'=>'master.road_category_datatables', 'uses'=>'RoadController@category_datatables']);
 		Route::post('/road-category-update', 		['as'=>'master.road_category_update', 'uses'=>'RoadController@category_update']);
 		Route::get('/road-category-delete/{id}', 	['as'=>'master.road_category_delete', 'uses'=>'RoadController@category_delete']);
-	});
+
+        Route::get('/afdeling', 			['as'=>'master.afdeling', 'uses'=>'MasterController@afdeling']);
+		Route::get('/afdeling-datatables', 	['as'=>'master.afdeling_datatables', 'uses'=>'MasterController@afdeling_datatables']);
+		
+
+    });
 	
 	
 });
