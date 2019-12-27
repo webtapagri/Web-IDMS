@@ -166,7 +166,7 @@ function loadGrid(){
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
         serverSide: true,
-        ajax: '{{ route("master.afdeling_datatables") }}',
+        ajax: '{{ route("master.block_datatables") }}',
 		"order": [[1,"asc"],[2, "asc" ]],
         columns: [
             { data: 'no', 	name: 'no' },
