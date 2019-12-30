@@ -15,7 +15,7 @@ class Block extends Model
 	
 	protected $fillable = [
 		'afdeling_id',
-		'block_dode',
+		'block_code',
 		'block_name',
 		'region_code',
 		'company_code',
