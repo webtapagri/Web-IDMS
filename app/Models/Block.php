@@ -20,7 +20,7 @@ class Block extends Model
 		'region_code',
 		'company_code',
 		'estate_code',
-		'weks',
+		'werks',
 		'werks_afd_block_code',
 		'latitude_block',
 		'longitude_block',

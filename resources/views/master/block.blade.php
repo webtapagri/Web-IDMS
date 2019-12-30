@@ -100,7 +100,7 @@ $(document).ready(()=>{
 function sync(dis){
 	$.ajax({
 		type: 'GET',
-		url: "{{ URL::to('api/master/sync-afd') }}/",
+		url: "{{ URL::to('api/master/sync-block') }}/",
 		data: null,
 		cache:false,
 		beforeSend:function(){
