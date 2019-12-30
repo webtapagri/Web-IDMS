@@ -15,12 +15,12 @@ class Block extends Model
 	
 	protected $fillable = [
 		'afdeling_id',
-		'block_dode',
+		'block_code',
 		'block_name',
 		'region_code',
 		'company_code',
 		'estate_code',
-		'weks',
+		'werks',
 		'werks_afd_block_code',
 		'latitude_block',
 		'longitude_block',

@@ -67,8 +67,8 @@
 		<tfoot>
 			<tr>
 				<th>Pencarian</th>
-				<th>Afdeling Code</th>
-				<th>Afdeling Name</th>
+				<th>Block Code</th>
+				<th>Block Name</th>
 				<th>Region Code</th>
 				<th>Company Code</th>
 				<th>Werks</th>
@@ -100,7 +100,7 @@ $(document).ready(()=>{
 function sync(dis){
 	$.ajax({
 		type: 'GET',
-		url: "{{ URL::to('api/master/sync-afd') }}/",
+		url: "{{ URL::to('api/master/sync-block') }}/",
 		data: null,
 		cache:false,
 		beforeSend:function(){
@@ -166,7 +166,7 @@ function loadGrid(){
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
         serverSide: true,
-        ajax: '{{ route("master.afdeling_datatables") }}',
+        ajax: '{{ route("master.block_datatables") }}',
 		"order": [[1,"asc"],[2, "asc" ]],
         columns: [
             { data: 'no', 	name: 'no' },
@@ -179,7 +179,7 @@ function loadGrid(){
         ],
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k > 0 && k < 5){
+				if(k > 0 && k < 7){
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())
