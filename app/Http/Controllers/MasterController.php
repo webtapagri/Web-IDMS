@@ -212,7 +212,7 @@ class MasterController extends Controller
 					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
 				}
 			}
-			$where = "id in (select distinct company_id from tm_estate where werks in ($ww))";
+			$where = "id in (select distinct company_id from TM_ESTATE where werks in ($ww))";
 		}
 		$model = Company::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_COMPANY.*')->whereRaw($where);
 		
