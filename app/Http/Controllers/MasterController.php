@@ -251,9 +251,7 @@ class MasterController extends Controller
 			$where = "werks in ($ww)";
 		}
 		
-		$model = VEstate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_ESTATE.*')
-						->whereRaw("werks in ($ww)");
-		
+		$model = VEstate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_ESTATE.*')->whereRaw($where);		
 		
 		return Datatables::eloquent($model)
 			->rawColumns(['action'])
