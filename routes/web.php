@@ -15,7 +15,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 
 	Route::group(['prefix'=>'api/master'], function () {
 		Route::get('/road-status', 				['as'=>'master.api_road_status', 'uses'=>'RoadController@api_status']);
-		Route::get('/get-data-plant', 				['as'=>'master.api_get_data_plant', 'uses'=>'MasterController@api_get_data_plant']);
+		Route::get('/get-data-plant', 			['as'=>'master.api_get_data_plant', 'uses'=>'MasterController@api_get_data_plant']);
 		
 		Route::get('/sync-afd', 				['as'=>'master.api_sync_afd', 'uses'=>'MasterController@sync_afd']);
 		Route::get('/sync-comp', 				['as'=>'master.api_sync_comp', 'uses'=>'MasterController@sync_comp']);
