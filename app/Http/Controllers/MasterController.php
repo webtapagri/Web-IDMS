@@ -234,7 +234,7 @@ class MasterController extends Controller
 					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
 				}
 			}
-			$model = Estate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_ESTATE.*')
+			$model = VEstate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_ESTATE.*')
 						->whereRaw("werks in ($ww)");
 		}
 		
