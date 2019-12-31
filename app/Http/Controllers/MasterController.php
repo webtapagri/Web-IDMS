@@ -274,8 +274,22 @@ class MasterController extends Controller
 		$req = $request->all();
 		$start = $req['start'];
 		$access = access($request, 'master/afdeling');
-		$model = VAfdeling::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_AFDELING.*')->whereRaw('1=1');
 		
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			$where = "1=1";
+		}else{
+			$ww = '';
+			foreach($werks as $k=>$w){
+				if($w != 'All'){
+					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+				}
+			}
+			$where = "werks in ($ww)";
+		}
+		
+		$model = VAfdeling::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_AFDELING.*')->whereRaw($where);		
 		
 		return Datatables::eloquent($model)
 			->rawColumns(['action'])
@@ -297,8 +311,22 @@ class MasterController extends Controller
 		$req = $request->all();
 		$start = $req['start'];
 		$access = access($request, 'master/block');
-		$model = VBlock::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_BLOCK.*')->whereRaw('1=1');
 		
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			$where = "1=1";
+		}else{
+			$ww = '';
+			foreach($werks as $k=>$w){
+				if($w != 'All'){
+					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+				}
+			}
+			$where = "werks in ($ww)";
+		}
+		
+		$model = VBlock::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_BLOCK.*')->whereRaw($where);	
 		
 		return Datatables::eloquent($model)
 			->rawColumns(['action'])
