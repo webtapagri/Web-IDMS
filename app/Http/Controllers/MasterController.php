@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\Estate;
 use App\Models\Afdeling;
 use App\Models\Block;
+use App\Models\VEstate;
 use AccessRight;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
@@ -225,7 +226,7 @@ class MasterController extends Controller
 		$werks = explode(',',session('area_code'));
 		$cek =  collect($werks);
 		if( $cek->contains('All') ){
-			$model = Estate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_ESTATE.*')->whereRaw('1=1');
+			$model = VEstate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_ESTATE.*')->whereRaw('1=1');
 		}else{
 			$ww = '';
 			foreach($werks as $k=>$w){
@@ -233,7 +234,7 @@ class MasterController extends Controller
 					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
 				}
 			}
-			$model = Estate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_ESTATE.*')
+			$model = Estate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_ESTATE.*')
 						->whereRaw("werks in ($ww)");
 		}
 		

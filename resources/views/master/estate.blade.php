@@ -59,7 +59,7 @@
 				<th>Estate Code</th>
 				<th>Estate Name</th>
 				<th>Company Name</th>
-				<th>Werks</th>
+				<th>BA Code</th>
 				<th>City</th>
 			</tr>
 		</thead>
@@ -67,7 +67,7 @@
 			<tr>
 				<th>Pencarian</th>
 				<th>Estate Code</th>
-				<th>Estate Name</th>
+				<th>Ba Code</th>
 				<th>Company Name</th>
 				<th>Werks</th>
 				<th>City</th>
@@ -170,7 +170,7 @@ function loadGrid(){
             { data: 'no', 	name: 'no' },
             { data: 'estate_code', 	name: 'estate_code' },
             { data: 'estate_name', 	name: 'estate_name' },
-            { data: 'company_id', 	name: 'company_id' },
+            { data: 'company_name', 	name: 'company_name' },
             { data: 'werks', 		name: 'werks' },
             { data: 'city', 		name: 'city' },
         ],
