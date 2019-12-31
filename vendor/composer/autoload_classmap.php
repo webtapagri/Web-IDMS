@@ -184,6 +184,7 @@ return array(
     'App\\Models\\RoadStatus' => $baseDir . '/app/Models/RoadStatus.php',
     'App\\Models\\RoleAccess' => $baseDir . '/app/Models/RoleAccess.php',
     'App\\Models\\Token' => $baseDir . '/app/Models/Token.php',
+    'App\\Models\\VEstate' => $baseDir . '/app/Models/VEstate.php',
     'App\\Models\\VRoadCategory' => $baseDir . '/app/Models/VRoadCategory.php',
     'App\\Module' => $baseDir . '/app/Module.php',
     'App\\MyMenuFilter' => $baseDir . '/app/MyMenuFilter.php',

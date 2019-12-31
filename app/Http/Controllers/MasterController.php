@@ -10,6 +10,8 @@ use App\Models\Estate;
 use App\Models\Afdeling;
 use App\Models\Block;
 use App\Models\VEstate;
+use App\Models\VBlock;
+use App\Models\VAfdeling;
 use AccessRight;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
@@ -272,7 +274,7 @@ class MasterController extends Controller
 		$req = $request->all();
 		$start = $req['start'];
 		$access = access($request, 'master/afdeling');
-		$model = Afdeling::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_AFDELING.*')->whereRaw('1=1');
+		$model = VAfdeling::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_AFDELING.*')->whereRaw('1=1');
 		
 		
 		return Datatables::eloquent($model)
@@ -295,7 +297,7 @@ class MasterController extends Controller
 		$req = $request->all();
 		$start = $req['start'];
 		$access = access($request, 'master/block');
-		$model = Block::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_BLOCK.*')->whereRaw('1=1');
+		$model = VBlock::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, V_BLOCK.*')->whereRaw('1=1');
 		
 		
 		return Datatables::eloquent($model)
