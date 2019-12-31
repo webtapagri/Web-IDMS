@@ -20,4 +20,9 @@ class Estate extends Model
 		'werks',
 		'city',
 	];
+	
+	public function company()
+	{
+		return $this->belongsTo('App\Models\Company', 'company_id');
+	}
 }

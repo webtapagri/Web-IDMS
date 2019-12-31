@@ -11,6 +11,7 @@ use App\Models\Afdeling;
 use App\Models\Block;
 use AccessRight;
 use Yajra\DataTables\Facades\DataTables;
+use DB;
 
 class MasterController extends Controller
 {
@@ -220,7 +221,21 @@ class MasterController extends Controller
 		$req = $request->all();
 		$start = $req['start'];
 		$access = access($request, 'master/estate');
-		$model = Estate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_ESTATE.*')->whereRaw('1=1');
+		
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			$model = Estate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_ESTATE.*')->whereRaw('1=1');
+		}else{
+			$ww = '';
+			foreach($werks as $k=>$w){
+				if($w != 'All'){
+					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+				}
+			}
+			$model = Estate::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_ESTATE.*')
+						->whereRaw("werks in ($ww)");
+		}
 		
 		
 		return Datatables::eloquent($model)
@@ -271,5 +286,23 @@ class MasterController extends Controller
 		return Datatables::eloquent($model)
 			->rawColumns(['action'])
 			->make(true);
+	}
+	
+	public function api_get_data_plant()
+	{
+		$data = DB::table('TM_ESTATE')
+        ->select('werks as id', 'estate_name as text')
+        ->get();
+
+        $arr = array();
+		$arr[] = ['id'=>'All','text'=>'All-All Business Area Code'];
+        foreach ($data as $row) {
+            $arr[] = array(
+                "id" => $row->id,
+                "text" => $row->id .'-' . $row->text
+            );
+        }
+
+        return response()->json(array('data' => $arr));
 	}
 }

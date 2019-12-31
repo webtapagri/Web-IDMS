@@ -248,7 +248,7 @@
             allowClear: true
         });
 
-        var busines_area = jQuery.parseJSON(JSON.stringify(dataJson('{!! route("get.generaldataplant") !!}')));
+        var busines_area = jQuery.parseJSON(JSON.stringify(dataJson('{!! route("master.api_get_data_plant") !!}')));
         jQuery("#area_code").select2({
             data: busines_area,
             width: '100%',
