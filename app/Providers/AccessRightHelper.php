@@ -27,6 +27,7 @@ class AccessRightHelper extends ServiceProvider
                 ->join('TBM_ROLE as role', "role.id", "=", "access.role_id")
                 ->join("TBM_MENU as menu", "menu.id", "=", "access.menu_id")
                 ->select('menu.name as name', 'menu.url as url', 'menu.sort')
+				->distinct()
                 ->where([
                     ["role.id", "=", Session::get('role_id')],
                     ["menu.module_id", "=", $row->module_id],
