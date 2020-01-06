@@ -1,4 +1,4 @@
-create or replace view v_road as select company_name, tme.estate_name, tma.afdeling_name, tmb.block_name, tmrs.status_name, tmrc.category_name, 
+create or replace view V_ROAD as select company_name, tme.estate_name, tma.afdeling_name, tmb.block_name, tmrs.status_name, tmrc.category_name, 
 (select total_length from TR_ROAD_LOG trl where trl.road_id = tmr.id order by id desc limit 1) as total_length,
 (select asset_code from TR_ROAD_LOG trl where trl.road_id = tmr.id order by id desc limit 1) as asset_code,
 tmr.* from TM_ROAD tmr

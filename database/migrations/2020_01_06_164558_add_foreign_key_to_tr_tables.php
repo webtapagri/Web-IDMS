@@ -29,10 +29,10 @@ class AddForeignKeyToTrTables extends Migration
     public function down()
     {
         Schema::table('TR_ROAD_LOG', function (Blueprint $table) {
-            $table->dropForeign('tm_road_log_road_id_foreign');
+            $table->dropForeign('tr_road_log_road_id_foreign');
         });
         Schema::table('TR_ROAD_STATUS', function (Blueprint $table) {
-            $table->dropForeign('tm_road_log_road_id_foreign');
+            $table->dropForeign('tr_road_log_road_id_foreign');
         });
     }
 }
