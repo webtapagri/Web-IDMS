@@ -13,7 +13,7 @@ class ReaddEstateCodeToTmRoad extends Migration
      */
     public function up()
     {
-        Schema::table('tm_road', function (Blueprint $table) {
+        Schema::table('TM_ROAD', function (Blueprint $table) {
             $table->string('estate_code',100);
         });
     }
@@ -25,7 +25,7 @@ class ReaddEstateCodeToTmRoad extends Migration
      */
     public function down()
     {
-        Schema::table('tm_road', function (Blueprint $table) {
+        Schema::table('TM_ROAD', function (Blueprint $table) {
             $table->dropColumn('estate_code');
         });
     }
