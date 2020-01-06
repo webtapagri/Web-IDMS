@@ -3,7 +3,7 @@
 		<!-- Header with logos -->
 		<div class="navbar-header navbar-dark d-none d-md-flex align-items-md-center">
 			<div class="navbar-brand navbar-brand-md">
-				<a href="../full/index.html" class="d-inline-block logo-text">
+				<a href="{{ route('road') }}" class="d-inline-block logo-text">
 					{{ config('app.name') }}
 				</a>
 			</div>

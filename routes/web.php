@@ -15,12 +15,20 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 
 	Route::group(['prefix'=>'api/master'], function () {
 		Route::get('/road-status', 				['as'=>'master.api_road_status', 'uses'=>'RoadController@api_status']);
-		Route::get('/get-data-plant', 			['as'=>'master.api_get_data_plant', 'uses'=>'MasterController@api_get_data_plant']);
+		Route::get('/road-category/{id}', 				['as'=>'master.api_road_category', 'uses'=>'RoadController@api_category']);
 		
 		Route::get('/sync-afd', 				['as'=>'master.api_sync_afd', 'uses'=>'MasterController@sync_afd']);
 		Route::get('/sync-comp', 				['as'=>'master.api_sync_comp', 'uses'=>'MasterController@sync_comp']);
 		Route::get('/sync-block', 				['as'=>'master.api_sync_block', 'uses'=>'MasterController@sync_block']);
-		Route::get('/sync-est', 				['as'=>'master.api_sync_est', 'uses'=>'MasterController@sync_est']);		
+		Route::get('/sync-est', 				['as'=>'master.api_sync_est', 'uses'=>'MasterController@sync_est']);	
+		
+		Route::get('/company', 				'MasterController@api_company')->name('api.master.company');
+		Route::get('/estate_tree/{id}', 	'MasterController@api_estate_tree')->name('api.master.api_estate_tree');
+		Route::get('/afdeling_tree/{id}', 	'MasterController@api_afdeling_tree')->name('api.master.api_afdeling_tree');
+		Route::get('/block_tree/{id}/{werks}', 		'MasterController@api_block_tree')->name('api.master.api_block_tree');
+		
+		Route::get('/estate', 	'MasterController@api_estate')->name('api.master.estate');
+		
 	});
 
 	Route::group(['prefix'=>'master'], function () {
@@ -45,12 +53,16 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::get('/road-category-datatables', 	['as'=>'master.road_category_datatables', 'uses'=>'RoadController@category_datatables']);
 		Route::post('/road-category-update', 		['as'=>'master.road_category_update', 'uses'=>'RoadController@category_update']);
 		Route::get('/road-category-delete/{id}', 	['as'=>'master.road_category_delete', 'uses'=>'RoadController@category_delete']);
-
-        
-
+		
+		Route::get('/road', 			['as'=>'master.road', 'uses'=>'RoadController@road']);
+		Route::get('/road-add', 			['as'=>'master.road_add', 'uses'=>'RoadController@road_add']);
+		Route::post('/road-save', 			['as'=>'master.road_save', 'uses'=>'RoadController@road_save']);
+		Route::get('/road-datatables', 	['as'=>'master.road_datatables', 'uses'=>'RoadController@road_datatables']);
+		Route::post('/road-update', 	['as'=>'master.road_update', 'uses'=>'RoadController@road_update']);
+		Route::get('/road-delete/{id}', 	['as'=>'master.road_delete', 'uses'=>'RoadController@road_delete']);
+		
     });
-	
-	
+
 });
 
 

@@ -100,11 +100,21 @@ class Master extends ServiceProvider
 
         } catch ( ClientException $e ) {
             $body = $e->getResponse()->getBody();
-            $response = json_decode( $body->getContents(), true );
-
+            $rsp = json_decode( $body->getContents(), true );
+			$response = [
+				'code' => '422',
+				'message'=>'json',
+				'contents'=>$rsp
+			];
         } catch ( ServerException $e ) {
-            abort( 500 );
-
+            // abort( 500 );
+			$body = $e->getResponse()->getBody();
+			$rsp = $body->getContents();
+			$response = [
+				'code' => '422',
+				'message'=>'html',
+				'contents'=>$rsp
+			];
         }
 
         return $response;
