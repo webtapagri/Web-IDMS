@@ -792,6 +792,8 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'App\\Models\\RoadStatus' => __DIR__ . '/../..' . '/app/Models/RoadStatus.php',
         'App\\Models\\RoleAccess' => __DIR__ . '/../..' . '/app/Models/RoleAccess.php',
         'App\\Models\\Token' => __DIR__ . '/../..' . '/app/Models/Token.php',
+        'App\\Models\\VAfdeling' => __DIR__ . '/../..' . '/app/Models/VAfdeling.php',
+        'App\\Models\\VBlock' => __DIR__ . '/../..' . '/app/Models/VBlock.php',
         'App\\Models\\VEstate' => __DIR__ . '/../..' . '/app/Models/VEstate.php',
         'App\\Models\\VRoadCategory' => __DIR__ . '/../..' . '/app/Models/VRoadCategory.php',
         'App\\Module' => __DIR__ . '/../..' . '/app/Module.php',

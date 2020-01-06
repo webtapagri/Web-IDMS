@@ -184,6 +184,8 @@ return array(
     'App\\Models\\RoadStatus' => $baseDir . '/app/Models/RoadStatus.php',
     'App\\Models\\RoleAccess' => $baseDir . '/app/Models/RoleAccess.php',
     'App\\Models\\Token' => $baseDir . '/app/Models/Token.php',
+    'App\\Models\\VAfdeling' => $baseDir . '/app/Models/VAfdeling.php',
+    'App\\Models\\VBlock' => $baseDir . '/app/Models/VBlock.php',
     'App\\Models\\VEstate' => $baseDir . '/app/Models/VEstate.php',
     'App\\Models\\VRoadCategory' => $baseDir . '/app/Models/VRoadCategory.php',
     'App\\Module' => $baseDir . '/app/Module.php',
