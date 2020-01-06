@@ -40,19 +40,19 @@ class SchedulerMasterData extends Command
         
 		\Log::info('============'.date('Ymdh').'  Running master data scheduler ');
 		
-		try {
+		// try {
 			
 			$rsp = app('App\Http\Controllers\MasterController')->sync_comp();
-			\Log::info( $rsp );
+			\Log::info( '1. '.$rsp );
 			
 			$rsp = app('App\Http\Controllers\MasterController')->sync_est();
-			\Log::info( $rsp );
+			\Log::info( '2. '.$rsp );
 			
-		}catch (\Throwable $e) {
-			\Log::info(throwable_msg($e));
-		}catch (\Exception $e) {
-			\Log::info(exception_msg($e));
-        }
+		// }catch (\Throwable $e) {
+			// \Log::info(throwable_msg($e));
+		// }catch (\Exception $e) {
+			// \Log::info(exception_msg($e));
+        // }
 		
 		
 		\Log::info('============'.date('Ymdh').' End scheduler master data  ');

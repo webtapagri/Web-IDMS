@@ -7,14 +7,20 @@ use App\Http\Controllers\Controller;
 use App\Models\RoadStatus;
 use App\Models\RoadCategory;
 use App\Models\VRoadCategory;
+use App\Models\Road;
+use App\Models\VRoad;
+use App\Models\RoadLog;
+use App\Models\TRRoadStatus;
 use Session;
 use AccessRight;
 use App\RoleAccess;
 use API;
 use App\Http\Requests\RoadStatusRequest;
 use App\Http\Requests\RoadCategoryRequest;
+use App\Http\Requests\RoadRequest;
 use Yajra\DataTables\Facades\DataTables;
 use URL;
+use DB;
 use Carbon\Carbon;
 
 class RoadController extends Controller
@@ -40,6 +46,20 @@ class RoadController extends Controller
 			
 			$get = RoadStatus::all();
 			
+		}catch (\Throwable $e) {
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+            return response()->error('Error',exception_msg($e));
+		}
+		
+		return response()->success('Success', $get);
+	}
+	
+	public function api_category($id)
+	{
+		try {
+			
+			$get = RoadCategory::where('status_id',$id)->get();
 		}catch (\Throwable $e) {
             return response()->error('Error',throwable_msg($e));
         }catch (\Exception $e) {
@@ -113,7 +133,7 @@ class RoadController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil menyimpan data');
-        return redirect()->route('master.road_status');
+        return redirect()->route('road');
 	}
 	
 	public function update(RoadStatusRequest $request)
@@ -156,7 +176,7 @@ class RoadController extends Controller
         return redirect()->route('master.road_status');
 	}
 	
-	//STart Master Category Module
+	//STart Master Category Menu
 	
 	public function category(Request $request)
 	{
@@ -257,6 +277,118 @@ class RoadController extends Controller
         return redirect()->route('master.road_category');
 	}
 	
+	
+	// STart Master Road Menu
+	
+	public function road(Request $request)
+	{
+		$access = access($request);
+		$data['ctree'] = '/master/road';
+		return view('road.road', compact('access','data'));
+	}
+	
+	public function road_datatables(Request $request)
+	{
+		$req = $request->all();
+		$start = $req['start'];
+		$access = access($request, 'master/road');
+		$model = VRoad::whereRaw('deleted_at is null');
+		
+		$update_action = '';
+		$delete_action = '';
+		if($access['update']==1){
+			// $update_action = '
+					// <button class="btn btn-link text-primary-600" onclick="edit({{ $id }}, \'{{ $category_name }}\', \'{{ $category_code }}\', \'{{ $category_initial }}\', \'{{ $status_id }}\'); return false;">
+						// <i class="icon-pencil7"></i> Edit
+					// </button>
+			// ';
+		}
+		if($access['delete']==1){
+			$delete_action = '
+					<a class="btn btn-link text-danger-600" href="" onclick="del(\''.URL::to('master/road-delete/{{ $id }}').'\'); return false;">
+						<i class="icon-trash"></i> Hapus
+					</a>
+			';
+		}
+		
+		return Datatables::eloquent($model)
+			->addColumn('action', '<div class="text-center">
+					'.$update_action.'
+					'.$delete_action.'
+				<div>
+				')
+			->rawColumns(['action'])
+			->make(true);
+	}
+	
+	public function road_add(Request $request)
+	{
+		$data['ctree'] = '/master/road';
+		return view('road.road_add', compact('data'));
+	}
+	
+	public function road_save(RoadRequest $request)
+	{
+		DB::beginTransaction();
+		try {
+			$land_use_code = '0601';
+			$cat = RoadCategory::find($request->category_id);
+			$stat = RoadStatus::find($request->status_id);
+			
+			//insert into TM_ROAD
+			$esw 				= explode('-',$request->werks);
+			$blck 				= explode('-',$request->block_code);
+			$data['werks'] 		= $esw[0];
+			$data['estate_code']= $esw[1];	
+			$data['block_code']	= $blck[0];	
+			$data['road_code']= $request->company_code.$esw[1].$blck[0].$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
+			$data['road_name']=  $blck[1].$cat->category_initial.$request->segment;
+			$road 				= Road::create($request->except('werks','status_id','category_id','total_length','asset_code','block_code')+$data);
+						
+			//insert into TR_ROAD_LOG
+			$tr_data = [
+				'road_id'		=> $road->id,
+				'updated_by'	=> \Session::get('user_id')
+			];
+			RoadLog::create( $request->only('total_length','asset_code')+$tr_data );
+			
+			//insert into TR_ROAD_STATUS
+			
+			TRRoadStatus::create( $request->only('status_id','category_id')+$tr_data );
+			
+		}catch (\Throwable $e) {
+			DB::rollBack();
+            \Session::flash('error', throwable_msg($e));
+            return redirect()->back()->withInput($request->input());
+        }catch (\Exception $e) {
+			DB::rollBack();
+            \Session::flash('error', exception_msg($e));
+            return redirect()->back()->withInput($request->input());
+		}
+		
+		DB::commit();
+		\Session::flash('success', 'Berhasil menyimpan data');
+        return redirect()->route('master.road');
+	}
+	
+	public function road_delete($id){
+		
+		try {
+			$data = Road::find($id);			
+			$data->deleted_at = Carbon::now();
+			$data->updated_by = \Session::get('user_id');
+			$data->save();
+		}catch (\Throwable $e) {
+            \Session::flash('error', throwable_msg($e));
+            return redirect()->back();
+        }catch (\Exception $e) {
+            \Session::flash('error', exception_msg($e));
+            return redirect()->back();
+		}
+		
+		\Session::flash('success', 'Berhasil menghapus data');
+        return redirect()->route('master.road');
+	}
 	
 	
 	

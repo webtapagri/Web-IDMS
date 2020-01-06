@@ -333,7 +333,71 @@ class MasterController extends Controller
 			->make(true);
 	}
 	
-	public function api_get_data_plant()
+	public function api_company()
+	{
+		try{
+			$data = Company::selectRaw('id, company_code, company_name')->get();
+			
+		}catch (\Throwable $e) {
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+            return response()->error('Error',exception_msg($e));
+		}
+		return response()->success('Success', $data);
+	}
+	
+	public function api_estate_tree($id)
+	{
+		try{
+			$data = Estate::
+							selectRaw('estate_code, werks, estate_name')
+							->join('TM_COMPANY','TM_COMPANY.id','=','TM_ESTATE.company_id')
+							->where('TM_COMPANY.company_code',$id)
+							->get();
+			
+		}catch (\Throwable $e) {
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+            return response()->error('Error',exception_msg($e));
+		}
+		return response()->success('Success', $data);
+	}
+	
+	public function api_afdeling_tree($id)
+	{
+		try{
+			$d = explode('-',$id);
+			$data = Afdeling::
+							selectRaw('afdeling_code, afdeling_name')
+							->where('werks',$d[0])
+							->get();
+			
+		}catch (\Throwable $e) {
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+            return response()->error('Error',exception_msg($e));
+		}
+		return response()->success('Success', $data);
+	}
+	
+	public function api_block_tree($id, $werks)
+	{
+		try{
+			$d = explode('-',$werks);
+			$data = Block::
+							selectRaw('block_code, block_name')
+							->whereRaw("substring(werks_afd_block_code,5,1) = '$id' and werks = '{$d[0]}'")
+							->get();
+			
+		}catch (\Throwable $e) {
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+            return response()->error('Error',exception_msg($e));
+		}
+		return response()->success('Success', $data);
+	}
+	
+	public function api_estate()
 	{
 		$data = DB::table('TM_ESTATE')
         ->select('werks as id', 'estate_name as text')
@@ -350,4 +414,5 @@ class MasterController extends Controller
 
         return response()->json(array('data' => $arr));
 	}
+
 }

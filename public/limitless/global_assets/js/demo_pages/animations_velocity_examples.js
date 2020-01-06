@@ -171,7 +171,7 @@ var AnimationsVelocityAdvanced = function() {
         //
 
         // Hide elements first
-        $('.sidebar, .navbar, .navbar-brand, .navbar-text, .navbar-nav .nav-item, .page-header, .page-title, .page-header .header-elements, .breadcrumb, .breadcrumb-elements-item, .content > .card, .content .row > [class*=col-], .footer')
+        $('.sidebar, .navbar, .navbar-text, .navbar-nav .nav-item, .page-header, .page-title, .page-header .header-elements, .breadcrumb, .breadcrumb-elements-item, .content > .card, .footer')
             .css('opacity', 0);
     };
 
@@ -196,7 +196,7 @@ var AnimationsVelocityAdvanced = function() {
         });
 
         // Layout parts - block
-        $('.navbar-brand, .navbar-text, .navbar-nav .nav-item, .page-header, .content .row > [class*=col-], .breadcrumb-elements-item')
+        $(' .navbar-text, .navbar-nav .nav-item, .page-header, .breadcrumb-elements-item')
             .css('opacity', 1)
             .velocity('transition.slideUpIn', {
                 stagger: 200,
