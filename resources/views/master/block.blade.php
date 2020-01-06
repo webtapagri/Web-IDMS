@@ -59,9 +59,9 @@
 				<th>Block Code</th>
 				<th>Block Name</th>
 				<th>Region Code</th>
-				<th>Company Code</th>
-				<th>Werks</th>
-				<th>Werks Afdeling Block Code</th>
+				<th>Company Name</th>
+				<th>BA Code</th>
+				<th>BA Afdeling Block Code</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -70,9 +70,9 @@
 				<th>Block Code</th>
 				<th>Block Name</th>
 				<th>Region Code</th>
-				<th>Company Code</th>
-				<th>Werks</th>
-				<th>Werks Afdeling Code</th>
+				<th>Company Name</th>
+				<th>BA Code</th>
+				<th>BA Afdeling Code</th>
 			</tr>
 		</tfoot>
 	</table>
@@ -173,7 +173,7 @@ function loadGrid(){
             { data: 'block_code', 	name: 'block_code' },
             { data: 'block_name', 	name: 'block_name' },
             { data: 'region_code', 	name: 'region_code' },
-            { data: 'company_code', 		name: 'company_code' },
+            { data: 'company_name', 		name: 'company_name' },
             { data: 'werks', 		name: 'werks' },
             { data: 'werks_afd_block_code', 		name: 'werks_afd_block_code' },
         ],
