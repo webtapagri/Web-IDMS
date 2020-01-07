@@ -22,7 +22,7 @@ class TransactionController extends Controller
 		$req = $request->all();
 		$start = $req['start'];
 		$access = access($request, 'history/progres-perkerasan');
-		$model = VListProgressPerkerasan::whereRaw('1=1');
+		$model = VListProgressPerkerasan::whereRaw('1=1')->orderBy('id','desc');
 		
 		$update_action = '';
 		$delete_action = '';
