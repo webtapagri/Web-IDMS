@@ -297,11 +297,11 @@ class RoadController extends Controller
 		$update_action = '';
 		$delete_action = '';
 		if($access['update']==1){
-			// $update_action = '
-					// <button class="btn btn-link text-primary-600" onclick="edit({{ $id }}, \'{{ $category_name }}\', \'{{ $category_code }}\', \'{{ $category_initial }}\', \'{{ $status_id }}\'); return false;">
-						// <i class="icon-pencil7"></i> Edit
-					// </button>
-			// ';
+			$update_action = '
+					<button class="btn btn-link text-primary-600" onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $asset_code }}\'); return false;">
+						<i class="icon-pencil7"></i> Edit
+					</button>
+			';
 		}
 		if($access['delete']==1){
 			$delete_action = '
@@ -312,7 +312,7 @@ class RoadController extends Controller
 		}
 		
 		return Datatables::eloquent($model)
-			->addColumn('action', '<div class="text-center">
+			->addColumn('action', '<div class="">
 					'.$update_action.'
 					'.$delete_action.'
 				<div>
@@ -390,6 +390,21 @@ class RoadController extends Controller
         return redirect()->route('master.road');
 	}
 	
+	public function road_update(Request $request)
+	{
+		try {
+			RoadLog::create($request->all()+['updated_by'=>\Session::get('user_id')]);
+		}catch (\Throwable $e) {
+            \Session::flash('error', throwable_msg($e));
+            return redirect()->back()->withInput($request->input());
+        }catch (\Exception $e) {
+            \Session::flash('error', exception_msg($e));
+            return redirect()->back()->withInput($request->input());
+		}
+		
+		\Session::flash('success', 'Berhasil mengupdate data');
+        return redirect()->route('master.road');
+	}
 	
 	
 }
