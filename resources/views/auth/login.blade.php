@@ -36,6 +36,8 @@
 	<script src="{{ asset('limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('limitless/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
 	<script src="{{ asset('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script>
+	<script src="{{ asset('limitless/global_assets/js/plugins/buttons/spin.min.js') }}"></script>
+	<script src="{{ asset('limitless/global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
 	@endif
 	
 	<!-- /core JS files -->
@@ -104,7 +106,10 @@
 								</div>
 
 								<div class="form-group">
-									<button type="submit" class="btn btn-primary btn-block">Sign in</button>
+									<button type="submit" class="btn btn-block btn-primary btn-ladda btn-ladda-spinner ladda-button legitRipple" data-style="expand-left" data-spinner-color="#333" data-spinner-size="20">
+										<span class="ladda-label">Sign In</span>
+										<span class="ladda-spinner"></span><div class="ladda-progress" style="width: 0px;"></div>
+									</button>
 								</div>
 
 								
@@ -126,8 +131,18 @@
 	<!-- /page content -->
 	@yield('theme_js')
 	
+	@include('layouts.global_script')
+	
 	@yield('my_script')
 	
-	@include('layouts.global_script')
+	<script>
+	$(document).ready(()=>{
+		
+		Ladda.bind('.btn-ladda-spinner', {
+			dataSpinnerSize: 16,
+			timeout: 2000
+			});
+	});
+	</script>
 </body>
 </html>
