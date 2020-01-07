@@ -407,7 +407,7 @@ function loadGridDetail(url){
 				columnDefs: [
 					{ 
 						orderable: false,
-						targets: [ 3 ]
+						targets: [ 0,1,2,3,4 ]
 					},
 				],
 				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
