@@ -120,8 +120,8 @@
 				<div class="modal-body">
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Panjang Perkerasan (m)</label>
-						<div class="col-sm-9">
-							<input required type="number" value="1" min="1" name="length" id="rc_length" placeholder="Total Length" class="touchspin-vertical form-control">
+						<div class="col-sm-9 tsp">
+							
 						</div>
 					</div>
 					<?php 
@@ -212,12 +212,7 @@
 var table, table_detail
 
 $(document).ready(()=>{
-	$('.touchspin-vertical').TouchSpin({
-			max: 10000,
-            verticalbuttons: true,
-            verticalupclass: 'icon-arrow-up22',
-            verticaldownclass: 'icon-arrow-down22'
-        });
+	
 	Ladda.bind('.btn-ladda-spinner', {
             dataSpinnerSize: 16,
             timeout: 2000
@@ -251,8 +246,8 @@ function edit(id,max,cur){
 	};
 	$('#rc_id').val(id)
 	$('#modal_edit').modal('show')
-	$('.touchspin-vertical').TouchSpin('destroy')
-	$('.touchspin-vertical').TouchSpin({
+	$('.tsp').html('<input required type="number" value="1" min="1" name="length" id="rc_length" placeholder="Total Length" class="touchspin-vertical'+id+' form-control">')
+	$('.touchspin-vertical'+id).TouchSpin({
 			max: maxi,
             verticalbuttons: true,
             verticalupclass: 'icon-arrow-up22',
