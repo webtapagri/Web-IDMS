@@ -15,7 +15,7 @@ class ModifyVRoadCategory20200107 extends Migration
     {
         //
         \DB::unprepared("DROP VIEW IF EXISTS V_ROAD_CATEGORY");
-        DB::unprepared(file_get_contents(__DIR__. '/../sql/V_ROAD_CATEGORY.sql'));
+        DB::unprepared(file_get_contents(__DIR__. '/../sql/v_road_category.sql'));
     }
 
     /**
@@ -27,6 +27,6 @@ class ModifyVRoadCategory20200107 extends Migration
     {
         //
         \DB::unprepared("DROP VIEW IF EXISTS V_ROAD_CATEGORY");
-        DB::unprepared(file_get_contents(__DIR__. '/../sql/V_ROAD_CATEGORY.sql'));
+        DB::unprepared(file_get_contents(__DIR__. '/../sql/v_road_category.sql'));
     }
 }
