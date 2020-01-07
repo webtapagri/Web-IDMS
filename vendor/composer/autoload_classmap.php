@@ -160,6 +160,7 @@ return array(
     'App\\Http\\Controllers\\RolesController' => $baseDir . '/app/Http/Controllers/RolesController.php',
     'App\\Http\\Controllers\\SAPController' => $baseDir . '/app/Http/Controllers/SAPController.php',
     'App\\Http\\Controllers\\Select2Controller' => $baseDir . '/app/Http/Controllers/Select2Controller.php',
+    'App\\Http\\Controllers\\TransactionController' => $baseDir . '/app/Http/Controllers/TransactionController.php',
     'App\\Http\\Controllers\\UsersController' => $baseDir . '/app/Http/Controllers/UsersController.php',
     'App\\Http\\Controllers\\VerifikasiController' => $baseDir . '/app/Http/Controllers/VerifikasiController.php',
     'App\\Http\\Controllers\\WorkflowController' => $baseDir . '/app/Http/Controllers/WorkflowController.php',

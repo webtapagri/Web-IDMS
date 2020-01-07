@@ -768,6 +768,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'App\\Http\\Controllers\\RolesController' => __DIR__ . '/../..' . '/app/Http/Controllers/RolesController.php',
         'App\\Http\\Controllers\\SAPController' => __DIR__ . '/../..' . '/app/Http/Controllers/SAPController.php',
         'App\\Http\\Controllers\\Select2Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Select2Controller.php',
+        'App\\Http\\Controllers\\TransactionController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransactionController.php',
         'App\\Http\\Controllers\\UsersController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsersController.php',
         'App\\Http\\Controllers\\VerifikasiController' => __DIR__ . '/../..' . '/app/Http/Controllers/VerifikasiController.php',
         'App\\Http\\Controllers\\WorkflowController' => __DIR__ . '/../..' . '/app/Http/Controllers/WorkflowController.php',
