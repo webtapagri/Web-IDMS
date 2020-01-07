@@ -356,13 +356,7 @@ function loadGrid(){
 					lengthMenu: '<span>Show:</span> _MENU_',
 					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
 				},
-				scrollX: true,
-				scrollY: '350px',
-				scrollCollapse: true,
-				fixedColumns: {
-					leftColumns: 0,
-					rightColumns: 1
-				}
+				
 			});
 	
 
@@ -371,6 +365,13 @@ function loadGrid(){
 		'processing': true,
         serverSide: true,
         ajax: '{{ route("history.progres_perkerasan_datatables") }}',
+		scrollX: true,
+		scrollY: '350px',
+		scrollCollapse: true,
+		fixedColumns: {
+			leftColumns: 0,
+			rightColumns: 1
+		},
         columns: [
             { data: 'road_code', 		name: 'road_code' },
             { data: 'road_name', 		name: 'road_name' },
