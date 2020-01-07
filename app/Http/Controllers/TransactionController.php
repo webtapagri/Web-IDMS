@@ -28,8 +28,8 @@ class TransactionController extends Controller
 		$delete_action = '';
 		if($access['update']==1){
 			$update_action = '
-					<button class="btn btn-link text-primary-600" onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\'); return false;">
-						<i class="icon-plus2"></i> Tambah Progress
+					<button title="Tambah progress perkerasan jalan" class="btn btn-sm btn-primary " onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\'); return false;">
+						<i class="icon-plus2"></i> Tambah
 					</button>
 			';
 		}
@@ -38,8 +38,8 @@ class TransactionController extends Controller
 		}
 		
 		$update_action .= '
-			<button class="btn btn-link text-info-600" onclick="detail({{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\'); return false;">
-				<i class="icon-list3"></i> History Progress
+			<button title="List history perkerasan jalan" class="btn btn-sm btn-info " onclick="detail({{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\'); return false;">
+				<i class="icon-list3"></i> History
 			</button>
 		';
 		

@@ -16,4 +16,8 @@
     min-width: 13.625rem;
 }
 
+.btn-sm {
+    padding: 4px;
+    font-size: 7pt;
+}
 </style>
