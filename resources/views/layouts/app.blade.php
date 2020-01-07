@@ -95,8 +95,9 @@
 	<!-- /page content -->
 	@yield('theme_js')
 	
+	@include('layouts.global_script')
+	
 	@yield('my_script')
 	
-	@include('layouts.global_script')
 </body>
 </html>
