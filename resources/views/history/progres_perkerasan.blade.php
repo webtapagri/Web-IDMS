@@ -212,7 +212,12 @@
 var table, table_detail
 
 $(document).ready(()=>{
-	
+	$('.touchspin-vertical').TouchSpin({
+			max: 10000,
+            verticalbuttons: true,
+            verticalupclass: 'icon-arrow-up22',
+            verticaldownclass: 'icon-arrow-down22'
+        });
 	Ladda.bind('.btn-ladda-spinner', {
             dataSpinnerSize: 16,
             timeout: 2000
@@ -246,6 +251,7 @@ function edit(id,max,cur){
 	};
 	$('#rc_id').val(id)
 	$('#modal_edit').modal('show')
+	$('.touchspin-vertical').TouchSpin('destroy')
 	$('.touchspin-vertical').TouchSpin({
 			max: maxi,
             verticalbuttons: true,
