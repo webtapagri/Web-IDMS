@@ -16,8 +16,6 @@
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
-<script src="{{ asset('limitless/global_assets/js/plugins/buttons/spin.min.js') }}"></script>
-<script src="{{ asset('limitless/global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
 
 <!-- velocity anime -->
 <script src="{{ asset('limitless/global_assets/js/plugins/velocity/velocity.min.js') }}"></script>

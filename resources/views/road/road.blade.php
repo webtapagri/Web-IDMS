@@ -70,9 +70,9 @@
 			<tr>
 				<th>Road Code</th>
 				<th>Road Name</th>
+				<th>Length</th>
 				<th>Asset Code</th>
 				<th>Segment</th>
-				<th>Length</th>
 				<th>Status</th>
 				<th>Category</th>
 				<th>Company</th> 
@@ -86,9 +86,9 @@
 			<tr>
 				<th>Road Code</th>
 				<th>Road Name</th>
+				<th>Length</th>
 				<th>Asset Code</th>
 				<th>Segment</th>
-				<th>Length</th>
 				<th>Status</th>
 				<th>Category</th>
 				<th>Company</th> 
@@ -101,6 +101,44 @@
 	</table>
 </div>
 
+<div id="modal_edit" class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Edit Road Master</h5>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<form action="{{ route('master.road_update') }}" method="post" class="form-horizontal">
+				@csrf
+				<input type="hidden" id="rc_road_id" name="road_id">
+				<div class="modal-body">
+					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Total Length</label>
+						<div class="col-sm-9">
+							<input required type="number" name="total_length" id="rc_total_length" placeholder="Total Length" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Asset Code</label>
+						<div class="col-sm-9">
+							<input required type="text" name="asset_code" id="rc_asset_code" maxlength="255" placeholder="Asset Code" class="form-control">
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Tutup</button>
+					<button type="submit" class="btn btn-primary btn-ladda btn-ladda-spinner ladda-button legitRipple" data-style="expand-left" data-spinner-color="#333" data-spinner-size="20">
+						<span class="ladda-label">SImpan</span>
+						<span class="ladda-spinner"></span><div class="ladda-progress" style="width: 0px;"></div>
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 @endsection
 
 @section('my_script')
@@ -108,6 +146,11 @@
 var table
 
 $(document).ready(()=>{
+	
+	Ladda.bind('.btn-ladda-spinner', {
+            dataSpinnerSize: 16,
+            timeout: 2000
+        });
 	
 	$('.select-clear').select2({
 		// placeholder: 'Select a State',
@@ -124,6 +167,14 @@ $(document).ready(()=>{
 	
 	
 });
+
+function edit(id, tl, ac){
+	$('#rc_road_id').val(id)
+	$('#rc_total_length').val(tl)
+	$('#rc_asset_code').val(ac)
+	$('#modal_edit').modal('show')
+	return false;
+}
 
 function del(url){
 	swal({
@@ -191,7 +242,6 @@ function loadStatus(){
 }
 
 function loadGrid(){
-	console.log('load grid')
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -243,9 +293,9 @@ function loadGrid(){
         columns: [
             { data: 'road_code', 		name: 'road_code' },
             { data: 'road_name', 		name: 'road_name' },
+            { data: 'total_length', 	name: 'total_length' },
             { data: 'asset_code', 		name: 'asset_code' },
             { data: 'segment', 			name: 'segment' },
-            { data: 'total_length', 	name: 'total_length' },
             { data: 'status_name', 		name: 'status_name' },
             { data: 'category_name', 	name: 'category_name' },
 			{ data: 'company_name', 	name: 'company_name' },
@@ -255,7 +305,6 @@ function loadGrid(){
             { data: 'action', 			name: 'action' },
         ],
 		initComplete: function () {
-			console.log(123)
 			this.api().columns().every(function (k) {
 				if(k > -1 && k < 11){
 					var column = this;

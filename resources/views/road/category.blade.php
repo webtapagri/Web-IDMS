@@ -207,7 +207,6 @@ $(document).ready(()=>{
 });
 
 function edit(id, cn, cc, ci,si){
-	console.log(si)
 	$('#rc_id').val(id)
 	$('#comboid_'+si).attr('selected','selected')
 	$('#rc_category_name').val(cn)
