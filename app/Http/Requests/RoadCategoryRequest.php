@@ -28,22 +28,38 @@ class RoadCategoryRequest extends FormRequest
             'category_name' => [
 				'required', 
 				Rule::unique('TM_ROAD_CATEGORY')->where(function ($query) {
-					return $query->where('status_id',$this->get('status_id'))
-								 ->whereRaw('deleted_at is null');
+					if(\Route::current()->getName()!= 'master.road_category_update'){
+						return $query->where('status_id',$this->get('status_id'))
+									 ->whereRaw('deleted_at is null');
+					}else{
+						return $query->where('status_id',$this->get('status_id'))
+									 ->whereRaw('deleted_at is null')
+									 ->where('id','!=',$this->get('id'));
+					}
 				})
 			],
             'category_code' => [
 				'required', 
 				Rule::unique('TM_ROAD_CATEGORY')->where(function ($query) {
-					return $query->where('status_id',$this->get('status_id'))
+					if(\Route::current()->getName()!= 'master.road_category_update'){
+						return $query->where('status_id',$this->get('status_id'))
 								 ->whereRaw('deleted_at is null');
+					}else{
+						return $query->where('status_id',$this->get('status_id'))
+								 ->whereRaw('deleted_at is null')
+								 ->where('id','!=',$this->get('id'));
+					}
 				}),
 				'numeric'
 			],
 			'category_initial' => [
 				'required', 
 				Rule::unique('TM_ROAD_CATEGORY')->where(function ($query) {
-					return $query->whereRaw('deleted_at is null');
+					if(\Route::current()->getName()!= 'master.road_category_update'){
+						return $query->whereRaw('deleted_at is null');
+					}else{
+						return $query->whereRaw('deleted_at is null')->where('id','!=',$this->get('id'));
+					}
 				})
 			],
             'status_id' => 'required',
