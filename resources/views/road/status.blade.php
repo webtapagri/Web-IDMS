@@ -190,9 +190,9 @@ function del(url){
 	}).then(function (is) {
 		if(is.value){
 			swal(
-				'Terhapus!',
-				'Data telah dihapus',
-				'success'
+				'Info!',
+				'Data dedang dihapus',
+				'info'
 			);
 			setTimeout(function(){
 				window.location.href = url;
