@@ -28,13 +28,22 @@ class RoadStatusRequest extends FormRequest
             'status_name' => [
 				'required', 
 				Rule::unique('TM_ROAD_STATUS')->where(function ($query) {
-					return $query->whereRaw('deleted_at is null');
+					if(\Route::current()->getName()!= 'master.road_status_update'){
+						return $query->whereRaw('deleted_at is null');
+					}else{
+						return $query->whereRaw('deleted_at is null')->where('id','!=',$this->get('id'));
+					}
+					
 				})
 			],
             'status_code' => [
 				'required', 
 				Rule::unique('TM_ROAD_STATUS')->where(function ($query) {
-					return $query->whereRaw('deleted_at is null');
+					if(\Route::current()->getName()!= 'master.road_status_update'){
+						return $query->whereRaw('deleted_at is null');
+					}else{
+						return $query->whereRaw('deleted_at is null')->where('id','!=',$this->get('id'));
+					}
 				}),
 				'numeric'
 			],
