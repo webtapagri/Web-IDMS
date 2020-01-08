@@ -191,7 +191,7 @@ function del(url){
 		if(is.value){
 			swal(
 				'Terhapus!',
-				'Data telah dihapus',
+				'Data dedang dihapus',
 				'success'
 			);
 			setTimeout(function(){
