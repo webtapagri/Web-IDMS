@@ -189,11 +189,6 @@ function del(url){
 		buttonsStyling: false
 	}).then(function (is) {
 		if(is.value){
-			swal(
-				'Info!',
-				'Data dedang dihapus',
-				'info'
-			);
 			setTimeout(function(){
 				window.location.href = url;
 			}, 1000);
