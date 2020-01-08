@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\SchedulerMasterData::class,
+        \App\Console\Commands\SchedulerMasterData2::class,
     ];
 
     /**
@@ -25,7 +26,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command( "SchedulerMasterData:sync" )
-					->dailyAt('05:50');
+					->dailyAt('10:00');
+        $schedule->command( "SchedulerMasterData2:sync" )
+					->dailyAt('10:15');
     }
 
     /**

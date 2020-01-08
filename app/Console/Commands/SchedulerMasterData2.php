@@ -4,21 +4,21 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 
-class SchedulerMasterData extends Command
+class SchedulerMasterData2 extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = "SchedulerMasterData:sync";
+    protected $signature = "SchedulerMasterData2:sync";
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = "Sync data MASTER";
+    protected $description = "Sync data MASTER2";
 
     /**
      * Create a new command instance.
@@ -38,15 +38,15 @@ class SchedulerMasterData extends Command
     public function handle()
     {
         
-		\Log::info('============'.date('Ymdh').'  Running master data scheduler ');
+		\Log::info('============'.date('Ymdh').'  Running master data2 scheduler ');
 		
 		try {
 			
-			$rsp = app('App\Http\Controllers\MasterController')->sync_comp();
-			\Log::info( '1. '.$rsp );
+			$rsp = app('App\Http\Controllers\MasterController')->sync_afd();
+			\Log::info( '3. '.$rsp );
 			
-			$rsp = app('App\Http\Controllers\MasterController')->sync_est();
-			\Log::info( '2. '.$rsp );
+			$rsp = app('App\Http\Controllers\MasterController')->sync_block();
+			\Log::info( '4. '.$rsp );
 			
 		}catch (\Throwable $e) {
 			\Log::info(throwable_msg($e));
@@ -55,7 +55,7 @@ class SchedulerMasterData extends Command
         }
 		
 		
-		\Log::info('============'.date('Ymdh').' End scheduler master data  ');
+		\Log::info('============'.date('Ymdh').' End scheduler master data2  ');
         
     }
 }
