@@ -56,7 +56,7 @@ class RoadCategoryRequest extends FormRequest
 				'required', 
 				Rule::unique('TM_ROAD_CATEGORY')->where(function ($query) {
 					if(\Route::current()->getName()!= 'master.road_category_update'){
-						return $query->whereRaw('deleted_at is null');
+						return $query->whereRaw('deleted_at is null and (select deleted_at from TM_ROAD_STATUS TRD where TRD.id = TM_ROAD_CATEGORY.status_id) is null');
 					}else{
 						return $query->whereRaw('deleted_at is null')->where('id','!=',$this->get('id'));
 					}
