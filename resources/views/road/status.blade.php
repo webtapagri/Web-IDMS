@@ -190,9 +190,9 @@ function del(url){
 	}).then(function (is) {
 		if(is.value){
 			swal(
-				'Terhapus!',
+				'Info!',
 				'Data dedang dihapus',
-				'success'
+				'info'
 			);
 			setTimeout(function(){
 				window.location.href = url;
