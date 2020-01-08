@@ -133,7 +133,7 @@ class RoadController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil menyimpan data');
-        return redirect()->route('road');
+        return redirect()->route('master.road_status');
 	}
 	
 	public function update(RoadStatusRequest $request)
