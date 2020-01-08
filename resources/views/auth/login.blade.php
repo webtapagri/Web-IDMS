@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 	<title>Login - {{ env('APP_NAME') }}</title>
+	<link href="{{ asset('img/icon.ico') }}" rel="shortcut icon">
 
 	<!-- Global stylesheets -->
 	<link href="{{ asset('limitless/global_assets/css/css.css?family=Roboto:400,300,100,500,700,900') }}" rel="stylesheet" type="text/css">
