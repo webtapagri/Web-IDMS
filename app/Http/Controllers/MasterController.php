@@ -44,7 +44,7 @@ class MasterController extends Controller
 		// return $RestAPI;
 		if(count($RestAPI['data']) > 0 ){
 			foreach($RestAPI['data'] as $data){
-				$est = Estate::where('estate_code',$data['EST_CODE'])->first();
+				$est = Estate::where('werks',$data['WERKS'])->first();
 					if($est){
 						try {
 								$afd = Afdeling::firstOrNew(array('estate_id' => $est['id'],'afdeling_code' => $data['AFD_CODE']));
@@ -85,7 +85,7 @@ class MasterController extends Controller
 		if(count($RestAPI['data']) > 0 ){
 			foreach($RestAPI['data'] as $data){
 
-				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->first();
+				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
 					if($afd){
 						try {
 								$block = Block::firstOrNew(array('afdeling_id' => $afd['id'],'block_code' => $data['BLOCK_CODE']));
