@@ -415,8 +415,9 @@ function loadGridDetail(url){
 				responsive: true,
 				columnDefs: [
 					{ 
-						orderable: false,
-						targets: [ 0,1,2,3,4 ]
+						"orderSequence": [ "desc",'asc' ],
+						orderable: true,
+						targets: [ 2,1 ]
 					},
 				],
 				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
