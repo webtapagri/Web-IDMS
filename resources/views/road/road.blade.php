@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Road Category List')
+@section('title', 'Road Master List')
 
 @section('theme_css')
 
