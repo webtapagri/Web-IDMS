@@ -167,7 +167,7 @@ function loadGrid(){
         processing: true,
         serverSide: true,
         ajax: '{{ route("master.afdeling_datatables") }}',
-		"order": [[1,"asc"],[2, "asc" ]],
+		// "order": [[1,"asc"],[2, "asc" ]],
         columns: [
             { data: 'no', 	name: 'no' },
             { data: 'afdeling_code', 	name: 'afdeling_code' },
