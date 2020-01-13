@@ -185,7 +185,7 @@
 			<table class="table datatable-detail table-xs">
 				<thead>
 					<tr>
-						<th>Panjang</th>
+						<th>Panjang (m)</th>
 						<th>Bulan</th>
 						<th>Tahun</th>
 						<th>Oleh</th>
@@ -194,7 +194,7 @@
 				</thead>
 				<tfoot>
 					<tr>
-						<th>Panjang</th>
+						<th>Panjang (m)</th>
 						<th>Bulan</th>
 						<th>Tahun</th>
 						<th>Oleh</th>
