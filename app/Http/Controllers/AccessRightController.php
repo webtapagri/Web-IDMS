@@ -80,7 +80,7 @@ class AccessRightController extends Controller
                     FROM 
                         TBM_MODULE as module
                     INNER JOIN TBM_MENU as menu ON (module.id=menu.module_id)
-                    WHERE module.deleted=0
+                    WHERE module.deleted=0 and menu.deleted=0
                 ) as module
                 LEFT OUTER JOIN(
                     select id, role_id, menu_id, module_id, `create`, `read`, `update`, `delete`
