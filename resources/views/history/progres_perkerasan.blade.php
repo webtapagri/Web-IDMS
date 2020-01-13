@@ -182,6 +182,9 @@
 				<h5 class="modal-title">Detail Progress Perkerasan Jalan</h5>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
+			<div class="modal-body">
+				Kode Jalan: <strong id="detailKodeJalan"></strong>
+			</div>
 			<table class="table datatable-detail table-xs">
 				<thead>
 					<tr>
@@ -257,11 +260,11 @@ function edit(id,max,cur){
 	return false;
 }
 
-function detail(id,max,cur){
+function detail(id,max,cur, kode){
 	if(table_detail){
 		table_detail.destroy()
 	};
-	loadGridDetail( "{{ URL::to('api/history/progress-perkerasan-detail') }}/"+id )
+	loadGridDetail( "{{ URL::to('api/history/progress-perkerasan-detail') }}/"+id, kode )
 	return false;
 }
 
@@ -409,7 +412,7 @@ function loadGrid(){
     // } ).draw();
 }
 
-function loadGridDetail(url){
+function loadGridDetail(url, kode){
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -453,6 +456,7 @@ function loadGridDetail(url){
 				}
 			});
 			
+			$('#detailKodeJalan').html(kode)
 			$('#modal_detail').modal('show')
 		}
     } );
