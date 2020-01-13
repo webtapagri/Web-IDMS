@@ -22,11 +22,26 @@ class TransactionController extends Controller
 		$req = $request->all();
 		$start = $req['start'];
 		$access = access($request, 'history/progres-perkerasan');
-		$model = VListProgressPerkerasan::whereRaw('1=1');
+		
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			$where = "1=1";
+		}else{
+			$ww = '';
+			foreach($werks as $k=>$w){
+				if($w != 'All'){
+					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+				}
+			}
+			$where = "werks in ($ww)";
+		}
+		
+		$model = VListProgressPerkerasan::whereRaw($where);
 		
 		$update_action = '';
 		$delete_action = '';
-		if($access['update']==1){
+		if($access['update']==1 || $access['create']==1){
 			$update_action = '
 					<button title="Tambah progress perkerasan jalan" class="btn btn-sm btn-primary " onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\'); return false;">
 						<i class="icon-plus2"></i> Tambah
@@ -78,7 +93,8 @@ class TransactionController extends Controller
 		$start = $req['start'];
 		$access = access($request, 'history/progres-perkerasan');
 		$model = RoadPavementProgress::with('admin')
-				->orderBy('id','desc')
+				->orderBy('year','asc')
+				->orderBy('month','asc')
 				->where('road_id',$id);
 		
 		$update_action = '';

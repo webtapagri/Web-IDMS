@@ -8,10 +8,6 @@ Route::group(['middleware' => ['web']], function () {
 
 });
 
-Route::get('/wadid', function(){
-	echo 1;die;
-})->name('xx');
-
 Route::group(['middleware' => [ 'auth' ]], function () {
 	
 	Route::get('/', 'RoadController@index')->name('road');

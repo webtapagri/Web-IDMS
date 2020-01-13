@@ -311,7 +311,7 @@ class RoadController extends Controller
 		
 		$update_action = '';
 		$delete_action = '';
-		if($access['update']==1){
+		if($access['update']==1 || $access['create']==1){
 			$update_action = '
 					<button class="btn btn-link text-primary-600" onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $asset_code }}\'); return false;">
 						<i class="icon-pencil7"></i> Edit
