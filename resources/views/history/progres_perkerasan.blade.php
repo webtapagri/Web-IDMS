@@ -413,6 +413,12 @@ function loadGridDetail(url){
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
+				columnDefs: [
+					{ 
+						orderable: false,
+						targets: [ 0,1,2,3,4 ]
+					},
+				],
 				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
@@ -428,13 +434,6 @@ function loadGridDetail(url){
 		'processing': true,
         serverSide: true,
         ajax: url,
-				columnDefs: [
-					{ 
-						"orderSequence": [ "desc",'asc' ],
-						orderable: true,
-						targets: [ 2,1 ]
-					},
-				],
         columns: [
             { data: 'length', 		name: 'length' },
             { data: 'month', 		name: 'month' },
