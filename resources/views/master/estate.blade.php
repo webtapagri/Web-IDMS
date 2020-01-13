@@ -165,7 +165,7 @@ function loadGrid(){
         processing: true,
         serverSide: true,
         ajax: '{{ route("master.estate_datatables") }}',
-		"order": [[1,"asc"],[2, "asc" ]],
+		// "order": [[1,"asc"],[2, "asc" ]],
         columns: [
             { data: 'no', 	name: 'no' },
             { data: 'estate_code', 	name: 'estate_code' },

@@ -216,10 +216,13 @@ class MasterController extends Controller
 			}
 			$where = "id in (select distinct company_id from TM_ESTATE where werks in ($ww))";
 		}
-		$model = Company::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_COMPANY.*')->whereRaw($where);
+		// dd($start);
+		// $model = Company::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_COMPANY.*')->whereRaw($where);
+		$model = DB::select( DB::raw('select @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_COMPANY.* from TM_COMPANY where '.$where));
 		
-		
-		return Datatables::eloquent($model)
+		$collection = collect($model);
+		// return Datatables::eloquent($model)
+		return Datatables::of($collection)
 			->rawColumns(['action'])
 			->make(true);
 	}
