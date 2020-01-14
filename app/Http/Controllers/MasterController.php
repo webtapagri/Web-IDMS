@@ -44,7 +44,7 @@ class MasterController extends Controller
 		// return $RestAPI;
 		if(count($RestAPI['data']) > 0 ){
 			foreach($RestAPI['data'] as $data){
-				$est = Estate::where('estate_code',$data['EST_CODE'])->first();
+				$est = Estate::where('werks',$data['WERKS'])->first();
 					if($est){
 						try {
 								$afd = Afdeling::firstOrNew(array('estate_id' => $est['id'],'afdeling_code' => $data['AFD_CODE']));
@@ -85,7 +85,7 @@ class MasterController extends Controller
 		if(count($RestAPI['data']) > 0 ){
 			foreach($RestAPI['data'] as $data){
 
-				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->first();
+				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
 					if($afd){
 						try {
 								$block = Block::firstOrNew(array('afdeling_id' => $afd['id'],'block_code' => $data['BLOCK_CODE']));
@@ -216,10 +216,13 @@ class MasterController extends Controller
 			}
 			$where = "id in (select distinct company_id from TM_ESTATE where werks in ($ww))";
 		}
-		$model = Company::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_COMPANY.*')->whereRaw($where);
+		// dd($start);
+		// $model = Company::selectRaw(' @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_COMPANY.*')->whereRaw($where);
+		$model = DB::select( DB::raw('select @rank  := ifnull(@rank, '.$start.')  + 1  AS no, TM_COMPANY.* from TM_COMPANY where '.$where));
 		
-		
-		return Datatables::eloquent($model)
+		$collection = collect($model);
+		// return Datatables::eloquent($model)
+		return Datatables::of($collection)
 			->rawColumns(['action'])
 			->make(true);
 	}

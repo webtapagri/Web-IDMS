@@ -72,6 +72,7 @@ class AccessRightHelper extends ServiceProvider
             ->select('menu.name as name', 'menu.url as url', 'menu.sort','access.create', 'access.read', 'access.update', 'access.delete')
             ->where([
                 ["role.id", "=", Session::get('role_id')],
+                ["menu.deleted", "=", '0'],
             ])
             ->orderBy("menu.sort", "ASC")
             ->get();

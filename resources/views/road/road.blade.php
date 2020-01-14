@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Road Category List')
+@section('title', 'Road Master List')
 
 @section('theme_css')
 
@@ -189,11 +189,6 @@ function del(url){
 		buttonsStyling: false
 	}).then(function (is) {
 		if(is.value){
-			swal(
-				'Terhapus!',
-				'Data telah dihapus',
-				'success'
-			);
 			setTimeout(function(){
 				window.location.href = url;
 			}, 1000);

@@ -292,7 +292,22 @@ class RoadController extends Controller
 		$req = $request->all();
 		$start = $req['start'];
 		$access = access($request, 'master/road');
-		$model = VRoad::whereRaw('deleted_at is null')->orderBy('id','desc');
+		
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			$where = "1=1";
+		}else{
+			$ww = '';
+			foreach($werks as $k=>$w){
+				if($w != 'All'){
+					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+				}
+			}
+			$where = "werks in ($ww)";
+		}
+		
+		$model = VRoad::whereRaw("deleted_at is null and $where")->orderBy('id','desc');
 		
 		$update_action = '';
 		$delete_action = '';

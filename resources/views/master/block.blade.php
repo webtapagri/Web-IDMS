@@ -104,10 +104,10 @@ function sync(dis){
 		data: null,
 		cache:false,
 		beforeSend:function(){
-			$(dis).html('<b><i class="icon-sync"></i></b> Please wait...')
+			$(dis).attr('disabled','disabled').html('<b><i class="icon-spinner spinner"></i></b> Please wait...')
 		},
 		complete:function(){
-			$(dis).html('<b><i class="icon-sync"></i></b> Sync Now')
+			$(dis).removeAttr('disabled').html('<b><i class="icon-sync"></i></b> Sync Now')
 		},
 		headers: {
 			"X-CSRF-TOKEN": "{{ csrf_token() }}"
@@ -167,7 +167,7 @@ function loadGrid(){
         processing: true,
         serverSide: true,
         ajax: '{{ route("master.block_datatables") }}',
-		"order": [[1,"asc"],[2, "asc" ]],
+		// "order": [[1,"asc"],[2, "asc" ]],
         columns: [
             { data: 'no', 	name: 'no' },
             { data: 'block_code', 	name: 'block_code' },
