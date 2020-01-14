@@ -41,8 +41,16 @@
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
-						<i class="icon-paragraph-justify3"></i>
+						<i class="icon-paragraph-justify3"></i> 
 					</a>
+				</li>
+				<li class="nav-item">
+					
+					@if(@$back)
+					<a href="{{  url()->previous() }}" class="navbar-nav-link d-none d-md-block">
+						<i class="icon-circle-left2"></i> Back
+					</a>
+					@endif
 				</li>
 
 			</ul>
