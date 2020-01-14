@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Road Category List')
+@section('title', 'Progress Perkerasan Jalan')
 
 @section('theme_css')
 
