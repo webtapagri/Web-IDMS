@@ -34,6 +34,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		
 		Route::group(['prefix'=>'history'], function () {
 			Route::get('/progress-perkerasan-detail/{id}', 	'TransactionController@api_progress_perkerasan_detail')->name('api.history.api_progress_perkerasan_detail');
+			Route::get('/road-log-detail/{id}', 	'TransactionController@api_road_log_detail')->name('api.history.api_road_log_detail');
 		});
 	});
 
@@ -75,6 +76,10 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::get('/progres-perkerasan', 	'TransactionController@progres_perkerasan')->name('history.progres_perkerasan');
 		Route::get('/progres-perkerasan-datatables', 	'TransactionController@progres_perkerasan_datatables')->name('history.progres_perkerasan_datatables');
 		Route::post('/progres-perkerasan-update', 	'TransactionController@progres_perkerasan_update')->name('history.progres_perkerasan_update');
+		
+		Route::get('/road-log', 	'TransactionController@road_log')->name('history.road_log');
+		Route::get('/road-log-datatables', 	'TransactionController@road_log_datatables')->name('history.road_log_datatables');
+		Route::post('/road-log-update', 	'TransactionController@road_log_update')->name('history.road_log_update');
 		
     });
 
