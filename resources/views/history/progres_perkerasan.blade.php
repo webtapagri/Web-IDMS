@@ -84,7 +84,7 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
-				<th class="text-center">Aksi</th>
+				<th class="text-center">Action</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -101,7 +101,7 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
-				<th class="text-center">Aksi</th>
+				<th class="text-center">Action</th>
 			</tr>
 		</tfoot>
 	</table>
@@ -260,11 +260,12 @@ function edit(id,max,cur){
 	return false;
 }
 
-function detail(id,max,cur, kode){
+function detail(btn, id,max,cur, kode){
 	if(table_detail){
 		table_detail.destroy()
 	};
-	loadGridDetail( "{{ URL::to('api/history/progress-perkerasan-detail') }}/"+id, kode )
+	$(btn).html('<i class="icon-spinner spinner"></i> History')
+	loadGridDetail(btn, "{{ URL::to('api/history/progress-perkerasan-detail') }}/"+id, kode )
 	return false;
 }
 
@@ -412,7 +413,7 @@ function loadGrid(){
     // } ).draw();
 }
 
-function loadGridDetail(url, kode){
+function loadGridDetail(btn, url, kode){
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -458,6 +459,7 @@ function loadGridDetail(url, kode){
 			
 			$('#detailKodeJalan').html(kode)
 			$('#modal_detail').modal('show')
+			$(btn).html('<i class="icon-list3"></i> History')
 		}
     } );
 }

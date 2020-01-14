@@ -53,7 +53,7 @@ class TransactionController extends Controller
 		}
 		
 		$update_action .= '
-			<button title="List history perkerasan jalan" class="btn btn-sm btn-info " onclick="detail({{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\', \'{{ $road_code }}\'); return false;">
+			<button title="List history perkerasan jalan" class="btn btn-sm btn-info " onclick="detail(this, {{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\', \'{{ $road_code }}\'); return false;">
 				<i class="icon-list3"></i> History
 			</button>
 		';

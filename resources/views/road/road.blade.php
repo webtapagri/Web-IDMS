@@ -79,7 +79,7 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
-				<th class="text-center">Aksi</th>
+				<th class="text-center">Action</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -95,7 +95,7 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
-				<th class="text-center">Aksi</th>
+				<th class="text-center">Action</th>
 			</tr>
 		</tfoot>
 	</table>
