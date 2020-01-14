@@ -235,6 +235,7 @@ $(document).ready(()=>{
 		loadGrid()
 	})
 	
+	formRequiredMark()
 	
 });
 

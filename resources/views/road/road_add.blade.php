@@ -148,7 +148,7 @@
 				-->
 				
 				<div class="form-group row">
-					<label class="col-form-label col-sm-3">Asset Code</label>
+					<label class="col-form-label col-sm-3 norequired">Asset Code</label>
 					<div class="col-sm-9">
 						<input type="text" name="asset_code"  class="form-control" value="{{ old('asset_code') }}">
 					</div>
@@ -186,7 +186,7 @@ $(document).ready(()=>{
 	$('.select-clear').select2({
 		allowClear: true
 	});
-	
+	formRequiredMark()
 });
 
 $('.company_code').change(()=>{
