@@ -24,13 +24,11 @@
 <div class="card">
 	<div class="card-header header-elements-inline">
 		@if($access['create']=='1')
-		<a href="{{ route('master.road_add') }}">
-			<button 
-				data-toggle="modal"
-				type="button" class="btn bg-teal-400 btn-labeled btn-labeled-left"><b><i class="icon-plus3"></i></b> 
-				Tambah
-			</button>
-		</a>
+		<button 
+			data-toggle="modal" data-target="#modal_add"
+			type="button" class="btn bg-teal-400 btn-labeled btn-labeled-left"><b><i class="icon-plus3"></i></b> 
+			Tambah
+		</button>
 		@endif
 		<div class="header-elements">
 			<div class="list-icons">
@@ -99,6 +97,39 @@
 			</tr>
 		</tfoot>
 	</table>
+</div>
+
+<div id="modal_add" class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="row " style="pointer-events: auto;">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-body text-center">
+						<i class="icon-insert-template icon-3x text-info mt-1 mb-3"></i>
+						<h6 class="font-weight-semibold">Form</h6>
+						<p class="mb-3">Menambahkan data secara manual menggunakan form input</p>
+						<a href="{{ route('master.road_add') }}">Pilih &rarr;</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-body text-center">
+						<i class="icon-copy icon-3x text-primary-600 mt-1 mb-3"></i>
+						<h6 class="font-weight-semibold">Copy Paste</h6>
+						<p class="mb-3">Menambahkan data secara <i>copy paste</i></p>
+						<a href="#">Pilih &rarr;</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="row" style="pointer-events: auto;">
+			<div class="col-md-12 text-center">
+				<a href="" class="btn btn-link text-white" data-dismiss="modal">Close</a>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div id="modal_edit" class="modal fade" tabindex="-1">
