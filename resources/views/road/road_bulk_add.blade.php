@@ -5,6 +5,8 @@
 @section('theme_js')
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/handsontable/handsontable.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/handsontable/sheetclip.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/notifications/noty.min.js') }}"></script>
 @endsection
 
 @section('content')
@@ -21,10 +23,23 @@
 	</div>
 
 	<div class="card-body">
-		<p class="mb-3">Gunakan shortcuts <kbd>Ctrl (Cmd) + C</kbd> and <kbd>Ctrl (Cmd) + V</kbd> untuk menyalin data dari file excel atau csv anda.</p>
-
+		<div class="row mb-3">
+			<div class="col-md-8">
+				<p class="">Gunakan shortcuts <kbd>Ctrl (Cmd) + C</kbd> and <kbd>Ctrl (Cmd) + V</kbd> untuk menyalin data dari file excel atau csv anda.</p>
+			</div>
+			<div class="col-md-4 text-right">
+				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
+				<button type="submit" class="btn btn-primary">Simpan</button>
+			</div>
+		</div>
 		<div class="hot-container">
 			<div id="hot_context_copy"></div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12 mt-2">
+				<button type="submit" class="btn btn-primary">Simpan</button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -33,12 +48,34 @@
 
 @section('my_script')
 <script>
-var HotContextMenu;
+var HotContextMenu, hot_context_copy_init;
 $(document).ready(()=>{
 	HotContextMenu.init();
 	
+	Noty.overrideDefaults({
+            theme: 'limitless',
+            layout: 'topRight',
+            type: 'alert',
+            timeout: 3500
+        });
+	
 	$('a[data-action="reload"]').click(()=>{
 		HotContextMenu.init()
+	})
+	
+	$('button[type="submit"]').click(()=>{
+		save()
+	})
+	
+	$('.validation-check').click(()=>{
+		hot_context_copy_init.validateCells((isValid)=>{
+			if(isValid){
+				new Noty({
+					text: 'Semua data valid.',
+					type: 'success'
+				}).show();
+			}  
+		})
 	})
 })
 
@@ -57,20 +94,39 @@ HotContextMenu = function() {
 		var sheetclip = new SheetClip();
 		var clipboardCache = '';
 		
-		var hot_context_copy_init = new Handsontable(hot_context_copy, {
+		var cekString = function(value,callback){
+			if (value == '' || value === null) {
+			  callback(false);
+			}
+			else {
+			  callback(true);
+			}
+		}
+		var cekNum = function(value,callback){
+			if (value == '' || value === null || typeof(value) == 'string') {
+			  callback(false);
+			}
+			else {
+			  callback(true);
+			}
+		}
+		
+		hot_context_copy_init = new Handsontable(hot_context_copy, {
 				data: car_data,
 				rowHeaders: true,
 				stretchH: 'all',
-				colHeaders: ['Road Code', 'Road Name', 'Length', 'Month', 'Year'],
+				colHeaders: ['Road Code', 'Road Name', 'Length (m)', 'Month', 'Year'],
 				columns: [
 					{
 						data: 'road_code',
 						type: 'numeric',
 						className: 'htLeft',
-						width: 50
+						width: 50,
+						validator: cekNum
 					},
 					{
-						data: 'road_name'
+						data: 'road_name',
+						validator: cekString
 					},
 					{
 						data: 'length',
@@ -80,19 +136,22 @@ HotContextMenu = function() {
 							// pattern: '0%'
 							pattern: '0'
 						},
-						width: 50
+						width: 50,
+						validator: cekNum
 					},
 					{
 						data: 'month',
 						type: 'numeric',
 						className: 'htLeft',
-						width: 50
+						width: 50,
+						validator: cekNum
 					},
 					{
 						data: 'Year',
 						type: 'numeric',
 						className: 'htLeft',
-						width: 50
+						width: 50,
+						validator: cekNum
 					},
 				],
 				afterCopy: function(changes) {
@@ -103,6 +162,29 @@ HotContextMenu = function() {
 				},
 				afterPaste: function(changes) {
 					clipboardCache = sheetclip.stringify(changes);
+				},
+				afterValidate: function(isValid, value, row, prop){
+					if(!isValid){
+						if(prop == 'road_name'){
+							new Noty({
+								text: 'Kolom '+prop+' baris ke '+(row+1)+' harus diisi.',
+								type: 'warning'
+							}).show();
+						}else{
+							if(value=='0'||value==0){
+								new Noty({
+									text: 'Kolom '+prop+' baris ke '+(row+1)+' harus lebih dari 0 meter.',
+									type: 'warning'
+								}).show();
+							}else{
+								new Noty({
+									text: 'Kolom '+prop+' baris ke '+(row+1)+' harus diisi dan harus berupa angka.',
+									type: 'warning'
+								}).show();
+							}
+
+						}
+					}
 				},
 				contextMenu: [
 					'row_above',
@@ -134,5 +216,15 @@ HotContextMenu = function() {
 	}
 }();
 
+
+function save(){
+	var valid
+	hot_context_copy_init.validateCells((isValid)=>{
+		valid = isValid    
+	})
+	if(valid){
+		
+	}
+}
 </script>
 @endsection
