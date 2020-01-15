@@ -45,7 +45,7 @@
 	<!-- /theme JS files -->
 </head>
 
-<body class="navbar-top">
+<body class="navbar-top" id="gttop">
 
 	<!-- Main navbar -->
 	@include('layouts.header')

@@ -35,12 +35,6 @@
 		<div class="hot-container">
 			<div id="hot_context_copy"></div>
 		</div>
-		
-		<div class="row">
-			<div class="col-md-12 mt-2">
-				<button type="submit" class="btn btn-primary">Simpan</button>
-			</div>
-		</div>
 	</div>
 </div>
 
