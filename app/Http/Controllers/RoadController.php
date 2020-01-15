@@ -357,8 +357,8 @@ class RoadController extends Controller
 			$data['werks'] 		= $esw[0];
 			$data['estate_code']= $esw[1];	
 			$data['block_code']	= $blck[0];	
-			$data['road_code']= $request->company_code.$esw[1].$blck[0].$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
-			$data['road_name']=  $blck[1].$cat->category_initial.$request->segment;
+			$data['road_code']	= $request->company_code.$esw[1].$blck[0].$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
+			$data['road_name']	=  $blck[1].$cat->category_initial.$request->segment;
 			$road 				= Road::create($request->except('werks','status_id','category_id','total_length','asset_code','block_code')+$data);
 						
 			//insert into TR_ROAD_LOG
