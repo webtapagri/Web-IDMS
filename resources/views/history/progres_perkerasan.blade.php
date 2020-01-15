@@ -115,7 +115,7 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
-			<form action="{{ route('history.road_status_update') }}" method="post" class="form-horizontal">
+			<form action="{{ route('history.progres_perkerasan_update') }}" method="post" class="form-horizontal">
 				@csrf
 				<input type="hidden" id="rc_id" name="road_id">
 				<div class="modal-body">
