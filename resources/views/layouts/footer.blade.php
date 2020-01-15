@@ -12,7 +12,7 @@
 					</span>
 
 					<ul class="navbar-nav ml-lg-auto">
-						
+						<li class="nav-item"><a href="#gttop" class="navbar-nav-link" >Go to top</a></li>
 					</ul>
 				</div>
 			</div>
