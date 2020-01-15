@@ -806,6 +806,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'App\\Models\\VRoad' => __DIR__ . '/../..' . '/app/Models/VRoad.php',
         'App\\Models\\VRoadCategory' => __DIR__ . '/../..' . '/app/Models/VRoadCategory.php',
         'App\\Models\\VRoadLog' => __DIR__ . '/../..' . '/app/Models/VRoadLog.php',
+        'App\\Models\\VRoadStatus' => __DIR__ . '/../..' . '/app/Models/VRoadStatus.php',
         'App\\Module' => __DIR__ . '/../..' . '/app/Module.php',
         'App\\MyMenuFilter' => __DIR__ . '/../..' . '/app/MyMenuFilter.php',
         'App\\Providers\\AccessRightHelper' => __DIR__ . '/../..' . '/app/Providers/AccessRightHelper.php',

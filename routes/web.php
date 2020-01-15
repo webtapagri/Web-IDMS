@@ -17,7 +17,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		
 		Route::group(['prefix'=>'master'], function () {
 			Route::get('/road-status', 				['as'=>'master.api_road_status', 'uses'=>'RoadController@api_status']);
-			Route::get('/road-category/{id}', 				['as'=>'master.api_road_category', 'uses'=>'RoadController@api_category']);
+			Route::get('/road-category/{id}', 		['as'=>'master.api_road_category', 'uses'=>'RoadController@api_category']);
 			
 			Route::get('/sync-afd', 				['as'=>'master.api_sync_afd', 'uses'=>'MasterController@sync_afd']);
 			Route::get('/sync-comp', 				['as'=>'master.api_sync_comp', 'uses'=>'MasterController@sync_comp']);
@@ -34,7 +34,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		
 		Route::group(['prefix'=>'history'], function () {
 			Route::get('/progress-perkerasan-detail/{id}', 	'TransactionController@api_progress_perkerasan_detail')->name('api.history.api_progress_perkerasan_detail');
-			Route::get('/road-log-detail/{id}', 	'TransactionController@api_road_log_detail')->name('api.history.api_road_log_detail');
+			Route::get('/road-status-detail/{id}', 	'TransactionController@api_road_status_detail')->name('api.history.api_road_status_detail');
 		});
 	});
 
@@ -77,9 +77,9 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::get('/progres-perkerasan-datatables', 	'TransactionController@progres_perkerasan_datatables')->name('history.progres_perkerasan_datatables');
 		Route::post('/progres-perkerasan-update', 	'TransactionController@progres_perkerasan_update')->name('history.progres_perkerasan_update');
 		
-		Route::get('/road-log', 	'TransactionController@road_log')->name('history.road_log');
-		Route::get('/road-log-datatables', 	'TransactionController@road_log_datatables')->name('history.road_log_datatables');
-		Route::post('/road-log-update', 	'TransactionController@road_log_update')->name('history.road_log_update');
+		Route::get('/road-status', 	'TransactionController@road_status')->name('history.road_status');
+		Route::get('/road-status-datatables', 	'TransactionController@road_status_datatables')->name('history.road_status_datatables');
+		Route::post('/road-status-update', 	'TransactionController@road_status_update')->name('history.road_status_update');
 		
     });
 

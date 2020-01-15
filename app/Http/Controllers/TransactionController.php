@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\RoadPavementProgress;
-use App\Models\RoadLog;
+use App\Models\TRRoadStatus;
 use App\Models\VListProgressPerkerasan;
 use App\Models\VRoadLog;
+use App\Models\VRoadStatus;
 use Yajra\DataTables\Facades\DataTables;
 
 class TransactionController extends Controller
@@ -109,25 +110,37 @@ class TransactionController extends Controller
 	}
 
 	/////
-	public function road_log(Request $request)
+	public function road_status(Request $request)
 	{
 		$access = access($request);
-		$data['ctree'] = '/history/road_log';
-		return view('history.road_log', compact('access','data'));
+		$data['ctree'] = '/history/road_status';
+		return view('history.road_status', compact('access','data'));
 	}
 	
-	public function road_log_datatables(Request $request)
+	public function road_status_datatables(Request $request)
 	{
 		$req = $request->all();
 		$start = $req['start'];
-		$access = access($request, 'history/road-log');
-		$model = VRoadLog::whereRaw('1=1')->orderBy('id','desc');
-		
+		$access = access($request, 'history/road-status');
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			$where = "1=1";
+		}else{
+			$ww = '';
+			foreach($werks as $k=>$w){
+				if($w != 'All'){
+					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+				}
+			}
+			$where = "werks in ($ww)";
+		}		
+		$model = VRoadLog::whereRaw($where);
 		$update_action = '';
 		$delete_action = '';
 		if($access['update']==1){
 			$update_action = '
-					<button title="Tambah log status jalan" class="btn btn-sm btn-primary " onclick="edit({{ $id }}, \'{{ $total_length }}\'); return false;">
+					<button title="Tambah perubahan status jalan" class="btn btn-sm btn-primary " onclick="edit({{ $id }}, \'{{ $status_id }}\'); return false;">
 						<i class="icon-plus2"></i> Tambah
 					</button>
 			';
@@ -137,7 +150,7 @@ class TransactionController extends Controller
 		}
 		
 		$update_action .= '
-			<button title="List history status jalan" class="btn btn-sm btn-info " onclick="detail({{ $id }}, \'{{ $total_length }}\'); return false;">
+			<button title="List history status jalan" class="btn btn-sm btn-info " onclick="detail({{ $id }},  \'{{ $status_id }}\'); return false;">
 				<i class="icon-list3"></i> History
 			</button>
 		';
@@ -152,10 +165,10 @@ class TransactionController extends Controller
 			->make(true);
 	}
 	
-	public function road_log_update(Request $request)
+	public function road_status_update(Request $request)
 	{
 		try {
-			RoadLog::create($request->all()+['updated_by'=>\Session::get('user_id')]);
+			TRRoadStatus::create($request->all()+['updated_by'=>\Session::get('user_id')]);
 		}catch (\Throwable $e) {
             \Session::flash('error', throwable_msg($e));
             return redirect()->back()->withInput($request->input());
@@ -165,18 +178,18 @@ class TransactionController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil mengupdate data');
-        return redirect()->route('history.road_log');
+        return redirect()->route('history.road_status');
 	}
 	
 	
 	//STart API
 	
-	public function api_road_log_detail(Request $request, $id)
+	public function api_road_status_detail(Request $request, $id)
 	{
 		$req = $request->all();
 		$start = $req['start'];
-		$access = access($request, 'history/road-log');
-		$model = RoadLog::with('admin')
+		$access = access($request, 'history/road-status');
+		$model = VRoadStatus::with('admin')
 				->orderBy('id','desc')
 				->where('road_id',$id);
 		

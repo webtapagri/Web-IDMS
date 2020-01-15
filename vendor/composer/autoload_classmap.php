@@ -198,6 +198,7 @@ return array(
     'App\\Models\\VRoad' => $baseDir . '/app/Models/VRoad.php',
     'App\\Models\\VRoadCategory' => $baseDir . '/app/Models/VRoadCategory.php',
     'App\\Models\\VRoadLog' => $baseDir . '/app/Models/VRoadLog.php',
+    'App\\Models\\VRoadStatus' => $baseDir . '/app/Models/VRoadStatus.php',
     'App\\Module' => $baseDir . '/app/Module.php',
     'App\\MyMenuFilter' => $baseDir . '/app/MyMenuFilter.php',
     'App\\Providers\\AccessRightHelper' => $baseDir . '/app/Providers/AccessRightHelper.php',
