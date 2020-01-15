@@ -174,6 +174,7 @@
 						<th>Road Name</th>
 						<th>Total Length</th>
 						<th>Status</th>
+						<th>Category</th>
 						<th>Updated by</th>
 						<th>Insert Date</th>
 					</tr>
@@ -184,6 +185,7 @@
 						<th>Road Name</th>
 						<th>Total Length</th>
 						<th>Status</th>
+						<th>Category</th>
 						<th>Updated by</th>
 						<th>Insert Date</th>
 					</tr>
@@ -497,12 +499,13 @@ function loadGridDetail(url){
             { data: 'road_name', 		name: 'road_name' },
             { data: 'total_length', 		name: 'total_length' },
             { data: 'status_name', 		name: 'status_name' },
+            { data: 'category_name', 		name: 'category_name' },
             { data: 'updated_by', 	name: 'updated_by' },
             { data: 'created_at', 	name: 'created_at' },
         ],
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k > -1 && k < 6){
+				if(k > -1 && k < 7){
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())

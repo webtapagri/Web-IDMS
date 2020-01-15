@@ -217,6 +217,31 @@ function save(){
 		valid = isValid    
 	})
 	if(valid){
+
+	//save handsontable data
+		Handsontable.dom.addEvent(save, 'click', function() {
+
+			var myData = hot_context_copy_init.getData();
+			var myForm = new FormData();
+			myForm.append('myData', JSON.stringify(myData));
+			
+			$.ajax({
+				url: "{{ URL::to('master/road-bulk-save') }}/",
+				data: myForm,
+				cache: false,
+				async: false,
+				processData: false,
+				contentType: false,
+				type: 'POST',
+				success: function(json_object) {
+				myConsole.innerText = 'Data Saved';
+				},
+				error: function(json_object) {
+				myConsole.innerText = 'Data Save Error';
+				}
+			});
+
+		});
 		
 	}
 }
