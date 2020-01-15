@@ -1,4 +1,4 @@
-create or replace view v_list_history_status
+create or replace view V_LIST_HISTORY_STATUS as
 select trs.id,trs.road_id ,vrl.road_code,vrl.road_name,vrl.total_length, vrl.status_name, vrl.category_name, trs.updated_by, trs.created_at, trs.updated_at
 from TR_ROAD_STATUS trs, V_ROAD_LOG vrl,
 TM_ROAD tmr 

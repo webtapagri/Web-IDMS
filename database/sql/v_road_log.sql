@@ -1,4 +1,4 @@
-create or replace view v_road_log
+create or replace view V_ROAD_LOG as
 select company_name, tme.estate_name, tma.afdeling_name, tmb.block_name, tmrs.status_code as status_id,tmrs.status_name, tmrc.category_name,
 round(ifnull((select sum(length) from TR_ROAD_PAVEMENT_PROGRESS trpp where trpp.road_id = tmr.id ),0),2) as curr_progress,
 concat(round(ifnull((select sum(length) from TR_ROAD_PAVEMENT_PROGRESS trpp where trpp.road_id = tmr.id ),0)/
