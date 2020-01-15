@@ -339,7 +339,20 @@ class MasterController extends Controller
 	public function api_company()
 	{
 		try{
-			$data = Company::selectRaw('id, company_code, company_name')->get();
+			$werks = explode(',',session('area_code'));
+			$cek =  collect($werks);
+			if( $cek->contains('All') ){
+				$where = "1=1";
+			}else{
+				$ww = '';
+				foreach($werks as $k=>$w){
+					if($w != 'All'){
+						$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+					}
+				}
+				$where = "id in (select distinct company_id from TM_ESTATE where werks in ($ww))";
+			}
+			$data = Company::selectRaw('id, company_code, company_name')->whereRaw($where)->get();
 			
 		}catch (\Throwable $e) {
             return response()->error('Error',throwable_msg($e));
@@ -352,10 +365,24 @@ class MasterController extends Controller
 	public function api_estate_tree($id)
 	{
 		try{
+			$werks = explode(',',session('area_code'));
+			$cek =  collect($werks);
+			if( $cek->contains('All') ){
+				$where = "1=1";
+			}else{
+				$ww = '';
+				foreach($werks as $k=>$w){
+					if($w != 'All'){
+						$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+					}
+				}
+				$where = "TM_ESTATE.werks in ($ww)";
+			}
 			$data = Estate::
 							selectRaw('estate_code, werks, estate_name')
 							->join('TM_COMPANY','TM_COMPANY.id','=','TM_ESTATE.company_id')
 							->where('TM_COMPANY.company_code',$id)
+							->whereRaw($where)
 							->get();
 			
 		}catch (\Throwable $e) {

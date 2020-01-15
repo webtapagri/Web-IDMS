@@ -165,6 +165,7 @@ $(document).ready(()=>{
 		console.log(123)
 	})
 	
+	formRequiredMark()
 	
 });
 
@@ -246,7 +247,7 @@ function loadGrid(){
 					$(input).appendTo($(column.footer()).empty())
 					.on('change', function () {
 						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Cari').addClass('form-control');
+					}).attr('placeholder',' Search').addClass('form-control');
 				}
 			});
 		}
