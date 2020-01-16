@@ -9,3 +9,4 @@ join TM_BLOCK tmb on tmb.block_code = tmr.block_code and tmb.werks = tmr.werks
 join TM_ROAD_STATUS tmrs on tmrs.id = (select status_id from TR_ROAD_STATUS trs where trs.road_id = tmr.id order by id desc limit 1)
 join TM_ROAD_CATEGORY tmrc on tmrc.id = (select category_id from TR_ROAD_STATUS trs where trs.road_id = tmr.id order by id desc limit 1)
 where tmr.deleted_at is null 
+and tmrs.status_name = 'PRODUKSI'
