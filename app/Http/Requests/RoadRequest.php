@@ -32,7 +32,7 @@ class RoadRequest extends FormRequest
 			'status_id' => 'required',
 			'category_id' => 'required',
 			// 'asset_code' => 'required',
-			'segment' => 'required',
+			'segment' => 'required|numeric|max:9',
 			'total_length' => 'required|numeric',
 			
             // 'road_code' => [

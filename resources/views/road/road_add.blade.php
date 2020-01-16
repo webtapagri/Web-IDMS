@@ -120,7 +120,7 @@
 				<div class="form-group row">
 					<label class="col-form-label col-sm-3">Segment</label>
 					<div class="col-sm-9">
-						<input type="number" name="segment"  min="0" class="form-control" value="{{ old('segment') }}">
+						<input type="number" name="segment"  min="0" max="9" class="form-control" value="{{ old('segment') }}">
 					</div>
 				</div>
 				
