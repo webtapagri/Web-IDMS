@@ -120,14 +120,14 @@
 				<div class="form-group row">
 					<label class="col-form-label col-sm-3">Segment</label>
 					<div class="col-sm-9">
-						<input type="number" name="segment"  min="0" max="9" class="form-control" value="{{ old('segment') }}">
+						<input type="number" name="segment"  min="1" max="9" class="form-control" value="{{ old('segment') }}">
 					</div>
 				</div>
 				
 				<div class="form-group row">
 					<label class="col-form-label col-sm-3">Length (m)</label>
 					<div class="col-sm-9">
-						<input type="number" name="total_length" min="0"  class="form-control" value="{{ old('total_length') }}">
+						<input type="number" name="total_length" min="1"  class="form-control" value="{{ old('total_length') }}">
 					</div>
 				</div>
 				
