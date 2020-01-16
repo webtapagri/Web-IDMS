@@ -153,7 +153,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Asset Code</label>
 						<div class="col-sm-9">
-							<input required type="text" name="asset_code" id="rc_asset_code" maxlength="255" placeholder="Asset Code" class="form-control">
+							<input type="text" name="asset_code" id="rc_asset_code" maxlength="255" placeholder="Asset Code" class="form-control">
 						</div>
 					</div>
 				</div>
