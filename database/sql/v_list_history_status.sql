@@ -5,4 +5,4 @@ join V_ROAD_LOG vrl on trs.road_id = vrl.id
 join TM_ROAD tmr on vrl.id = tmr.id 
 join TM_ROAD_STATUS tmrs on tmrs.id = trs.status_id
 join TM_ROAD_CATEGORY tmrc on tmrc.id = trs.category_id
-where vrl.id = trs.road_id and tmr.id = vrl.id and trs.road_id = '7' and tmr.deleted_at is null 
+where vrl.id = trs.road_id and tmr.id = vrl.id and tmr.deleted_at is null 
