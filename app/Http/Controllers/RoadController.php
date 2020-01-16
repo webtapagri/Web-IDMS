@@ -428,4 +428,20 @@ class RoadController extends Controller
 		$back = true;
 		return view('road.road_bulk_add', compact('data','back'));
 	}
+	
+	public function road_bulk_save(Request $request)
+	{
+		try {
+			Road::insert($request->all());
+		}catch (\Throwable $e) {
+            \Session::flash('error', throwable_msg($e));
+            return redirect()->back()->withInput($request->input());
+        }catch (\Exception $e) {
+            \Session::flash('error', exception_msg($e));
+            return redirect()->back()->withInput($request->input());
+		}
+		
+		\Session::flash('success', 'Berhasil menyimpan data');
+        return redirect()->route('master.road');
+	}
 }
