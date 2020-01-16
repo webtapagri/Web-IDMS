@@ -147,7 +147,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Total Length</label>
 						<div class="col-sm-9">
-							<input required type="number" name="total_length" id="rc_total_length" placeholder="Total Length" class="form-control">
+							<input required type="number" name="total_length" min="1" id="rc_total_length" placeholder="Total Length" class="form-control">
 						</div>
 					</div>
 					<div class="form-group row">
