@@ -182,8 +182,9 @@ class TransactionController extends Controller
 			//insert into TM_ROAD
 			$esw 				= $RS->werks;
 			$blck 				= $RS->block_code;
-			$road_code			= $RS->company_code.$esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
-			$road_name			=  $blck.$cat->category_initial.$RS->segment;
+			// $road_code			= $RS->company_code.$esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
+			$road_code			= $esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
+			$road_name			= $blck.$cat->category_initial.$RS->segment;
 			
 			// insert TR_ROAD_STATUS
 			TRRoadStatus::create($request->all()+['updated_by'=>\Session::get('user_id'),'road_code'=>$road_code,'road_name'=>$road_name]);
