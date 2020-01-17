@@ -133,6 +133,13 @@
 							</select>
 						</div>
 					</div>
+					
+					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Segment</label>
+						<div class="col-sm-9">
+							<input type="number" name="segment"  min="1" max="9" class="form-control" value="{{ old('segment') }}">
+						</div>
+					</div>
 					<!-- <div class="form-group row">
 						<label class="col-form-label col-sm-3">Panjang Perkerasan (m)</label>
 						<div class="col-sm-9 tsp">
@@ -175,6 +182,7 @@
 						<th>Total Length</th>
 						<th>Status</th>
 						<th>Category</th>
+						<th>Segment</th>
 						<th>Updated by</th>
 						<th>Insert Date</th>
 					</tr>
@@ -186,6 +194,7 @@
 						<th>Total Length</th>
 						<th>Status</th>
 						<th>Category</th>
+						<th>Segment</th>
 						<th>Updated by</th>
 						<th>Insert Date</th>
 					</tr>
@@ -375,6 +384,7 @@ function load_status(){
 		}
 	}).done(function(rsp){
 		
+		$('.category_id option').remove();
 		if(rsp.code=200){
 			var cont = rsp.contents
 			$.each(cont, (k,v)=>{
@@ -500,12 +510,13 @@ function loadGridDetail(url){
             { data: 'total_length', 		name: 'total_length' },
             { data: 'status_name', 		name: 'status_name' },
             { data: 'category_name', 		name: 'category_name' },
+            { data: 'segment', 		name: 'segment' },
             { data: 'updated_by', 	name: 'updated_by' },
             { data: 'created_at', 	name: 'created_at' },
         ],
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k > -1 && k < 7){
+				if(k > -1 && k < 8){
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())
