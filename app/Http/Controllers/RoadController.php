@@ -364,13 +364,19 @@ class RoadController extends Controller
 			//insert into TR_ROAD_LOG
 			$tr_data = [
 				'road_id'		=> $road->id,
-				'updated_by'	=> \Session::get('user_id')
+				'updated_by'	=> \Session::get('user_id'),
+			];
+			$ts_data = [
+				'road_id'		=> $road->id,
+				'updated_by'	=> \Session::get('user_id'),
+				'road_code'=>$data['road_code'],
+				'road_name'=>$data['road_name']
 			];
 			RoadLog::create( $request->only('total_length','asset_code')+$tr_data );
 			
 			//insert into TR_ROAD_STATUS
 			
-			TRRoadStatus::create( $request->only('status_id','category_id')+$tr_data );
+			TRRoadStatus::create( $request->only('status_id','category_id')+$ts_data );
 			
 		}catch (\Throwable $e) {
 			DB::rollBack();

@@ -7,9 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Models\RoadPavementProgress;
 use App\Models\TRRoadStatus;
 use App\Models\VListProgressPerkerasan;
+use App\Models\Road;
 use App\Models\VRoadLog;
 use App\Models\VRoadStatus;
+use App\Models\RoadStatus;
+use App\Models\RoadCategory;
 use Yajra\DataTables\Facades\DataTables;
+use DB;
 
 class TransactionController extends Controller
 {
@@ -167,8 +171,29 @@ class TransactionController extends Controller
 	
 	public function road_status_update(Request $request)
 	{
+		DB::beginTransaction();
 		try {
-			TRRoadStatus::create($request->all()+['updated_by'=>\Session::get('user_id')]);
+			$land_use_code = '0601';
+			$cat = RoadCategory::find($request->category_id);
+			$stat = RoadStatus::find($request->status_id);
+
+			$RS = Road::find($request->road_id);
+
+			//insert into TM_ROAD
+			$esw 				= $RS->werks;
+			$blck 				= $RS->block_code;
+			$road_code			= $RS->company_code.$esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
+			$road_name			=  $blck.$cat->category_initial.$RS->segment;
+			
+			// insert TR_ROAD_STATUS
+			TRRoadStatus::create($request->all()+['updated_by'=>\Session::get('user_id'),'road_code'=>$road_code,'road_name'=>$road_name]);
+		
+			// update TM_ROAD
+			$RS->road_code = $road_code;
+			$RS->road_name = $road_name;
+			$RS->updated_by = \Session::get('user_id');
+			$RS->save();
+
 		}catch (\Throwable $e) {
             \Session::flash('error', throwable_msg($e));
             return redirect()->back()->withInput($request->input());
@@ -176,7 +201,7 @@ class TransactionController extends Controller
             \Session::flash('error', exception_msg($e));
             return redirect()->back()->withInput($request->input());
 		}
-		
+		DB::commit();
 		\Session::flash('success', 'Berhasil mengupdate data');
         return redirect()->route('history.road_status');
 	}
@@ -190,7 +215,7 @@ class TransactionController extends Controller
 		$start = $req['start'];
 		$access = access($request, 'history/road-status');
 		$model = VRoadStatus::with('admin')
-				->orderBy('id','desc')
+				->orderBy('updated_at','desc')
 				->where('road_id',$id);
 		
 		$update_action = '';
