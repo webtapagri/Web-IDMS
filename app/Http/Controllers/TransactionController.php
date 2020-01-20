@@ -193,15 +193,16 @@ class TransactionController extends Controller
 			$BL = Block::where('block_code',$RS->block_code)->first();
 			//insert into TM_ROAD
 			$esw 				= $RS->werks;
-			$blck 				= $BL->block_name;
+			$blc 				= $BL->block_name;
+			$blck 				= $BL->block_code;
 			// $road_code			= $RS->company_code.$esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
 			$road_code			= $esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
-			$road_name			= $blck.$cat->category_initial.$request->segment;
+			$road_name			= $blc.$cat->category_initial.$request->segment;
 			
 			if (Road::where('road_name', '=', $road_name)->exists() == "true"){
 				throw new \ErrorException('Segment sudah digunakan');
 			}
-			
+
 			// insert TR_ROAD_STATUS
 			TRRoadStatus::create($request->all()+['updated_by'=>\Session::get('user_id'),'road_code'=>$road_code,'road_name'=>$road_name]);
 		
