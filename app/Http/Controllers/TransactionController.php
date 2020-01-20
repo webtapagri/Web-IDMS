@@ -12,6 +12,8 @@ use App\Models\VRoadLog;
 use App\Models\VRoadStatus;
 use App\Models\RoadStatus;
 use App\Models\RoadCategory;
+use App\Models\Block;
+use App\Http\Requests\RoadStatusChangesRequest;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
 
@@ -178,10 +180,10 @@ class TransactionController extends Controller
 			$stat = RoadStatus::find($request->status_id);
 
 			$RS = Road::find($request->road_id);
-
+			$BL = Block::where('block_code',$RS->block_code)->first();
 			//insert into TM_ROAD
 			$esw 				= $RS->werks;
-			$blck 				= $RS->block_code;
+			$blck 				= $BL->block_name;
 			// $road_code			= $RS->company_code.$esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
 			$road_code			= $esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
 			$road_name			= $blck.$cat->category_initial.$RS->segment;
@@ -192,6 +194,7 @@ class TransactionController extends Controller
 			// update TM_ROAD
 			$RS->road_code = $road_code;
 			$RS->road_name = $road_name;
+			$RS->segment = $request->segment;
 			$RS->updated_by = \Session::get('user_id');
 			$RS->save();
 
@@ -216,7 +219,7 @@ class TransactionController extends Controller
 		$start = $req['start'];
 		$access = access($request, 'history/road-status');
 		$model = VRoadStatus::with('admin')
-				->orderBy('updated_at','desc')
+				->orderBy('updated_at','asc')
 				->where('road_id',$id);
 		
 		$update_action = '';
