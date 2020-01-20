@@ -339,7 +339,7 @@ class RoadController extends Controller
 	public function road_add(Request $request)
 	{
 		$data['ctree'] = '/master/road';
-		$back = true;
+		$back = 'master.road';
 		return view('road.road_add', compact('data','back'));
 	}
 	
@@ -425,7 +425,7 @@ class RoadController extends Controller
 	public function road_bulk_add()
 	{
 		$data['ctree'] = '/master/road';
-		$back = true;
+		$back = 'master.road';
 		return view('road.road_bulk_add', compact('data','back'));
 	}
 	
