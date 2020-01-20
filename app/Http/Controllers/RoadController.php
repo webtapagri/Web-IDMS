@@ -376,7 +376,7 @@ class RoadController extends Controller
 			
 			//insert into TR_ROAD_STATUS
 			
-			TRRoadStatus::create( $request->only('status_id','category_id')+$ts_data );
+			TRRoadStatus::create( $request->only('status_id','category_id','segment')+$ts_data );
 			
 		}catch (\Throwable $e) {
 			DB::rollBack();

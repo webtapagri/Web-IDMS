@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use App\Models\Road;
 
 class RoadStatusChangesRequest extends FormRequest
 {
@@ -27,7 +28,7 @@ class RoadStatusChangesRequest extends FormRequest
         return [
 			'status_id' => 'required',
 			'category_id' => 'required',
-			'segment' => 'required|numeric|max:9|min:1',
+			'segment' => 'required|numeric|max:9|min:1|'.Rule::unique(Road, 'block_code'),
 			
            
         ];

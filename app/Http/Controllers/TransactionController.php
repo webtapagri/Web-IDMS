@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use App\Http\Controllers\Controller;
 use App\Models\RoadPavementProgress;
 use App\Models\TRRoadStatus;
@@ -175,6 +177,14 @@ class TransactionController extends Controller
 	{
 		DB::beginTransaction();
 		try {
+
+			$request->validate([
+				'status_id' => 'required',
+				'category_id' => 'required',
+				'segment' => 'required|numeric|max:9|min:1'
+			]);
+			// dd($request);
+
 			$land_use_code = '0601';
 			$cat = RoadCategory::find($request->category_id);
 			$stat = RoadStatus::find($request->status_id);
@@ -185,8 +195,12 @@ class TransactionController extends Controller
 			$esw 				= $RS->werks;
 			$blck 				= $BL->block_name;
 			// $road_code			= $RS->company_code.$esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
-			$road_code			= $esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$RS->segment;	
-			$road_name			= $blck.$cat->category_initial.$RS->segment;
+			$road_code			= $esw.$blck.$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
+			$road_name			= $blck.$cat->category_initial.$request->segment;
+			
+			if (Road::where('road_name', '=', $road_name)->exists() == "true"){
+				throw new \ErrorException('Segment sudah digunakan');
+			}
 			
 			// insert TR_ROAD_STATUS
 			TRRoadStatus::create($request->all()+['updated_by'=>\Session::get('user_id'),'road_code'=>$road_code,'road_name'=>$road_name]);
