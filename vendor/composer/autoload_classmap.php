@@ -176,6 +176,7 @@ return array(
     'App\\Http\\Middleware\\VerifyCsrfToken' => $baseDir . '/app/Http/Middleware/VerifyCsrfToken.php',
     'App\\Http\\Requests\\RoadCategoryRequest' => $baseDir . '/app/Http/Requests/RoadCategoryRequest.php',
     'App\\Http\\Requests\\RoadRequest' => $baseDir . '/app/Http/Requests/RoadRequest.php',
+    'App\\Http\\Requests\\RoadStatusChangesRequest' => $baseDir . '/app/Http/Requests/RoadStatusChangesRequest.php',
     'App\\Http\\Requests\\RoadStatusRequest' => $baseDir . '/app/Http/Requests/RoadStatusRequest.php',
     'App\\Mail\\FamsEmail' => $baseDir . '/app/Mail/FamsEmail.php',
     'App\\Menu' => $baseDir . '/app/Menu.php',

@@ -784,6 +784,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\RoadCategoryRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RoadCategoryRequest.php',
         'App\\Http\\Requests\\RoadRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RoadRequest.php',
+        'App\\Http\\Requests\\RoadStatusChangesRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RoadStatusChangesRequest.php',
         'App\\Http\\Requests\\RoadStatusRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RoadStatusRequest.php',
         'App\\Mail\\FamsEmail' => __DIR__ . '/../..' . '/app/Mail/FamsEmail.php',
         'App\\Menu' => __DIR__ . '/../..' . '/app/Menu.php',
