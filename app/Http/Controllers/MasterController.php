@@ -70,95 +70,95 @@ class MasterController extends Controller
 		
 	}
 
-	// public function sync_block()
-	// {
-	// 	$Master = new Master;
-	// 	$token = $Master->token();
-	// 	$RestAPI = $Master
-	// 				->setEndpoint('block/all')
-	// 				->setHeaders([
-	// 					'Authorization' => 'Bearer '.$token
-	// 				])
-	// 				->get();
-					
-	// 	// return $RestAPI;
-	// 	if(count($RestAPI['data']) > 0 ){
-	// 		foreach($RestAPI['data'] as $data){
-
-	// 			$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
-	// 				if($afd){
-	// 					try {
-	// 							$block = Block::firstOrNew(array('afdeling_id' => $afd['id'],'block_code' => $data['BLOCK_CODE']));
-	// 							$block->block_name = $data['BLOCK_NAME'];
-	// 							$block->region_code = $data['REGION_CODE'];
-	// 							$block->company_code = $data['COMP_CODE'];
-	// 							$block->estate_code = $data['EST_CODE'];
-	// 							$block->werks = $data['WERKS'];
-	// 							$block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
-	// 							$block->latitude_block = $data['LATITUDE_BLOCK'];
-	// 							$block->longitude_block = $data['LONGITUDE_BLOCK'];
-	// 							$block->save();
-	// 					}catch (\Throwable $e) {
-	// 						//
-	// 					}catch (\Exception $e) {
-	// 						//
-	// 					}
-	// 				}else{
-	// 					// masuk log  COMP_CODE  not found
-	// 				}
-				
-	// 		}
-	// 	}
-					
-	// 	return 1;
-		
-	// }
-
-	
 	public function sync_block()
 	{
 		$Master = new Master;
-		// $token = $Master->token();
+		$token = $Master->token();
 		$RestAPI = $Master
-					->setEndpoint('block/all/raw')
-					// ->setEndpoint('block/all')
-					// ->setHeaders([
-					// 	'Authorization' => 'Bearer '.$token
-					// ])
-					->get("2");
-				// dd($RestAPI);	
-		return $RestAPI;
-		// if(count($RestAPI['data']) > 0 ){
-		// 	foreach($RestAPI['data'] as $data){
-
-		// 		$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
-		// 			if($afd){
-		// 				try {
-		// 						$block = Block::firstOrNew(array('afdeling_id' => $afd['id'],'block_code' => $data['BLOCK_CODE']));
-		// 						$block->block_name = $data['BLOCK_NAME'];
-		// 						$block->region_code = $data['REGION_CODE'];
-		// 						$block->company_code = $data['COMP_CODE'];
-		// 						$block->estate_code = $data['EST_CODE'];
-		// 						$block->werks = $data['WERKS'];
-		// 						$block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
-		// 						$block->latitude_block = $data['LATITUDE_BLOCK'];
-		// 						$block->longitude_block = $data['LONGITUDE_BLOCK'];
-		// 						$block->save();
-		// 				}catch (\Throwable $e) {
-		// 					//
-		// 				}catch (\Exception $e) {
-		// 					//
-		// 				}
-		// 			}else{
-		// 				// masuk log  COMP_CODE  not found
-		// 			}
-				
-		// 	}
-		// }
+					->setEndpoint('block/all')
+					->setHeaders([
+						'Authorization' => 'Bearer '.$token
+					])
+					->get();
 					
-		// return 1;
+		// return $RestAPI;
+		if(count($RestAPI['data']) > 0 ){
+			foreach($RestAPI['data'] as $data){
+
+				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
+					if($afd){
+						try {
+								$block = Block::firstOrNew(array('afdeling_id' => $afd['id'],'block_code' => $data['BLOCK_CODE']));
+								$block->block_name = $data['BLOCK_NAME'];
+								$block->region_code = $data['REGION_CODE'];
+								$block->company_code = $data['COMP_CODE'];
+								$block->estate_code = $data['EST_CODE'];
+								$block->werks = $data['WERKS'];
+								$block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
+								$block->latitude_block = $data['LATITUDE_BLOCK'];
+								$block->longitude_block = $data['LONGITUDE_BLOCK'];
+								$block->save();
+						}catch (\Throwable $e) {
+							//
+						}catch (\Exception $e) {
+							//
+						}
+					}else{
+						// masuk log  COMP_CODE  not found
+					}
+				
+			}
+		}
+					
+		return 1;
 		
 	}
+
+	
+	// public function sync_block()
+	// {
+	// 	$Master = new Master;
+	// 	// $token = $Master->token();
+	// 	$RestAPI = $Master
+	// 				->setEndpoint('block/all/raw')
+	// 				// ->setEndpoint('block/all')
+	// 				// ->setHeaders([
+	// 				// 	'Authorization' => 'Bearer '.$token
+	// 				// ])
+	// 				->get("2");
+	// 			// dd($RestAPI);	
+	// 	return $RestAPI;
+	// 	// if(count($RestAPI['data']) > 0 ){
+	// 	// 	foreach($RestAPI['data'] as $data){
+
+	// 	// 		$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
+	// 	// 			if($afd){
+	// 	// 				try {
+	// 	// 						$block = Block::firstOrNew(array('afdeling_id' => $afd['id'],'block_code' => $data['BLOCK_CODE']));
+	// 	// 						$block->block_name = $data['BLOCK_NAME'];
+	// 	// 						$block->region_code = $data['REGION_CODE'];
+	// 	// 						$block->company_code = $data['COMP_CODE'];
+	// 	// 						$block->estate_code = $data['EST_CODE'];
+	// 	// 						$block->werks = $data['WERKS'];
+	// 	// 						$block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
+	// 	// 						$block->latitude_block = $data['LATITUDE_BLOCK'];
+	// 	// 						$block->longitude_block = $data['LONGITUDE_BLOCK'];
+	// 	// 						$block->save();
+	// 	// 				}catch (\Throwable $e) {
+	// 	// 					//
+	// 	// 				}catch (\Exception $e) {
+	// 	// 					//
+	// 	// 				}
+	// 	// 			}else{
+	// 	// 				// masuk log  COMP_CODE  not found
+	// 	// 			}
+				
+	// 	// 	}
+	// 	// }
+					
+	// 	// return 1;
+		
+	// }
 
 
 	public function sync_comp()
