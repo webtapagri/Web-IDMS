@@ -354,6 +354,7 @@ class RoadController extends Controller
 			//insert into TM_ROAD
 			$esw 				= explode('-',$request->werks);
 			$blck 				= explode('-',$request->block_code);
+			dd($esw,$blck);
 			$data['werks'] 		= $esw[0];
 			$data['estate_code']= $esw[1];	
 			$data['block_code']	= $blck[0];	
