@@ -115,12 +115,25 @@
 
 			<form action="{{ route('history.road_status_update') }}" method="post" class="form-horizontal">
 				@csrf
+
+				
+				@if ($errors->any())
+					<div class="alert alert-danger no-border">
+						Terdapat error:
+						<ul>
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						</ul>
+					</div>
+				@endif
+
 				<input type="hidden" id="rc_id" name="road_id">
 				<div class="modal-body">
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Road Status</label>
 						<div class="col-sm-9">
-							<select data-placeholder="Select Road Status" name="status_id" id="status_id"  class="form-control select-clear status_id" data-fouc>
+							<select required data-placeholder="Select Road Status" name="status_id" id="status_id"  class="form-control select-clear status_id" data-fouc>
 								<option value=""></option>
 							</select>
 						</div>
@@ -128,7 +141,7 @@
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Road Category</label>
 						<div class="col-sm-9">
-							<select data-placeholder="Select Road Category" name="category_id" id="category_id"  class="form-control select-clear category_id" data-fouc>
+							<select required data-placeholder="Select Road Category" name="category_id" id="category_id"  class="form-control select-clear category_id" data-fouc>
 								<option value=""></option>
 							</select>
 						</div>
