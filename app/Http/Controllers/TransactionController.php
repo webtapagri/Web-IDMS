@@ -190,12 +190,13 @@ class TransactionController extends Controller
 			$stat = RoadStatus::find($request->status_id);
 
 			$RS = Road::find($request->road_id);
-			$BL = Block::where('block_code',$RS->block_code)->first();
+			$BL = Block::where('block_code',$RS->block_code)->where('werks', $RS->werks)->first();
+			
 			//insert into TM_ROAD
 			$company 			= $RS->company_code;
 			$estate 			= $RS->estate_code;
 			$blc 				= $BL->block_name;
-			$blck 				= $BL->block_code;
+			$blck 				= $RS->block_code;
 			
 			$road_code			= $company.$estate.$blck.$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
 			$road_name			= $blc.$cat->category_initial.$request->segment;
