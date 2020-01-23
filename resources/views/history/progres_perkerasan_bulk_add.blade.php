@@ -227,6 +227,7 @@ function save(){
 					HoldOff();
 				},
 				headers: {
+					"Access-Control-Allow-Origin":"*",
 					"X-CSRF-TOKEN": "{{ csrf_token() }}"
 				}
 			}).done(function(rsp){
