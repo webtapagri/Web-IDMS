@@ -27,7 +27,7 @@
 	<div class="card-header header-elements-inline">
 		@if($access['create']=='1')
 		 
-		<a href="{{ route('history.progres_perkerasan_bulk_add') }}">
+		<a href="{{ route('history.progres_perkerasan_bulkadd') }}">
 			<button 
 				data-toggle="modal"
 				type="button" class="btn bg-teal-400 btn-labeled btn-labeled-left"><b><i class="icon-plus3"></i></b> 
