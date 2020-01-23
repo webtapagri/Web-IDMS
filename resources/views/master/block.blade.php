@@ -145,7 +145,7 @@ function loadGrid(){
 					{ 
 						orderable: false,
 						width: 250,
-						targets: [ 3 ]
+						targets: [ 4 ]
 					},
 					{ 
 						orderable: false,
