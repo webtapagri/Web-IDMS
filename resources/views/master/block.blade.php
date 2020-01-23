@@ -62,6 +62,8 @@
 				<th>Company Name</th>
 				<th>BA Code</th>
 				<th>BA Afdeling Block Code</th>
+				<th>Start Valid</th>
+				<th>End Valid</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -72,7 +74,9 @@
 				<th>Region Code</th>
 				<th>Company Name</th>
 				<th>BA Code</th>
-				<th>BA Afdeling Code</th>
+				<th>BA Afdeling Block Code</th>
+				<th>Start Valid</th>
+				<th>End Valid</th>
 			</tr>
 		</tfoot>
 	</table>
@@ -175,10 +179,12 @@ function loadGrid(){
             { data: 'company_name', 		name: 'company_name' },
             { data: 'werks', 		name: 'werks' },
             { data: 'werks_afd_block_code', 		name: 'werks_afd_block_code' },
+            { data: 'start_valid', 		name: 'start_valid' },
+            { data: 'end_valid', 		name: 'end_valid' },
         ],
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k > 0 && k < 7){
+				if(k > 0 && k < 9){
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())
