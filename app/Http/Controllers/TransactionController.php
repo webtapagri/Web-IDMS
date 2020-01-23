@@ -28,6 +28,14 @@ class TransactionController extends Controller
 		return view('history.progres_perkerasan', compact('access','data'));
 	}
 	
+    public function progres_perkerasan_bulk_add(Request $request)
+	{
+		$access = access($request,'history/progres-perkerasan');
+		$back = 'history.progres_perkerasan_bulk_add';
+		$data['ctree'] = '/history/progres-perkerasan';
+		return view('history.progres_perkerasan_bulk_add', compact('access','data'));
+	}
+	
 	public function progres_perkerasan_datatables(Request $request)
 	{
 		$req = $request->all();
