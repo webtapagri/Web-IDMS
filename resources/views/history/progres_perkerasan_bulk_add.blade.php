@@ -214,9 +214,10 @@ HotContextMenu = function() {
 
 
 function save(){
+	var tp = 'post';
 	$.ajax({
-				type: 'post',
-				url: "{{ URL::to('history/progres-perkerasan/bulk-save') }}/",
+				type: tp,
+				url: "{{ URL::to('history/progres-perkerasan/bulk-saves') }}/",
 				data: hot_context_copy_init.getData(),
 				cache:false,
 				beforeSend:function(){
@@ -236,7 +237,6 @@ function save(){
 					
 				// }
 			}).fail(function(errors) {
-				
 				console.log(errors.responseText)
 				alert("Gagal Terhubung ke Server");
 				
