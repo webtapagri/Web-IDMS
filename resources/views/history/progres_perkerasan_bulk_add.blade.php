@@ -279,7 +279,7 @@ function save(){
 			});
 			
 			$.ajax({
-				type: 'get',
+				type: 'post',
 				crossDomain: true,
 				url: "{{ URL::to('history/progres-perkerasan/bulk-saves') }}/",
 				data: { data: dataFix },
@@ -296,7 +296,8 @@ function save(){
 					window.onbeforeunload = null
 				},
 				headers: {
-					"X-CSRF-TOKEN": "{{ csrf_token() }}"
+					"X-CSRF-TOKEN": "{{ csrf_token() }}",
+					"Access-Control-Allow-Origin":"*",
 				}
 			}).done(function(rsp){
 				if(rsp.code==200){
@@ -311,7 +312,12 @@ function save(){
 						$('.success').removeClass('d-none');
 						$.each(cont.success, (k,v)=>{
 							$('.success_area').append('Berhasil memproses Road code: ');
-							$('.success_area').append( v+' ' );
+							if(k>0){
+								let kom = ','
+							}else{
+								let kom = '';
+							}
+							$('.success_area').append( v+kom+' ' );
 						})
 					}
 				}else{
