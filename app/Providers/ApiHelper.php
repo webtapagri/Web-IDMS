@@ -18,7 +18,8 @@ class ApiHelper extends ServiceProvider
             'Authorization' => 'Bearer e8NDkyjDgqvapG5XnIH6nVgq3QJTkwcTg6MpRlYVRpn3oOojoSmZaV54bYug6XfUfTQzmX37XzLoMEHLSNYqV53NuT2PcHFblFFi'
         );
         
-        $api = "http://149.129.213.146:8080/api/";
+        // $api = "http://149.129.213.146:8080/api/";
+        $api = "http://app.tap-agri.com/mobileinspectiondev/ins-msa-dev-hectarestatement/api/v2.0/";
         $ldap = "http://tap-ldapdev.tap-agri.com/";
             
         if (!empty($param['host'])) {

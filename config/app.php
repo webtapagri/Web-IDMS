@@ -190,7 +190,6 @@ return [
 		//Intervention\Image\ImageServiceProvider::class,
 		Yajra\DataTables\DataTablesServiceProvider::class,
         App\Providers\ResponseServiceProvider::class,
-        App\Services\Validation\ValidationServiceProvider::class,
 
     ],
 
