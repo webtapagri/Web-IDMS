@@ -279,7 +279,7 @@ function save(){
 			});
 			
 			$.ajax({
-				type: 'post',
+				type: 'get',
 				crossDomain: true,
 				url: "{{ URL::to('history/progres-perkerasan/bulk-saves') }}/",
 				data: { data: dataFix },
@@ -308,10 +308,10 @@ function save(){
 						})
 					}
 					if(cont.success.length > 0){
-						$('.error').removeClass('d-none');
+						$('.success').removeClass('d-none');
 						$.each(cont.success, (k,v)=>{
 							$('.success_area').append('Berhasil memproses Road code: ');
-							$('.success_area').append( v.value );
+							$('.success_area').append( v+' ' );
 						})
 					}
 				}else{
