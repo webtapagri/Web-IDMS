@@ -71,66 +71,22 @@ class MasterController extends Controller
 		
 	}
 
-	// public function sync_block()
-	// {
-	// 	// $Master = new Master;
-	// 	// $token = $Master->token();
-	// 	$RestAPI = API::exec(array(
-	// 		'request' => 'GET',
-	// 		'host' => 'api',
-	// 		'method' => "block/all/raw/", 
-	// 	));
-	// 	// dd($RestAPI);
-	// 	if(count($RestAPI['data']) > 0 ){
-	// 		foreach($RestAPI['data'] as $data){
-
-	// 			$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
-	// 				if($afd){
-	// 					try {
-	// 							$block = Block::firstOrNew(array('afdeling_id' => $afd['id'],'block_code' => $data['BLOCK_CODE']));
-	// 							$block->block_name = $data['BLOCK_NAME'];
-	// 							$block->region_code = $data['REGION_CODE'];
-	// 							$block->company_code = $data['COMP_CODE'];
-	// 							$block->estate_code = $data['EST_CODE'];
-	// 							$block->werks = $data['WERKS'];
-	// 							$block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
-	// 							$block->latitude_block = $data['LATITUDE_BLOCK'];
-	// 							$block->longitude_block = $data['LONGITUDE_BLOCK'];
-	// 							$block->start_valid = DateTime::createFromFormat('Ymd', $data['START_VALID'])->format('Y-m-d');
-	// 							$block->end_valid = DateTime::createFromFormat('Ymd', $data['END_VALID'])->format('Y-m-d');
-	// 							// $block->save();
-	// 						dd($block);
-	// 					}catch (\Throwable $e) {
-	// 						//
-	// 					}catch (\Exception $e) {
-	// 						//
-	// 					}
-	// 				}else{
-	// 					// masuk log  COMP_CODE  not found
-	// 				}
-				
-	// 		}
-	// 	}
-					
-	// 	return 1;
-		
-	// }
-
 	public function sync_block()
 	{
-		$Master = new Master;
-		$token = $Master->token();
-		$RestAPI = $Master
-					->setEndpoint('block/all')
-					->setHeaders([
-						'Authorization' => 'Bearer '.$token
-					])
-					->get();
-					
-		// return $RestAPI;
-		if(count($RestAPI['data']) > 0 ){
-			foreach($RestAPI['data'] as $data){
-
+		// $Master = new Master;
+		// $token = $Master->token();
+		$RestAPI = API::exec(array(
+			'request' => 'GET',
+			'host' => 'api',
+			'method' => "block/all/raw/", 
+		));
+		// $RestAPI->data;
+		// dd($RestAPI);
+		if(count($RestAPI->data) > 0 ){
+			// 	if(count($RestAPI['data']) > 0 ){
+			// 		foreach($RestAPI['data'] as $data){
+			$d = json_decode(json_encode($RestAPI->data), true);
+			foreach( $d as $data){
 				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
 					if($afd){
 						try {
@@ -143,6 +99,8 @@ class MasterController extends Controller
 								$block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
 								$block->latitude_block = $data['LATITUDE_BLOCK'];
 								$block->longitude_block = $data['LONGITUDE_BLOCK'];
+								$block->start_valid = date("Y-m-d", strtotime($data['START_VALID']));
+								$block->end_valid = date("Y-m-d", strtotime($data['END_VALID']));
 								$block->save();
 						}catch (\Throwable $e) {
 							//
@@ -155,7 +113,6 @@ class MasterController extends Controller
 				
 			}
 		}
-					
 		return 1;
 		
 	}

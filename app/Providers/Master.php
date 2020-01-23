@@ -39,16 +39,6 @@ class Master extends ServiceProvider
     {
             return config( "restapi.uri" ) . $this->endpoint;
     }
-
-    public function setUri( $uri = "" )
-    {
-        if ($uri != ""){
-            return config( "restapi.uri2" ) . $this->endpoint;
-        }else{
-
-            return config( "restapi.uri" ) . $this->endpoint;
-        }
-    }
     
     public function setEndpoint( $endpoint = "" )
     {
@@ -92,52 +82,13 @@ class Master extends ServiceProvider
         return $methods;
     }
 
-    // public function get()
-    // {
-    //     try {
-			
-    //         $request  = $this->http->request(
-    //             "GET"
-    //             , $this->uri()
-    //             , [
-    //                 "headers" => $this->headers
-    //                 , "query" => $this->query
-    //             ]
-    //         );
-			
-
-    //         $response = json_decode( $request->getBody(), true );
-
-    //     } catch ( ClientException $e ) {
-    //         $body = $e->getResponse()->getBody();
-    //         $rsp = json_decode( $body->getContents(), true );
-	// 		$response = [
-	// 			'code' => '422',
-	// 			'message'=>'json',
-	// 			'contents'=>$rsp
-	// 		];
-    //     } catch ( ServerException $e ) {
-    //         // abort( 500 );
-	// 		$body = $e->getResponse()->getBody();
-	// 		$rsp = $body->getContents();
-	// 		$response = [
-	// 			'code' => '422',
-	// 			'message'=>'html',
-	// 			'contents'=>$rsp
-	// 		];
-    //     }
-
-    //     return $response;
-    // }
-
-    
-    public function get($uri="")
+    public function get()
     {
         try {
 			
             $request  = $this->http->request(
                 "GET"
-                , $this->setUri($uri)
+                , $this->uri()
                 , [
                     "headers" => $this->headers
                     , "query" => $this->query

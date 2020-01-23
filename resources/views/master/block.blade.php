@@ -77,7 +77,6 @@
 		</tfoot>
 	</table>
 </div>
-
 @endsection
 
 @section('my_script')
