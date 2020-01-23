@@ -238,32 +238,8 @@ function save(){
 	hot_context_copy_init.validateCells((isValid)=>{
 		valid = isValid    
 	})
-	if(valid){
-
-			// var $container = $("#hot_context_copy");
-			// var $console = $("#example1console");
-			// var $parent = $container.parent();
-
-	//save handsontable data
-		$.ajax({
-			url: "{{ URL::to('master/road-bulk-save') }}/",
-			data: {"data": hot_context_copy_init.getData()}, //returns all cells' data
-			dataType: 'json',
-			type: 'POST',
-			success: function (res) {
-				if (res.result === 'ok') {
-					$console.text('Data saved');
-				}
-				else {
-					$console.text('Save error');
-				}
-			},
-			error: function () {
-				$console.text('Save error. POST method is not allowed on GitHub Pages. Run this example on your own server to see the success message.');
-			}
-		});
-				
-	}
+	console.log(valid)
+	
 }
 </script>
 @endsection

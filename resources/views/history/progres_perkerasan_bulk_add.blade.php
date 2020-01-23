@@ -29,7 +29,7 @@
 			</div>
 			<div class="col-md-4 text-right">
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
-				<button type="submit" class="btn btn-primary">Simpan</button>
+				<button type="button" class="btn btn-primary save">Simpan</button>
 			</div>
 		</div>
 		<div class="hot-container">
@@ -59,7 +59,7 @@ $(document).ready(()=>{
 		HotContextMenu.init()
 	})
 	
-	$('button[type="submit"]').click(()=>{
+	$('.save').click(()=>{
 		save()
 	})
 	
@@ -214,36 +214,43 @@ HotContextMenu = function() {
 
 
 function save(){
-	var valid
-	hot_context_copy_init.validateCells((isValid)=>{
-		valid = isValid    
-	})
-	if(valid){
-
-			// var $container = $("#hot_context_copy");
-			// var $console = $("#example1console");
-			// var $parent = $container.parent();
-
-	//save handsontable data
-		$.ajax({
-			url: "{{ URL::to('master/road-bulk-save') }}/",
-			data: {"data": hot_context_copy_init.getData()}, //returns all cells' data
-			dataType: 'json',
-			type: 'POST',
-			success: function (res) {
-				if (res.result === 'ok') {
-					$console.text('Data saved');
+	$.ajax({
+				type: 'post',
+				url: "{{ URL::to('history/progres-perkerasan/bulk-save') }}/",
+				data: hot_context_copy_init.getData(),
+				cache:false,
+				beforeSend:function(){
+					HoldOn();
+				},
+				complete:function(){
+					HoldOff();
+				},
+				headers: {
+					"X-CSRF-TOKEN": "{{ csrf_token() }}"
 				}
-				else {
-					$console.text('Save error');
-				}
-			},
-			error: function () {
-				$console.text('Save error. POST method is not allowed on GitHub Pages. Run this example on your own server to see the success message.');
-			}
-		});
+			}).done(function(rsp){
+				console.log(rsp)
+				// if(rsp.code=200){
+					
+				// }else{
+					
+				// }
+			}).fail(function(errors) {
 				
-	}
+				console.log(errors.responseText)
+				alert("Gagal Terhubung ke Server");
+				
+			});
+	// hot_context_copy_init.validateCells((isValid)=>{
+		// if(isValid){
+			// window.onbeforeunload = function() {
+				// return 'Data sedang diproses, apakah anda ingin membatalkan ?';
+			// };
+			
+					
+		// }
+
+	// })
 }
 </script>
 @endsection

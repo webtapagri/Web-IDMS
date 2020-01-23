@@ -35,6 +35,10 @@ class TransactionController extends Controller
 		$data['ctree'] = '/history/progres-perkerasan';
 		return view('history.progres_perkerasan_bulk_add', compact('access','data'));
 	}
+    public function progres_perkerasan_bulk_save(Request $request)
+	{
+		echo 123;die;
+	}
 	
 	public function progres_perkerasan_datatables(Request $request)
 	{
