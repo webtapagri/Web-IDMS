@@ -32,6 +32,24 @@
 				<button type="button" class="btn btn-primary save">Simpan</button>
 			</div>
 		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				<div class="alert error alert-danger alert-dismissible d-none">
+					<button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+					<span class="error_area"></span>
+				</div>
+			</div>
+			
+			<div class="col-12">
+				<div class="alert success alert-success alert-dismissible d-none">
+					<button type="button" class="close" data-dismiss="alert"><span>×</span></button>
+					<span class="success_area"></span>
+				</div>
+			</div>
+		</div>
+		
+		
 		<div class="hot-container">
 			<!-- <pre id="example1console" class="console"></pre>
 			<div id="hot_context_copy" class="handsontable"></div> -->
@@ -106,6 +124,30 @@ HotContextMenu = function() {
 			  callback(true);
 			}
 		}
+		var cekNumYear = function(value,callback){
+			if (value == '' || value === null || typeof(value) == 'string') {
+				callback(false);
+			}
+			else {
+				if(value > 999 && value < 3000){
+					callback(true);
+				}else{
+					callback(false);
+				}
+			}
+		}
+		var cekNumMon = function(value,callback){
+			if (value == '' || value === null || typeof(value) == 'string') {
+				callback(false);
+			}
+			else {
+				if(value > 0 && value < 13){
+					callback(true);
+				}else{
+					callback(false);
+				}
+			}
+		}
 		
 		hot_context_copy_init = new Handsontable(hot_context_copy, {
 				data: car_data,
@@ -140,14 +182,14 @@ HotContextMenu = function() {
 						type: 'numeric',
 						className: 'htLeft',
 						width: 50,
-						validator: cekNum
+						validator: cekNumMon
 					},
 					{
-						data: 'Year',
+						data: 'year',
 						type: 'numeric',
 						className: 'htLeft',
 						width: 50,
-						validator: cekNum
+						validator: cekNumYear
 					},
 				],
 				afterCopy: function(changes) {
@@ -164,6 +206,16 @@ HotContextMenu = function() {
 						if(prop == 'road_name'){
 							new Noty({
 								text: 'Kolom '+prop+' baris ke '+(row+1)+' harus diisi.',
+								type: 'warning'
+							}).show();
+						}else if(prop == 'year'){
+							new Noty({
+								text: 'Format tahun baris ke '+(row+1)+' salah.',
+								type: 'warning'
+							}).show();
+						}else if(prop == 'month'){
+							new Noty({
+								text: 'Format bulan baris ke '+(row+1)+' salah.',
 								type: 'warning'
 							}).show();
 						}else{
@@ -214,44 +266,71 @@ HotContextMenu = function() {
 
 
 function save(){
-	var tp = 'post';
-	$.ajax({
-				type: tp,
+	
+	hot_context_copy_init.validateCells((isValid)=>{
+		if(isValid){
+			window.onbeforeunload = function() {
+				return 'Data sedang diproses, apakah anda ingin membatalkan ?';
+			};
+			
+			let dataFix = [];
+			$.each(hot_context_copy_init.getData(), (k,v)=>{
+				dataFix.push({road_code: v[0], road_name: v[1], length: v[2], month: v[3], year: v[4]})
+			});
+			
+			$.ajax({
+				type: 'post',
+				crossDomain: true,
 				url: "{{ URL::to('history/progres-perkerasan/bulk-saves') }}/",
-				data: hot_context_copy_init.getData(),
+				data: { data: dataFix },
 				cache:false,
 				beforeSend:function(){
 					HoldOn();
+					$('.error').addClass('d-none')
+					$('.error_area').html('')
+					$('.success').addClass('d-none')
+					$('.success_area').html('')
 				},
 				complete:function(){
 					HoldOff();
+					window.onbeforeunload = null
 				},
 				headers: {
+					"X-CSRF-TOKEN": "{{ csrf_token() }}",
 					"Access-Control-Allow-Origin":"*",
-					"X-CSRF-TOKEN": "{{ csrf_token() }}"
 				}
 			}).done(function(rsp){
-				console.log(rsp)
-				// if(rsp.code=200){
-					
-				// }else{
-					
-				// }
+				if(rsp.code==200){
+					let cont = rsp.contents
+					if(cont.error.length > 0){
+						$('.error').removeClass('d-none');
+						$.each(cont.error, (k,v)=>{
+							$('.error_area').append('Road code '+v.value+' at line '+v.line+' error with status <strong>'+v.status+'<strong><br/>');
+						})
+					}
+					if(cont.success.length > 0){
+						$('.success').removeClass('d-none');
+						$.each(cont.success, (k,v)=>{
+							$('.success_area').append('Berhasil memproses Road code: ');
+							if(k>0){
+								let kom = ','
+							}else{
+								let kom = '';
+							}
+							$('.success_area').append( v+kom+' ' );
+						})
+					}
+				}else{
+					alert("Respon error. "+rsp.code+" - "+rsp.contents);
+				}
 			}).fail(function(errors) {
-				console.log(errors.responseText)
+				console.log(errors)
 				alert("Gagal Terhubung ke Server");
 				
-			});
-	// hot_context_copy_init.validateCells((isValid)=>{
-		// if(isValid){
-			// window.onbeforeunload = function() {
-				// return 'Data sedang diproses, apakah anda ingin membatalkan ?';
-			// };
-			
-					
-		// }
+			});		
+		}
 
-	// })
+	})
 }
 </script>
 @endsection

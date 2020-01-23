@@ -10,6 +10,7 @@ use App\Models\RoadPavementProgress;
 use App\Models\TRRoadStatus;
 use App\Models\VListProgressPerkerasan;
 use App\Models\Road;
+use App\Models\RoadLog;
 use App\Models\VRoadLog;
 use App\Models\VRoadStatus;
 use App\Models\RoadStatus;
@@ -18,6 +19,7 @@ use App\Models\Block;
 use App\Http\Requests\RoadStatusChangesRequest;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
+use Illuminate\Support\Arr;
 
 class TransactionController extends Controller
 {
@@ -31,13 +33,67 @@ class TransactionController extends Controller
     public function progres_perkerasan_bulk_add(Request $request)
 	{
 		$access = access($request,'history/progres-perkerasan');
-		$back = 'history.progres_perkerasan_bulk_add';
+		$back = 'history.progres_perkerasan';
 		$data['ctree'] = '/history/progres-perkerasan';
-		return view('history.progres_perkerasan_bulk_add', compact('access','data'));
+		return view('history.progres_perkerasan_bulk_add', compact('access','data','back'));
 	}
     public function progres_perkerasan_bulk_save(Request $request)
 	{
-		echo 123;die;
+		DB::beginTransaction();
+		try{
+			$respon['error'] 	= [];
+			$respon['success'] 	= [];
+			$data = $request->data;
+			
+			if(count($data) > 0){
+				foreach($data as $k=>$dt){
+					//cek road code 
+					$r = Road::where('road_code',$dt['road_code'])->first();
+					if(!$r){
+						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'road_code_not_found'];
+						continue;
+					}
+					
+					//cek length
+					$m_progress 	= RoadPavementProgress::selectRaw('ifnull(sum(length),0) progress')->where('road_id',$r->id)->first()->progress;
+					$m_total_length	= RoadLog::select('total_length')->where('road_id',$r->id)->orderBy('id','desc')->first()->total_length;
+					if( ($m_progress+$dt['length']) > $m_total_length ){
+						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'over_length'];
+						continue;
+					}
+					
+					//cek road status
+					$cek_prod_status = TRRoadStatus::select('status_name')
+								->join('TM_ROAD_STATUS','TM_ROAD_STATUS.id','=','TR_ROAD_STATUS.status_id')
+								->where('road_id',$r->id)
+								->orderBy('TR_ROAD_STATUS.id','desc')
+								->first();
+
+					if($cek_prod_status['status_name'] != 'PRODUKSI'){
+						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'road_status_not_production'];
+						continue;
+					}
+					
+					//fon
+					$disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id]+Arr::except($dt, ['road_code', 'road_name', 'length']) );
+					$disRoad->length 		= $dt['length'];
+					$disRoad->updated_by 	= \Session::get('user_id');
+					$disRoad->save();
+					
+					$respon['success'][] = $dt['road_code'];
+					
+				}
+			}
+			
+		}catch (\Throwable $e) {
+			DB::rollBack();
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+			DB::rollBack();
+            return response()->error('Error',exception_msg($e));
+		}
+		DB::commit();
+		return response()->success('Success', $respon);
 	}
 	
 	public function progres_perkerasan_datatables(Request $request)
