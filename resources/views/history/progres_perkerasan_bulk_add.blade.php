@@ -280,6 +280,7 @@ function save(){
 			
 			$.ajax({
 				type: 'post',
+				crossDomain: true,
 				url: "{{ URL::to('history/progres-perkerasan/bulk-saves') }}/",
 				data: { data: dataFix },
 				cache:false,
