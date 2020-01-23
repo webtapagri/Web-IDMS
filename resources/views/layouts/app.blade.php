@@ -27,7 +27,10 @@
 
 	<!-- Core JS files -->
 	@if(!@$data['alt'])
-	<script src="{{ asset('limitless/global_assets/js/main/jquery.min.js') }}"></script>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
 	<script src="{{ asset('limitless/global_assets/js/main/bootstrap.bundle.min.js') }}"></script>
 	<script src="{{ asset('limitless/global_assets/js/plugins/loaders/blockui.min.js') }}"></script>
 	<script src="{{ asset('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script>
