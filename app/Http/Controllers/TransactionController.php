@@ -30,7 +30,7 @@ class TransactionController extends Controller
 		return view('history.progres_perkerasan', compact('access','data'));
 	}
 	
-    public function progres_perkerasan_bulk_add(Request $request)
+    public function progres_perkerasan_bulkadd(Request $request)
 	{
 		$access = access($request,'history/progres-perkerasan');
 		$back = 'history.progres_perkerasan';
