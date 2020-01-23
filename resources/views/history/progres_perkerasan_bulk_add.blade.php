@@ -296,8 +296,8 @@ function save(){
 					window.onbeforeunload = null
 				},
 				headers: {
-					"X-CSRF-TOKEN": "{{ csrf_token() }}",
 					"Access-Control-Allow-Origin":"*",
+					"X-CSRF-TOKEN": "{{ csrf_token() }}",
 				}
 			}).done(function(rsp){
 				if(rsp.code==200){
