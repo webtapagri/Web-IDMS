@@ -78,7 +78,7 @@
 						<li class="nav-item nav-item-submenu {{ $cls }}">
 							<a href="#" class="nav-link"><i class="{{ $row['module_icon'] }}"></i> <span>{{ $row['module'] }}</span></a>
 
-							<ul class="nav nav-group-sub" data-submenu-title="Starter kit">
+							<ul class="nav nav-group-sub" data-submenu-title="{{ $row['module'] }}">
 								@foreach($row["menu"] as $menu)
 								<li class="nav-item ">
 									<a href="{{ url($menu->url) }}" class="nav-link {{ ( @$data['ctree'] == $menu->url ? 'active':'' ) }}">

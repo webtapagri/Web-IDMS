@@ -29,7 +29,7 @@
 			</div>
 			<div class="col-md-4 text-right">
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
-				<button type="submit" class="btn btn-primary">Simpan</button>
+				<button type="button" class="btn btn-primary save">Simpan</button>
 			</div>
 		</div>
 		<div class="hot-container">
@@ -59,7 +59,7 @@ $(document).ready(()=>{
 		HotContextMenu.init()
 	})
 	
-	$('button[type="submit"]').click(()=>{
+	$('.save').click(()=>{
 		save()
 	})
 	
@@ -82,8 +82,7 @@ HotContextMenu = function() {
 				return;
 			}	
 		var car_data = [
-				{company_code: "", estate_code:"", werks: "", afdeling_code: "", block_code: "", status_id: "", category_id: "", segment: ""
-				, road_code: "", total_length: "", asset_code: ""},
+				{road_code: "", road_name: "", length: "", month: "", year: ""},
 			];
 			
 		var hot_context_copy = document.getElementById('hot_context_copy');
@@ -112,62 +111,43 @@ HotContextMenu = function() {
 				data: car_data,
 				rowHeaders: true,
 				stretchH: 'all',
-				colHeaders: ['Company Code', 'Estate Code', 'Plant', 'Afdeling Code', 'Block Code','Status Code','Category Code','Segment'
-				,'Road Code','Total Length','Asset Code'],
+				colHeaders: ['Road Code', 'Road Name', 'Length (m)', 'Month', 'Year'],
 				columns: [
 					{
-						data: 'company_code',
+						data: 'road_code',
 						type: 'numeric',
 						className: 'htLeft',
 						width: 50,
 						validator: cekNum
 					},
 					{
-						data: 'estate_code',
-						type: 'numeric',
-						validator: cekNum
-					},
-					{
-						data: 'werks',
-						type: 'numeric',
-						validator: cekNum
-					},
-					{
-						data: 'afdeling_code',
+						data: 'road_name',
 						validator: cekString
 					},
 					{
-						data: 'block_code',
-						validator: cekString
-					},
-					{
-						data: 'status_id',
+						data: 'length',
 						type: 'numeric',
+						className: 'htLeft',
+						numericFormat: {
+							// pattern: '0%'
+							pattern: '0'
+						},
+						width: 50,
 						validator: cekNum
 					},
 					{
-						data: 'category_id',
+						data: 'month',
 						type: 'numeric',
+						className: 'htLeft',
+						width: 50,
 						validator: cekNum
 					},
 					{
-						data: 'segment',
+						data: 'Year',
 						type: 'numeric',
+						className: 'htLeft',
+						width: 50,
 						validator: cekNum
-					},
-					{
-						data: 'road_code',
-						type: 'numeric',
-						validator: cekNum
-					},
-					{
-						data: 'total_length',
-						type: 'numeric',
-						validator: cekNum
-					},
-					{
-						data: 'asset_code',
-						validator: cekString
 					},
 				],
 				afterCopy: function(changes) {
@@ -181,7 +161,7 @@ HotContextMenu = function() {
 				},
 				afterValidate: function(isValid, value, row, prop){
 					if(!isValid){
-						if(value == 'afdeling_code' && value == 'block_code'  && value == 'asset_code'){
+						if(prop == 'road_name'){
 							new Noty({
 								text: 'Kolom '+prop+' baris ke '+(row+1)+' harus diisi.',
 								type: 'warning'
@@ -234,12 +214,43 @@ HotContextMenu = function() {
 
 
 function save(){
-	var valid
-	hot_context_copy_init.validateCells((isValid)=>{
-		valid = isValid    
-	})
-	console.log(valid)
-	
+	$.ajax({
+				type: 'post',
+				url: "{{ URL::to('history/progres-perkerasan/bulk-save') }}/",
+				data: hot_context_copy_init.getData(),
+				cache:false,
+				beforeSend:function(){
+					HoldOn();
+				},
+				complete:function(){
+					HoldOff();
+				},
+				headers: {
+					"X-CSRF-TOKEN": "{{ csrf_token() }}"
+				}
+			}).done(function(rsp){
+				console.log(rsp)
+				// if(rsp.code=200){
+					
+				// }else{
+					
+				// }
+			}).fail(function(errors) {
+				
+				console.log(errors.responseText)
+				alert("Gagal Terhubung ke Server");
+				
+			});
+	// hot_context_copy_init.validateCells((isValid)=>{
+		// if(isValid){
+			// window.onbeforeunload = function() {
+				// return 'Data sedang diproses, apakah anda ingin membatalkan ?';
+			// };
+			
+					
+		// }
+
+	// })
 }
 </script>
 @endsection

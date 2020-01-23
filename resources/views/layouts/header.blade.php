@@ -47,7 +47,7 @@
 				<li class="nav-item">
 					
 					@if(@$back)
-					<a href="{{  url()->previous() }}" class="navbar-nav-link d-none d-md-block">
+					<a href="{{  route($back) }}" class="navbar-nav-link d-none d-md-block">
 						<i class="icon-circle-left2"></i> Back
 					</a>
 					@endif

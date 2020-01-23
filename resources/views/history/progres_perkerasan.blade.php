@@ -26,15 +26,15 @@
 <div class="card">
 	<div class="card-header header-elements-inline">
 		@if($access['create']=='1')
-		<!--  
-		<a href="{{ route('master.road_add') }}">
+		 
+		<a href="{{ route('history.progres_perkerasan_bulk_add') }}">
 			<button 
 				data-toggle="modal"
 				type="button" class="btn bg-teal-400 btn-labeled btn-labeled-left"><b><i class="icon-plus3"></i></b> 
 				Tambah
 			</button>
 		</a>
-		-->
+		
 		@endif
 		<div class="header-elements">
 			<div class="list-icons">
