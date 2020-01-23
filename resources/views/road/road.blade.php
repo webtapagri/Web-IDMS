@@ -117,7 +117,7 @@
 					<div class="card-body text-center">
 						<i class="icon-copy icon-3x text-primary-600 mt-1 mb-3"></i>
 						<h6 class="font-weight-semibold">Copy Paste</h6>
-						<p class="mb-3">Menambahkan data secara <i>copy paste</i></p>
+						<p class="mb-3">Menambahkan data <i>opening balance</i> secara  <i>copy paste</i></p>
 						<a href="{{ route('master.road_bulk_add') }}">Pilih &rarr;</a>
 					</div>
 				</div>

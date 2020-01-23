@@ -19,7 +19,7 @@ if (! function_exists('clean')) {
 if (!function_exists('throwable_msg')) {
 	function throwable_msg($e)
 	{
-		return 'Terjadi kesalahan. Error messages -> '.substr($e->getMessage(),0,500);
+		return 'Error messages: '.substr($e->getMessage(),0,500);
 	}
 }
 

@@ -339,7 +339,7 @@ class RoadController extends Controller
 	public function road_add(Request $request)
 	{
 		$data['ctree'] = '/master/road';
-		$back = true;
+		$back = 'master.road';
 		return view('road.road_add', compact('data','back'));
 	}
 	
@@ -359,6 +359,13 @@ class RoadController extends Controller
 			$data['block_code']	= $blck[0];	
 			$data['road_code']	= $request->company_code.$esw[1].$blck[0].$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
 			$data['road_name']	= $blck[1].$cat->category_initial.$request->segment;
+			
+				//cek road_code is exist ?
+				$ceki = Road::where('road_code',$data['road_code'])->count();
+				if($ceki > 0){
+					throw new \Exception('Road code sudah terdaftar.');
+				}
+			
 			$road 				= Road::create($request->except('werks','status_id','category_id','total_length','asset_code','block_code')+$data);
 						
 			//insert into TR_ROAD_LOG
@@ -431,7 +438,7 @@ class RoadController extends Controller
 	public function road_bulk_add()
 	{
 		$data['ctree'] = '/master/road';
-		$back = true;
+		$back = 'master.road';
 		return view('road.road_bulk_add', compact('data','back'));
 	}
 	
