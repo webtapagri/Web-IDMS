@@ -77,7 +77,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		
 		Route::get('/progres-perkerasan', 	'TransactionController@progres_perkerasan')->name('history.progres_perkerasan');
 		Route::get('/progres-perkerasan/bulk-add', 	'TransactionController@progres_perkerasan_bulk_add')->name('history.progres_perkerasan_bulk_add');
-		Route::post('/progres-perkerasan/bulk-saves', 	'TransactionController@progres_perkerasan_bulk_save')->name('history.progres_perkerasan_bulk_save');
+		Route::post('/progres-perkerasan/bulksave', 	'TransactionController@progres_perkerasan_bulksave')->name('history.progres_perkerasan_bulksave');
 		Route::get('/progres-perkerasan-datatables', 	'TransactionController@progres_perkerasan_datatables')->name('history.progres_perkerasan_datatables');
 		Route::post('/progres-perkerasan-update', 	'TransactionController@progres_perkerasan_update')->name('history.progres_perkerasan_update');
 		
