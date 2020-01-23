@@ -279,9 +279,9 @@ function save(){
 			});
 			
 			$.ajax({
-				type: 'post',
-				crossDomain: true,
+				// crossDomain: true,
 				url: "{{ URL::to('history/progres-perkerasan/bulksave') }}/",
+				method : "POST", type: "POST",
 				data: { data: dataFix },
 				cache:false,
 				beforeSend:function(){
