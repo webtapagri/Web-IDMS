@@ -356,6 +356,7 @@ class RoadController extends Controller
 			$data['werks'] 		= $esw[0];
 			$data['estate_code']= $esw[1];
 			
+			$bcc = $request->block_code;
 			if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
 				
 				$getGD = GeneralData::select('description_code','description')->join('TM_COMPANY','TM_COMPANY.company_code','=','TM_GENERAL_DATA.description_code')
@@ -366,10 +367,10 @@ class RoadController extends Controller
 					throw new \Exception('Company code belum didaftarkan di General Data.');
 				}
 				
-				$request->block_code = $getGD->description_code.'-'.$getGD->description;
+				$bcc = $getGD->description_code.'-'.$getGD->description;
 			}
 			
-			$blck 				= explode('-',$request->block_code);
+			$blck 				= explode('-',$bcc);
 			$data['block_code']	= $blck[0];	
 			$data['road_code']	= $request->company_code.$esw[1].$blck[0].$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
 			$data['road_name']	= $blck[1].$cat->category_initial.$request->segment;	
