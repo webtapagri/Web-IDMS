@@ -312,15 +312,11 @@ function save(){
 						}
 						if(cont.success.length > 0){
 							$('.success').removeClass('d-none');
-							var kom = '';
 							$('.success_area').append('Berhasil memproses Road code: ');
 							var succ = cont.success.filter( distinct )
 							$.each(succ, (k,v)=>{
 								
-								if(k>0 && (k+1) < succ.length){
-									kom = ','
-								}
-								$('.success_area').append( v+kom+' ' );
+								$('.success_area').append( v+' <br/>' );
 							})
 						}
 					}else{
