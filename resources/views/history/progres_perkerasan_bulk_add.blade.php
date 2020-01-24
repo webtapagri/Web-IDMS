@@ -313,10 +313,11 @@ function save(){
 						if(cont.success.length > 0){
 							$('.success').removeClass('d-none');
 							var kom = '';
-							
-							$.each(cont.success.filter( distinct ), (k,v)=>{
-								$('.success_area').append('Berhasil memproses Road code: ');
-								if(k>0){
+							$('.success_area').append('Berhasil memproses Road code: ');
+							var succ = cont.success.filter( distinct )
+							$.each(succ, (k,v)=>{
+								
+								if(k>0 && (k+1) != succ.length){
 									kom = ','
 								}
 								$('.success_area').append( v+kom+' ' );
