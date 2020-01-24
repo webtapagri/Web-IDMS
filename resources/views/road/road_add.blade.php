@@ -63,46 +63,12 @@
 		<form action="{{ route('master.road_save') }}" method="post" class="form-horizontal">
 			@csrf
 			<div class="modal-body">
-				<div class="form-group row">
-					<label class="col-form-label col-sm-3">Company</label>
-					<div class="col-sm-9">
-						<select data-placeholder="Select a Company" name="company_code"  class="form-control select-clear company_code" data-fouc>
-							<option value=""></option>
-						</select>
-					</div>
-				</div>
 				
-				<div class="form-group row">
-					<label class="col-form-label col-sm-3">Estate</label>
-					<div class="col-sm-9">
-						<select  data-placeholder="Select a Estate" name="werks"  class="form-control select-clear estate_code" data-fouc>
-							<option value=""></option>
-						</select>
-					</div>
-				</div>
-				
-				<div class="form-group row">
-					<label class="col-form-label col-sm-3">Afdeling</label>
-					<div class="col-sm-9">
-						<select  data-placeholder="Select Afdeling" name="afdeling_code"  class="form-control select-clear afdeling_code" data-fouc>
-							<option value=""></option>
-						</select>
-					</div>
-				</div>
-				
-				<div class="form-group row">
-					<label class="col-form-label col-sm-3">Block</label>
-					<div class="col-sm-9">
-						<select data-placeholder="Select Block" name="block_code"  class="form-control select-clear block_code" data-fouc>
-							<option value=""></option>
-						</select>
-					</div>
-				</div>
 				
 				<div class="form-group row">
 					<label class="col-form-label col-sm-3">Road Status</label>
 					<div class="col-sm-9">
-						<select data-placeholder="Select Road Status" name="status_id"  class="form-control select-clear status_id" data-fouc>
+						<select required data-placeholder="Select Road Status" name="status_id"  class="form-control select-clear status_id" data-fouc>
 							<option value=""></option>
 						</select>
 					</div>
@@ -111,7 +77,43 @@
 				<div class="form-group row">
 					<label class="col-form-label col-sm-3">Road Category</label>
 					<div class="col-sm-9">
-						<select data-placeholder="Select Category" name="category_id"  class="form-control select-clear category_id" data-fouc>
+						<select required data-placeholder="Select Category" name="category_id"  class="form-control select-clear category_id" data-fouc>
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label class="col-form-label col-sm-3">Company</label>
+					<div class="col-sm-9">
+						<select required data-placeholder="Select a Company" name="company_code"  class="form-control select-clear company_code" data-fouc>
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label class="col-form-label col-sm-3">Estate</label>
+					<div class="col-sm-9">
+						<select required data-placeholder="Select a Estate" name="werks"  class="form-control select-clear estate_code" data-fouc>
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group row">
+					<label class="col-form-label col-sm-3">Afdeling</label>
+					<div class="col-sm-9">
+						<select required data-placeholder="Select Afdeling" name="afdeling_code"  class="form-control select-clear afdeling_code" data-fouc>
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="form-group row fg-block d-none">
+					<label class="col-form-label col-sm-3">Block</label>
+					<div class="col-sm-9">
+						<select required data-placeholder="Select Block" name="block_code"  class="form-control select-clear block_code" data-fouc>
 							<option value=""></option>
 						</select>
 					</div>
@@ -187,6 +189,18 @@ $(document).ready(()=>{
 		allowClear: true
 	});
 	formRequiredMark()
+	
+	$('select[name="category_id"]').change(()=>{
+		let v = $('select[name="category_id"]').val()    
+		let htm = $('select[name="category_id"]').find('option[value='+v+']').html() 
+		if( $.inArray( htm.toUpperCase(), [ "JALAN AKSES", "JALAN DESA", "JALAN NEGARA" ] ) != -1 ){
+			$('.block_code').removeAttr('required')
+			$('.fg-block').addClass('d-none')
+		}else{
+			$('.block_code').attr('required','required')
+			$('.fg-block').removeClass('d-none')
+		}
+	})
 });
 
 $('.company_code').change(()=>{
