@@ -184,6 +184,7 @@ return array(
     'App\\Models\\Block' => $baseDir . '/app/Models/Block.php',
     'App\\Models\\Company' => $baseDir . '/app/Models/Company.php',
     'App\\Models\\Estate' => $baseDir . '/app/Models/Estate.php',
+    'App\\Models\\GeneralData' => $baseDir . '/app/Models/GeneralData.php',
     'App\\Models\\Road' => $baseDir . '/app/Models/Road.php',
     'App\\Models\\RoadCategory' => $baseDir . '/app/Models/RoadCategory.php',
     'App\\Models\\RoadLog' => $baseDir . '/app/Models/RoadLog.php',
