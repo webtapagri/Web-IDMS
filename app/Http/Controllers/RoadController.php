@@ -365,7 +365,7 @@ class RoadController extends Controller
 								->first();
 								
 				if(!$getGD){
-					throw new \Exception('Company code belum didaftarkan di General Data.');
+					throw new \Exception('Company code belum didaftarkan di <a href="'.URL::to('setting/general-data').'">General Data</a>.');
 				}
 				
 				$bcc = $getGD->description_code.'-'.$getGD->description;

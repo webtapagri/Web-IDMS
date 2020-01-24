@@ -45,7 +45,7 @@
 		@if (\Session::has('error'))
 			<div class="alert alert-warning no-border">
 				<button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
-				<span class="text-semibold">Error!</span> {{ \Session::get('error') }}
+				<span class="text-semibold">Error!</span> {!! \Session::get('error') !!}
 			</div>
 		@endif
 		
