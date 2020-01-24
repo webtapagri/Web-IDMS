@@ -366,7 +366,7 @@ class RoadController extends Controller
 					throw new \Exception('Company code belum didaftarkan di General Data.');
 				}
 				
-				$request->block_code = $getGD->description_code.''.$getGD->description;
+				$request->block_code = $getGD->description_code.'-'.$getGD->description;
 			}
 			
 			$blck 				= explode('-',$request->block_code);
