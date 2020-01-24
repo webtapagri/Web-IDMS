@@ -36,14 +36,12 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="alert error alert-danger alert-dismissible d-none">
-					<button type="button" class="close" data-dismiss="alert"><span>×</span></button>
 					<span class="error_area"></span>
 				</div>
 			</div>
 			
 			<div class="col-12">
 				<div class="alert success alert-success alert-dismissible d-none">
-					<button type="button" class="close" data-dismiss="alert"><span>×</span></button>
 					<span class="success_area"></span>
 				</div>
 			</div>
