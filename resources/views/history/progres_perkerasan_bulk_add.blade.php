@@ -317,7 +317,7 @@ function save(){
 							var succ = cont.success.filter( distinct )
 							$.each(succ, (k,v)=>{
 								
-								if(k>0 && (k+1) != succ.length){
+								if(k>0 && (k+1) < succ.length){
 									kom = ','
 								}
 								$('.success_area').append( v+kom+' ' );
