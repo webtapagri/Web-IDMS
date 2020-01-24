@@ -309,12 +309,11 @@ function save(){
 						}
 						if(cont.success.length > 0){
 							$('.success').removeClass('d-none');
+							var kom = '';
 							$.each(cont.success, (k,v)=>{
 								$('.success_area').append('Berhasil memproses Road code: ');
 								if(k>0){
-									let kom = ','
-								}else{
-									let kom = '';
+									kom = ','
 								}
 								$('.success_area').append( v+kom+' ' );
 							})
