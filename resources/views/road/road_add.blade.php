@@ -142,7 +142,7 @@
 					<div class="col-sm-9">
 						<input type="number" required name="segment"  min="1" max="9" class="form-control" value="{{ old('segment') }}">
 						<div class="invalid-feedback">
-						  Please set a segment.
+						  Segment not valid.
 						</div>
 					</div>
 				</div>

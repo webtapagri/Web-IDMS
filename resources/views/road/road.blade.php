@@ -63,7 +63,7 @@
 			</div>
 		@endif
 	</div>
-	<table class="table datatable-responsive">
+	<table class="table datatable-responsive table-xs">
 		<thead>
 			<tr>
 				<th>Road Code</th>
@@ -175,6 +175,8 @@
 @section('my_script')
 <script>
 var table
+
+let hl = "{{ \Session::has('success') }}"
 
 $(document).ready(()=>{
 	
@@ -331,6 +333,9 @@ function loadGrid(){
             { data: 'action', 			name: 'action' },
         ],
 		initComplete: function () {
+			if(hl != ''){
+				$($('tbody>tr')[0]).css('background-color','#d0eeff')
+			}
 			this.api().columns().every(function (k) {
 				if(k > -1 && k < 11){
 					var column = this;
