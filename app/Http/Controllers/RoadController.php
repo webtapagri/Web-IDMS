@@ -414,6 +414,7 @@ class RoadController extends Controller
 		
 		DB::commit();
 		\Session::flash('success', 'Berhasil menyimpan data');
+		\Session::flash('hl', 'Highlight');
         return redirect()->route('master.road');
 	}
 	

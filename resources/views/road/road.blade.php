@@ -176,7 +176,7 @@
 <script>
 var table
 
-let hl = "{{ \Session::has('success') }}"
+let hl = "{{ \Session::has('hl') }}"
 
 $(document).ready(()=>{
 	
