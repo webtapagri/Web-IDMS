@@ -75,7 +75,7 @@ class TransactionController extends Controller
 					}
 					
 					//fon
-					$disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id]+Arr::except($dt, ['road_code', 'road_name', 'length']) );
+					$disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id,'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m')]+Arr::except($dt, ['month','road_code', 'road_name', 'length']) );
 					$disRoad->length 		= $dt['length'];
 					$disRoad->updated_by 	= \Session::get('user_id');
 					$disRoad->save();
