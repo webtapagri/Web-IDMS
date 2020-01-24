@@ -312,7 +312,7 @@ function save(){
 						}
 						if(cont.success.length > 0){
 							$('.success').removeClass('d-none');
-							$('.success_area').append('Berhasil memproses Road code: ');
+							$('.success_area').append('Berhasil memproses Road code: <br/>');
 							var succ = cont.success.filter( distinct )
 							$.each(succ, (k,v)=>{
 								
