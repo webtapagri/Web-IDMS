@@ -361,6 +361,7 @@ class RoadController extends Controller
 				
 				$getGD = GeneralData::select('description_code','description')->join('TM_COMPANY','TM_COMPANY.company_code','=','TM_GENERAL_DATA.description_code')
 								->where('general_code','company_initial')
+								->where('TM_COMPANY.company_code',$request->company_code)
 								->first();
 								
 				if(!$getGD){
