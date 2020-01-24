@@ -315,7 +315,7 @@ function save(){
 								if(k>0){
 									kom = ','
 								}
-								$('.success_area').append( v+kom+' ' );
+								$('.success_area').append( v+' line '+v.line+kom+' ' );
 							})
 						}
 					}else{
