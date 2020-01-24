@@ -358,15 +358,15 @@ class RoadController extends Controller
 			
 			if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
 				
-				$getGD = GeneralData::select('general_code','description_code')->join('TM_COMPANY','TM_COMPANY.company_code','=','TM_GENERAL_DATA.general_code')
-								->where('description','COMPINIT')
+				$getGD = GeneralData::select('description_code','description')->join('TM_COMPANY','TM_COMPANY.company_code','=','TM_GENERAL_DATA.description_code')
+								->where('general_code','company_initial')
 								->first();
 								
 				if(!$getGD){
 					throw new \Exception('Company code belum didaftarkan di General Data.');
 				}
 				
-				$request->block_code = $getGD->general_code.''.$getGD->description_code;
+				$request->block_code = $getGD->description_code.''.$getGD->description;
 			}
 			
 			$blck 				= explode('-',$request->block_code);

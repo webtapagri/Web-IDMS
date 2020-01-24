@@ -58,8 +58,22 @@ class GeneralDataController extends Controller
                 FROM TM_GENERAL_DATA
                 WHERE 1=1
         ';
-
-
+		
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			
+		}else{
+			$ww = '';
+			foreach($werks as $k=>$w){
+				if($w != 'All'){
+					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+				}
+			}
+			$sql .= " and (GENERAL_CODE != 'company_initial' or (GENERAL_CODE='company_initial' and DESCRIPTION_CODE in ($ww))) ";
+		}
+		
+		
         if ($request->general_code)
         $sql .= " AND general_code like'%" . $request->general_code . "%'";
 
