@@ -264,6 +264,9 @@ HotContextMenu = function() {
 	}
 }();
 
+function distinct(value, index, self) { 
+    return self.indexOf(value) === index;
+}
 
 function save(){
 	
@@ -310,12 +313,13 @@ function save(){
 						if(cont.success.length > 0){
 							$('.success').removeClass('d-none');
 							var kom = '';
-							$.each(cont.success, (k,v)=>{
+							
+							$.each(cont.success.filter( distinct ), (k,v)=>{
 								$('.success_area').append('Berhasil memproses Road code: ');
 								if(k>0){
 									kom = ','
 								}
-								$('.success_area').append( v+' line '+v.line+kom+' ' );
+								$('.success_area').append( v+kom+' ' );
 							})
 						}
 					}else{
