@@ -60,7 +60,7 @@
 			</div>
 		@endif
 		
-		<form action="{{ route('master.road_save') }}" method="post" class="form-horizontal">
+		<form action="{{ route('master.road_save') }}" method="post" class="form-horizontal needs-validation" novalidate>
 			@csrf
 			<div class="modal-body">
 				
@@ -71,6 +71,9 @@
 						<select required data-placeholder="Select Road Status" name="status_id"  class="form-control select-clear status_id" data-fouc>
 							<option value=""></option>
 						</select>
+						<div class="invalid-feedback">
+						  Please set Status.
+						</div>
 					</div>
 				</div>
 				
@@ -80,6 +83,9 @@
 						<select required data-placeholder="Select Category" name="category_id"  class="form-control select-clear category_id" data-fouc>
 							<option value=""></option>
 						</select>
+						<div class="invalid-feedback">
+						  Please set Category.
+						</div>
 					</div>
 				</div>
 				
@@ -89,6 +95,9 @@
 						<select required data-placeholder="Select a Company" name="company_code"  class="form-control select-clear company_code" data-fouc>
 							<option value=""></option>
 						</select>
+						<div class="invalid-feedback">
+						  Please set Company.
+						</div>
 					</div>
 				</div>
 				
@@ -98,6 +107,9 @@
 						<select required data-placeholder="Select a Estate" name="werks"  class="form-control select-clear estate_code" data-fouc>
 							<option value=""></option>
 						</select>
+						<div class="invalid-feedback">
+						  Please set Estate.
+						</div>
 					</div>
 				</div>
 				
@@ -107,6 +119,9 @@
 						<select required data-placeholder="Select Afdeling" name="afdeling_code"  class="form-control select-clear afdeling_code" data-fouc>
 							<option value=""></option>
 						</select>
+						<div class="invalid-feedback">
+						  Please set Afdeling.
+						</div>
 					</div>
 				</div>
 				
@@ -116,6 +131,9 @@
 						<select required data-placeholder="Select Block" name="block_code"  class="form-control select-clear block_code" data-fouc>
 							<option value=""></option>
 						</select>
+						<div class="invalid-feedback">
+						  Please set Block.
+						</div>
 					</div>
 				</div>
 				
@@ -123,6 +141,9 @@
 					<label class="col-form-label col-sm-3">Segment</label>
 					<div class="col-sm-9">
 						<input type="number" required name="segment"  min="1" max="9" class="form-control" value="{{ old('segment') }}">
+						<div class="invalid-feedback">
+						  Please set a segment.
+						</div>
 					</div>
 				</div>
 				
@@ -130,6 +151,9 @@
 					<label class="col-form-label col-sm-3">Length (m)</label>
 					<div class="col-sm-9">
 						<input type="number" required name="total_length" min="1"  class="form-control" value="{{ old('total_length') }}">
+						<div class="invalid-feedback">
+						  Please set a length.
+						</div>
 					</div>
 				</div>
 				
@@ -175,6 +199,24 @@
 @section('my_script')
 <script>
 var table
+
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
 
 $(document).ready(()=>{
 	Ladda.bind('.btn-ladda-spinner', {
