@@ -90,7 +90,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 	});
 	
 	Route::group(['prefix'=>'report'], function () {
-		Route::get('/road', 	'ReportsController@index')->name('report.road');
+		Route::get('/road', 	'ReportsController@road')->name('report.road');
 		Route::get('/road-datatables', 	'ReportsController@road_datatables')->name('report.road_datatables');
 	});
 

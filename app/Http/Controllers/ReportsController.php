@@ -16,7 +16,7 @@ use Carbon\Carbon;
 class ReportsController extends Controller
 {
     //
-    public function index(Request $request)
+    public function road(Request $request)
 	{
 		$access = AccessRight::roleaccess();
 		$title = 'Road Status list';
