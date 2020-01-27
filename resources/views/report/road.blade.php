@@ -210,14 +210,15 @@ function loadGrid(){
             buttons: {
                         buttons: [
                             {   extend: 'excel', 
-                                text : '<i class="icon-file-excel"></i> Export to Excel',
-                                className: 'btn bg-teal-400 btn-labeled btexcel',
                                 exportOptions: {
                                                 modifier: {
                                                 page: 'all',
                                                 search: 'none'   
                                                 }
                                 },
+                                text : '<i class="icon-file-excel"></i> Export to Excel',
+                                className: 'btn bg-teal-400 btn-labeled btexcel',
+                                
                              }
                         ]
                     },
