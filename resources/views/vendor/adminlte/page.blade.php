@@ -157,8 +157,7 @@
                         </span>
                     </a>
                     <ul class="treeview-menu" style="display:block">
-                        @foreach(Session('menus') as $row)
-
+                        @foreach(session('menus') as $row)
                         <li class="treeview {{ (@$data['ctree_mod'] == $row['module'] ? 'active':'') }}">
                             <a href="#">
                                 <i class="{{ $row['module_icon'] }}"></i> <span>{{ $row['module'] }}</span>
