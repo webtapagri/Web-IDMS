@@ -24,6 +24,7 @@
         "simplesoftwareio/simple-qrcode": "~2",
         "spipu/html2pdf": "^5.2",
         "vyuldashev/xml-to-array": "^1.0",
+        "yajra/laravel-datatables-buttons": "^4.8",
         "yajra/laravel-datatables-oracle": "8.*"
     },
     "require-dev": {
