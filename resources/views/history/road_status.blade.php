@@ -501,6 +501,10 @@ function loadGridDetail(url){
 						orderable: false,
 						targets: [ 0,1,2,3,4 ]
 					},
+					{ 
+						class: 'alpha-primary',
+						targets: [ 3]
+					},
 				],
 				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {

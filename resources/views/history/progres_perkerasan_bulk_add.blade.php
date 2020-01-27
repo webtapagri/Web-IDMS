@@ -36,14 +36,12 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="alert error alert-danger alert-dismissible d-none">
-					<button type="button" class="close" data-dismiss="alert"><span>×</span></button>
 					<span class="error_area"></span>
 				</div>
 			</div>
 			
 			<div class="col-12">
 				<div class="alert success alert-success alert-dismissible d-none">
-					<button type="button" class="close" data-dismiss="alert"><span>×</span></button>
 					<span class="success_area"></span>
 				</div>
 			</div>
@@ -264,6 +262,9 @@ HotContextMenu = function() {
 	}
 }();
 
+function distinct(value, index, self) { 
+    return self.indexOf(value) === index;
+}
 
 function save(){
 	
@@ -309,14 +310,11 @@ function save(){
 						}
 						if(cont.success.length > 0){
 							$('.success').removeClass('d-none');
-							$.each(cont.success, (k,v)=>{
-								$('.success_area').append('Berhasil memproses Road code: ');
-								if(k>0){
-									let kom = ','
-								}else{
-									let kom = '';
-								}
-								$('.success_area').append( v+kom+' ' );
+							$('.success_area').append('Berhasil memproses Road code: <br/>');
+							var succ = cont.success.filter( distinct )
+							$.each(succ, (k,v)=>{
+								
+								$('.success_area').append( v+' <br/>' );
 							})
 						}
 					}else{
