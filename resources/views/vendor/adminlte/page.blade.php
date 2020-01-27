@@ -157,7 +157,7 @@
                         </span>
                     </a>
                     <ul class="treeview-menu" style="display:block">
-                        @foreach(session('menus') as $row)
+                        @foreach(Session('menus') as $row)
 
                         <li class="treeview {{ (@$data['ctree_mod'] == $row['module'] ? 'active':'') }}">
                             <a href="#">
