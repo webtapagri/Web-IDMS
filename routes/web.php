@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\MaterialController;
+use Yajra\DataTables\Facades\DataTables;
+use App\DataTables\RoadDataTable;
 
 Auth::routes();
 
@@ -85,7 +87,16 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::get('/road-status-datatables', 	'TransactionController@road_status_datatables')->name('history.road_status_datatables');
 		Route::post('/road-status-update', 	'TransactionController@road_status_update')->name('history.road_status_update');
 		
-    });
+	});
+	
+	Route::group(['prefix'=>'report'], function () {
+		Route::get('/road', 	'ReportsController@road')->name('report.road');
+		Route::get('/road-datatables', 	'ReportsController@road_datatables')->name('report.road_datatables');
+	});
+
+	// Route::get('/report/road', function(RoadDataTable $dataTable) {
+	// 	return $dataTable->render('report.road');
+	// });
 
 });
 
@@ -276,9 +287,9 @@ Route::get('get-select_user_resume', ['as' => 'get.select_user_resume', 'uses' =
 Route::post('/resume/user-submit','ResumeController@user_submit');
 
 /* ALL REPORT */
-Route::get('/report/list-asset', 'ReportController@list_asset');
-Route::post('/report/list-asset/submit', 'ReportController@list_asset_submit');
-Route::post('/report/list-asset/download', 'ReportController@list_asset_download');
+// Route::get('/report/list-asset', 'ReportController@list_asset');
+// Route::post('/report/list-asset/submit', 'ReportController@list_asset_submit');
+// Route::post('/report/list-asset/download', 'ReportController@list_asset_download');
 
 /* DISPOSAL */
 Route::resource('/disposal-penjualan', 'DisposalController');

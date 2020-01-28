@@ -165,6 +165,7 @@ return [
         Illuminate\View\ViewServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         NahidulHasan\Html2pdf\Html2pdfServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -189,6 +190,7 @@ return [
         App\Providers\Master::class,
 		//Intervention\Image\ImageServiceProvider::class,
 		Yajra\DataTables\DataTablesServiceProvider::class,
+        Yajra\DataTables\ButtonsServiceProvider::class,
         App\Providers\ResponseServiceProvider::class,
 
     ],
@@ -246,6 +248,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Pdf'  => NahidulHasan\Html2pdf\Facades\Pdf::class,
 		//'Image' => Intervention\Image\Facades\Image::class,
-		'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class, 
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 ];
