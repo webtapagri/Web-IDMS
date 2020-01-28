@@ -9,8 +9,8 @@
 @section('theme_js')
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
-<script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/fixed_columns.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/fixed_columns.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/extensions/jquery_ui/interactions.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
@@ -337,6 +337,7 @@ function loadStatus(){
 }
 
 function loadGrid(){
+	var donlot = false
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: false,
@@ -355,7 +356,37 @@ function loadGrid(){
 						"targets": 0 
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Bfl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				buttons: [
+						{
+							extend: 'csv',
+							className: 'btn btn-light d-none toCsv',
+							text: '<i class="icon-file-spreadsheet mr-2"></i> CSV',
+							extension: '.csv',
+							exportOptions: {
+								columns: [ 0,1,2,3,4,6,7,8,9,10,11 ]
+							},
+						},
+						{
+							text: 'Download CSV',
+							className: 'btn bg-teal-400',
+							action: function(e, dt, node, config) {
+								
+								dt.page.len( -1 ).draw()
+								
+								donlot = true
+															
+							}
+						}
+				],
+				"drawCallback": function( settings ) {
+					// var api = this.api();
+					if(donlot){
+						$('.toCsv').click()
+						donlot = false
+					}
+					// console.log( api.rows( {page:'current'} ).data() );
+				},
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -367,20 +398,6 @@ function loadGrid(){
 	
 
 	table = $('.datatable-responsive').DataTable( {
-		buttons: [
-			{
-				text: 'Custom button',
-				className: 'btn bg-teal-400',
-				action: function(e, dt, node, config) {
-					swal({
-						title: "Good job!",
-						text: "Custom button activated",
-						confirmButtonColor: "#66BB6A",
-						type: "success"
-					});
-				}
-			}
-		],
         processing: true,
 		'processing': true,
         serverSide: true,

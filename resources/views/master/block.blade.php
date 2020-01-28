@@ -5,6 +5,7 @@
 @section('theme_js')
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
 
 
@@ -138,6 +139,7 @@ function sync(dis){
 }
 
 function loadGrid(){
+	var donlot = false
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -156,7 +158,35 @@ function loadGrid(){
 						targets: [ 0 ]
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Bfl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				buttons: [
+					   {
+							extend: 'csv',
+							className: 'btn btn-light d-none toCsv',
+							text: '<i class="icon-file-spreadsheet mr-2"></i> CSV',
+							extension: '.csv',
+						},
+						{
+							text: 'Download CSV',
+							className: 'btn bg-teal-400',
+							action: function(e, dt, node, config) {
+								
+								dt.page.len( -1 ).draw()
+								
+								donlot = true
+															
+							}
+						}
+					],
+				"drawCallback": function( settings ) {
+					// var api = this.api();
+					if(donlot){
+						$('.toCsv').click()
+						donlot = false
+					}
+					// console.log( api.rows( {page:'current'} ).data() );
+				},
+				lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
