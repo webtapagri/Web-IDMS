@@ -181,6 +181,7 @@ function loadGrid(){
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
 					lengthMenu: '<span>Show:</span> _MENU_',
+					// lengthMenu: '<span>Show:</span> '  [ [10, 25, 50, -1], [10, 25, 50, "All"] ],
 					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
 				}
 			});
@@ -212,8 +213,9 @@ function loadGrid(){
                             {   extend: 'excel', 
                                 exportOptions: {
                                                 modifier: {
-                                                page: 'all',
-                                                search: 'none'   
+													order : 'current',  // 'current', 'applied', 'index',  'original'
+													page : 'all',      // 'all',     'current'
+													search : 'applied'     // 'none',    'applied', 'removed'
                                                 }
                                 },
                                 text : '<i class="icon-file-excel"></i> Export to Excel',
