@@ -302,11 +302,11 @@ function save(){
 						}
 						if(cont.success.length > 0){
 							$('.success').removeClass('d-none');
-							$('.success_area').append('Berhasil memproses baris: <br/>');
-							var succ = cont.success.filter( distinct )
-							$.each(succ, (k,v)=>{
-								
-								$('.success_area').append( v+' <br/>' );
+							$('.success_area').append('Berhasil memproses baris ke: ');
+							// var succ = cont.success.filter( distinct )
+							$.each(cont.success, (k,v)=>{
+								var km = k != 0 ? ',' : ''
+								$('.success_area').append( v+km );
 							})
 						}
 					}else{
