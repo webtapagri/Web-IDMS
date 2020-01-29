@@ -322,56 +322,7 @@ function save(){
 					}
 				}
 			})
-			
-			// $.ajax({
-				// url: "{{ URL::to('history/progres-perkerasan/bulksave') }}",
-				// method : "POST", type: "POST",
-				// data: { data: dataFix },
-				// cache:false,
-				// beforeSend:function(){
-					// HoldOn();
-					// $('.error').addClass('d-none')
-					// $('.error_area').html('')
-					// $('.success').addClass('d-none')
-					// $('.success_area').html('')
-				// },
-				// complete:function(){
-					// HoldOff();
-					// window.onbeforeunload = null
-				// },
-				// headers: {
-					// "Access-Control-Allow-Origin":"*",
-					// "X-CSRF-TOKEN": "{{ csrf_token() }}",
-				// }
-			// }).done(function(rsp){
-				// if(rsp.code==200){
-					// let cont = rsp.contents
-					// if(cont.error.length > 0){
-						// $('.error').removeClass('d-none');
-						// $.each(cont.error, (k,v)=>{
-							// $('.error_area').append('Road code '+v.value+' at line '+v.line+' error with status <strong>'+v.status+'<strong><br/>');
-						// })
-					// }
-					// if(cont.success.length > 0){
-						// $('.success').removeClass('d-none');
-						// $.each(cont.success, (k,v)=>{
-							// $('.success_area').append('Berhasil memproses Road code: ');
-							// if(k>0){
-								// let kom = ','
-							// }else{
-								// let kom = '';
-							// }
-							// $('.success_area').append( v+kom+' ' );
-						// })
-					// }
-				// }else{
-					// alert("Respon error. "+rsp.code+" - "+rsp.contents);
-				// }
-			// }).fail(function(errors) {
-				// console.log(errors)
-				// alert("Gagal Terhubung ke Server");
 				
-			// });		
 		}
 
 	})
