@@ -12,6 +12,9 @@ use App\Models\VRoad;
 use App\Models\RoadLog;
 use App\Models\TRRoadStatus;
 use App\Models\GeneralData;
+use App\Models\Company;
+use App\Models\Estate;
+use App\Models\Block;
 use Session;
 use AccessRight;
 use App\RoleAccess;
@@ -23,6 +26,7 @@ use Yajra\DataTables\Facades\DataTables;
 use URL;
 use DB;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class RoadController extends Controller
 {
@@ -462,16 +466,107 @@ class RoadController extends Controller
 	
 	public function road_bulk_save(Request $request)
 	{		
-		$data = (object) $request->json()->all();
+		DB::beginTransaction();
 		try {
-			Road::create($data);
+			$respon['error'] 	= [];
+			$respon['success'] 	= [];
+			$sheet = $request->data;
+			if(count($sheet) > 0){
+				foreach($sheet as $k=>$dt){
+					
+					$land_use_code = '0601';
+					$cat = RoadCategory::where('category_code',$dt['category_code'])->first();
+					$stat = RoadStatus::where('status_code',$dt['status_code'])->first();
+					
+					if(!$cat){
+						$respon['error'][] = ['line'=>($k+1),'status'=>'category_code_not_found'];
+						// continue;
+					}
+					if(!$stat){
+						$respon['error'][] = ['line'=>($k+1),'status'=>'status_code_not_found'];
+						continue;
+					}
+					
+					if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
+						
+						$getGD = GeneralData::select('description_code','description')->join('TM_COMPANY','TM_COMPANY.company_code','=','TM_GENERAL_DATA.description_code')
+										->where('general_code','company_initial')
+										->where('TM_COMPANY.company_code',$dt['company_code'])
+										->first();
+										
+						if(!$getGD){
+							$respon['error'][] = ['line'=>($k+1),'status'=>'company_code_not_found'];
+							continue;
+						}
+						
+						$bcc = $getGD->description_code.'-'.$getGD->description;
+					}else{
+						$getCom = Company::where('company_code',$dt['company_code'])->first();
+						if(!$getCom){
+							$respon['error'][] = ['line'=>($k+1),'status'=>'company_code_not_found'];
+							continue;
+						}
+						$getW = Estate::where('werks',$dt['werks'])->where('company_id',$getCom->id)->where('estate_code',$dt['estate_code'])->first();
+						if(!$getW){
+							$respon['error'][] = ['line'=>($k+1),'status'=>'estate_code_or_werks_not_found'];
+							continue;
+						}
+						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->first();
+						if(!$getBlc){
+							$respon['error'][] = ['line'=>($k+1),'status'=>'block_code_not_found'];
+							continue;
+						}
+						$bcc = $getBlc->block_code.'-'.$getBlc->block_name;
+					}
+					
+					$blck 				= explode('-',$bcc);
+					$data['block_code']	= $blck[0];	
+					$data['road_code']	= $dt['company_code'].$dt['estate_code'].$blck[0].$land_use_code.$stat->status_code.$cat->category_code.$dt['segment'];	
+					$data['road_name']	= $blck[1].$cat->category_initial.$dt['segment'];	
+					
+					
+						//cek road_code is exist ?
+						$ceki = Road::where('road_code',$data['road_code'])->count();
+						if($ceki > 0){
+							$respon['error'][] = ['line'=>($k+1),'status'=>'road_code_is_exist'];
+							continue;
+						}
+					
+					$road 				= Road::create($data+Arr::except($dt,['status_code','category_code','segment','total_length','asset_code']));
+								
+					//insert into TR_ROAD_LOG
+					$tr_data = [
+						'road_id'		=> $road->id,
+						'updated_by'	=> \Session::get('user_id'),
+						'total_length'	=> $dt['total_length'],
+						'asset_code'	=> $dt['asset_code'],
+					];
+					$ts_data = [
+						'road_id'		=> $road->id,
+						'updated_by'	=> \Session::get('user_id'),
+						'road_code'		=> $data['road_code'],
+						'road_name'		=> $data['road_name'],
+						'status_id'		=> $stat->id,
+						'category_id'	=> $cat->id,
+						'segment'		=> $dt['segment']
+					];
+					RoadLog::create( $tr_data );
+					
+					//insert into TR_ROAD_STATUS
+					
+					TRRoadStatus::create( $ts_data );
+					
+				}
+			}
 		}catch (\Throwable $e) {
-            \Session::flash('error', throwable_msg($e));
-            return redirect()->route('master.road_bulk_add');
-        }catch (\Exception $e) {	
-            \Session::flash('error', exception_msg($e));
-            return redirect()->route('master.road_bulk_add');
+			DB::rollBack();
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+			DB::rollBack();
+            return response()->error('Error',exception_msg($e));
 		}
+		DB::commit();
+		return response()->success('Success', $respon);
 		
 		\Session::flash('success', 'Berhasil menyimpan data');
         return redirect()->route('master.road');

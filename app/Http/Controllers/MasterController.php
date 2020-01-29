@@ -162,7 +162,7 @@ class MasterController extends Controller
 		$jml = count($RestAPI['data']);
 		if($jml > 0){
 			foreach($RestAPI['data'] as $data){
-				
+				dd($data);
 				$comp = Company::where('company_code',$data['COMP_CODE'])->first();
 				
 				if($comp){

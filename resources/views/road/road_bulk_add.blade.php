@@ -32,6 +32,21 @@
 				<button type="submit" class="btn btn-primary">Simpan</button>
 			</div>
 		</div>
+		
+		<div class="row">
+			<div class="col-12">
+				<div class="alert error alert-danger alert-dismissible d-none">
+					<span class="error_area"></span>
+				</div>
+			</div>
+			
+			<div class="col-12">
+				<div class="alert success alert-success alert-dismissible d-none">
+					<span class="success_area"></span>
+				</div>
+			</div>
+		</div>
+		
 		<div class="hot-container">
 			<!-- <pre id="example1console" class="console"></pre>
 			<div id="hot_context_copy" class="handsontable"></div> -->
@@ -82,7 +97,7 @@ HotContextMenu = function() {
 				return;
 			}	
 		var car_data = [
-				{company_code: "", estate_code:"", werks: "", afdeling_code: "", block_code: "", status_id: "", category_id: "", segment: ""
+				{company_code: "", estate_code:"", werks: "", afdeling_code: "", block_code: "", status_code: "", category_code: "", segment: ""
 				, road_code: "", total_length: "", asset_code: ""},
 			];
 			
@@ -105,6 +120,18 @@ HotContextMenu = function() {
 			}
 			else {
 			  callback(true);
+			}
+		}
+		var cekNumSegment = function(value,callback){
+			if (value == '' || value === null || typeof(value) == 'string') {
+			  callback(false);
+			}
+			else {
+				if(value > 9){
+					callback(false);
+				}else{
+					callback(true);	
+				}
 			}
 		}
 		
@@ -141,19 +168,19 @@ HotContextMenu = function() {
 						validator: cekString
 					},
 					{
-						data: 'status_id',
+						data: 'status_code',
 						type: 'numeric',
 						validator: cekNum
 					},
 					{
-						data: 'category_id',
+						data: 'category_code',
 						type: 'numeric',
 						validator: cekNum
 					},
 					{
 						data: 'segment',
 						type: 'numeric',
-						validator: cekNum
+						validator: cekNumSegment
 					},
 					{
 						data: 'road_code',
@@ -194,7 +221,7 @@ HotContextMenu = function() {
 								}).show();
 							}else{
 								new Noty({
-									text: 'Kolom '+prop+' baris ke '+(row+1)+' harus diisi dan harus berupa angka.',
+									text: 'Kolom '+prop+' baris ke '+(row+1)+' harus diisi dan harus berupa angka dan sesuai format.',
 									type: 'warning'
 								}).show();
 							}
@@ -234,11 +261,62 @@ HotContextMenu = function() {
 
 
 function save(){
-	var valid
 	hot_context_copy_init.validateCells((isValid)=>{
-		valid = isValid    
+		if(isValid){
+			window.onbeforeunload = function() {
+				return 'Data sedang diproses, apakah anda ingin membatalkan ?';
+			};
+			
+			let dataFix = [];
+			$.each(hot_context_copy_init.getData(), (k,v)=>{
+				dataFix.push({company_code: v[0], estate_code:v[1], werks: v[2], afdeling_code: v[3], block_code: v[4], status_code: v[5], category_code: v[6], segment: v[7], road_code: v[8], total_length: v[9], asset_code: v[10]}) });
+			
+			$.ajax({
+				type:'post',
+				url:"{{ URL::to('master/road-bulk-save') }}",
+				data:{ data: dataFix },
+				cache:false,
+				beforeSend:function(){
+					HoldOn();
+					$('.error').addClass('d-none')
+					$('.error_area').html('')
+					$('.success').addClass('d-none')
+					$('.success_area').html('')
+				},
+				complete:function(){
+					HoldOff();
+					window.onbeforeunload = null
+				},
+				headers: {
+					"Access-Control-Allow-Origin":"*",
+					"X-CSRF-TOKEN": "{{ csrf_token() }}",
+				},
+				success:function(rsp){
+					if(rsp.code==200){
+						let cont = rsp.contents
+						if(cont.error.length > 0){
+							$('.error').removeClass('d-none');
+							$.each(cont.error, (k,v)=>{
+								$('.error_area').append('Error at line '+v.line+' with status <strong>'+v.status+'<strong><br/>');
+							})
+						}
+						if(cont.success.length > 0){
+							$('.success').removeClass('d-none');
+							$('.success_area').append('Berhasil memproses Road code: <br/>');
+							var succ = cont.success.filter( distinct )
+							$.each(succ, (k,v)=>{
+								
+								$('.success_area').append( v+' <br/>' );
+							})
+						}
+					}else{
+						alert("Respon error. "+rsp.code+" - "+rsp.contents);
+					}
+				}
+			})
+				
+		}
 	})
-	console.log(valid)
 	
 }
 </script>
