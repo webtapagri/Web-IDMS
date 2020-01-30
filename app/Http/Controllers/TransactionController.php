@@ -297,7 +297,7 @@ class TransactionController extends Controller
 			// update TM_ROAD
 			$RS->road_code = $road_code;
 			$RS->road_name = $road_name;
-			$RS->segment = $request->segment;
+			// $RS->segment = $request->segment;
 			$RS->updated_by = \Session::get('user_id');
 			$RS->save();
 
