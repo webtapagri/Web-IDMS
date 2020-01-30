@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Progress Perkerasan Jalan')
+@section('title', 'Report Progress Perkerasan Jalan')
 
 @section('theme_css')
 
@@ -85,7 +85,7 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
-				<th class="text-center">Action</th>
+				<th>Action</th>
 			</tr>
 		</thead>
 		<tfoot>
@@ -102,7 +102,7 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
-				<th class="text-center">Action</th>
+				<th>Action</th>
 			</tr>
 		</tfoot>
 	</table>
@@ -235,7 +235,6 @@ $(document).ready(()=>{
 	});
 	
 	loadGrid();
-	// loadStatus()
 	
 	$('#reloadGrid').click(()=>{
 		table.destroy()
@@ -304,44 +303,6 @@ function del(url){
 	});
 }
 
-function loadStatus(){
-	$.ajax({
-		type: 'GET',
-		url: "{{ URL::to('api/master/road-status') }}/",
-		data: null,
-		cache:false,
-		beforeSend:function(){
-			// HoldOn(light);
-		},
-		complete:function(){
-			// HoldOff(light);
-		},
-		headers: {
-			"X-CSRF-TOKEN": "{{ csrf_token() }}"
-		}
-	}).done(function(rsp){
-		
-		if(rsp.code=200){
-			var cont = rsp.contents;
-			var htm = '<option value="">-- Pilih Status --</option>'
-			var htm2 = '<option value="">-- Pilih Status --</option>'
-			$.each(cont, (k,v)=>{
-				htm += '<option value="'+v.id+'" >'+v.status_name+'</option>'
-				htm2 += '<option value="'+v.id+'" id="comboid_'+v.id+'">'+v.status_name+'</option>'
-			});
-			$('#rc_status_id').html(htm);
-			$('#rc_status_id_edit').html(htm2);
-		}else{
-			$('#rc_status_id').html('<option value="">Gagal mengambil data</option>');	
-			$('#rc_status_id_edit').html('<option value="">Gagal mengambil data</option>');	
-		}
-	}).fail(function(errors) {
-		
-		alert("Gagal Terhubung ke Server");
-		
-	});
-}
-
 function loadGrid(){
 	var donlot = false
 	$.extend( $.fn.dataTable.defaults, {
@@ -362,12 +323,15 @@ function loadGrid(){
 						"targets": 0 
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Bfl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
 							text: 'Download CSV',
 							className: 'btn bg-teal-400',
 							action: function(e, dt, node, config) {
+								
+								// dt.page.len( -1 ).draw()								
+								// donlot = true
 								
 								que = [];
 								que_global = $('input[type="search"]').val()
@@ -423,7 +387,7 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
-        ajax: '{{ route("history.progres_perkerasan_datatables") }}',
+        ajax: '{{ route("report.progress_perkerasan_datatables") }}',
 		scrollX: true,
 		scrollY: '350px',
 		scrollCollapse: true,
