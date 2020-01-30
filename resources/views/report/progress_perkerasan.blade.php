@@ -210,7 +210,7 @@
 	</div>
 </div>
 
-<form action="{{ route('history.progres_perkerasan_download') }}" id="formDownload" method="post">
+<form action="{{ route('report.progress_perkerasan_download') }}" id="formDownload" method="post">
 	@csrf
 	<input type="hidden" name="que" id="que">
 	<input type="hidden" name="que_global" id="que_global">
