@@ -26,17 +26,7 @@
 
 <div class="card">
 	<div class="card-header header-elements-inline">
-		@if($access['create']=='1')
-		 
-		<a href="{{ route('history.progres_perkerasan_bulkadd') }}">
-			<button 
-				data-toggle="modal"
-				type="button" class="btn bg-teal-400 btn-labeled btn-labeled-left"><b><i class="icon-plus3"></i></b> 
-				Tambah
-			</button>
-		</a>
 		
-		@endif
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" id="reloadGrid" data-action="reload"></a>
@@ -326,7 +316,7 @@ function loadGrid(){
 				dom: '<"datatable-header"Bfl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
-							text: 'Download CSV',
+							text: '<i class="icon-file-excel"></i><o></o> Export to Excel',
 							className: 'btn bg-teal-400',
 							action: function(e, dt, node, config) {
 								
