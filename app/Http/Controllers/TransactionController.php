@@ -168,9 +168,9 @@ class TransactionController extends Controller
 	public function progres_perkerasan_download(Request $request)
 	{
 		try {
-			
+			$where = $request->all();			
 			$file = 'download.xlsx';
-			return Excel::download(new ProgressPerkerasan($request), $file);
+			return Excel::download(new ProgressPerkerasan($where), $file);
 			
 		}catch (\Throwable $e) {
             \Session::flash('error', throwable_msg($e));
