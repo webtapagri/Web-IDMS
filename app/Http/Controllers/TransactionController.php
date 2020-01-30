@@ -20,6 +20,8 @@ use App\Http\Requests\RoadStatusChangesRequest;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
 use Illuminate\Support\Arr;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProgressPerkerasan;
 
 class TransactionController extends Controller
 {
@@ -161,6 +163,22 @@ class TransactionController extends Controller
 		
 		\Session::flash('success', 'Berhasil mengupdate data');
         return redirect()->route('history.progres_perkerasan');
+	}
+	
+	public function progres_perkerasan_download(Request $request)
+	{
+		try {
+			
+			$file = 'download.xlsx';
+			return Excel::download(new ProgressPerkerasan($request), $file);
+			
+		}catch (\Throwable $e) {
+            \Session::flash('error', throwable_msg($e));
+            return redirect()->back()->withInput($request->input());
+        }catch (\Exception $e) {
+            \Session::flash('error', exception_msg($e));
+            return redirect()->back()->withInput($request->input());
+		}
 	}
 	
 	

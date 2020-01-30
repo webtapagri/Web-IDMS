@@ -210,11 +210,17 @@
 	</div>
 </div>
 
+<form action="{{ route('history.progres_perkerasan_download') }}" id="formDownload" method="post">
+	@csrf
+	<input type="hidden" name="que" id="que">
+	<input type="hidden" name="que_global" id="que_global">
+</form>
+
 @endsection
 
 @section('my_script')
 <script>
-var table, table_detail
+var table, table_detail, col, que
 
 $(document).ready(()=>{
 	
@@ -359,22 +365,26 @@ function loadGrid(){
 				dom: '<"datatable-header"Bfl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
-							extend: 'csv',
-							className: 'btn btn-light d-none toCsv',
-							text: '<i class="icon-file-spreadsheet mr-2"></i> CSV',
-							extension: '.csv',
-							exportOptions: {
-								columns: [ 0,1,2,3,4,6,7,8,9,10,11 ]
-							},
-						},
-						{
 							text: 'Download CSV',
 							className: 'btn bg-teal-400',
 							action: function(e, dt, node, config) {
 								
-								dt.page.len( -1 ).draw()
+								// dt.page.len( -1 ).draw()								
+								// donlot = true
 								
-								donlot = true
+								que = [];
+								que_global = $('input[type="search"]').val()
+								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
+								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
+									if( $(v).val() != '' ){
+										console.log(k-tbll)
+										que.push( { col: col[k-tbll]['name'], val : $(v).val()} )
+									}    
+								})
+								
+								$('#que').val( JSON.stringify(que) )
+								$('#que_global').val( que_global )
+								$('#formDownload').submit()
 															
 							}
 						}
@@ -396,20 +406,7 @@ function loadGrid(){
 				
 			});
 	
-
-	table = $('.datatable-responsive').DataTable( {
-        processing: true,
-		'processing': true,
-        serverSide: true,
-        ajax: '{{ route("history.progres_perkerasan_datatables") }}',
-		scrollX: true,
-		scrollY: '350px',
-		scrollCollapse: true,
-		fixedColumns: {
-			leftColumns: 0,
-			rightColumns: 1
-		},
-        columns: [
+	col = [
             { data: 'road_code', 		name: 'road_code' },
             { data: 'road_name', 		name: 'road_name' },
             { data: 'total_length', 	name: 'total_length' },
@@ -423,16 +420,30 @@ function loadGrid(){
             { data: 'afdeling_name', 	name: 'afdeling_name' },
             { data: 'block_name', 		name: 'block_name' },
             { data: 'action', 			name: 'action' },
-        ],
+        ];
+
+	table = $('.datatable-responsive').DataTable( {
+        processing: true,
+		'processing': true,
+        serverSide: true,
+        ajax: '{{ route("history.progres_perkerasan_datatables") }}',
+		scrollX: true,
+		scrollY: '350px',
+		scrollCollapse: true,
+		fixedColumns: {
+			leftColumns: 0,
+			rightColumns: 1
+		},
+        columns: col,
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k > -1 && k < 12){
+				if(k >= 0 && k < 12){
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())
 					.on('change', function () {
 						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
+					}).attr('placeholder',' Search').addClass('form-control tfsearch');
 				}
 			});
 		}
