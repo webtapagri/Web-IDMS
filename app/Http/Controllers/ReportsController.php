@@ -13,6 +13,8 @@ use Yajra\DataTables\Facades\DataTables;
 use URL;
 use DB;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ProgressPerkerasan;
 
 class ReportsController extends Controller
 {
@@ -105,6 +107,21 @@ class ReportsController extends Controller
 	}
 	
 	
+	public function progress_perkerasan_download(Request $request)
+	{
+		try {
+			$where = $request->all();			
+			$file = 'REPORT_PROGRESS_PERKERASAN_JALAN_'.date('Ymd').'.xlsx';
+			return Excel::download(new ProgressPerkerasan($where), $file);
+			
+		}catch (\Throwable $e) {
+            \Session::flash('error', throwable_msg($e));
+            return redirect()->back()->withInput($request->input());
+        }catch (\Exception $e) {
+            \Session::flash('error', exception_msg($e));
+            return redirect()->back()->withInput($request->input());
+		}
+	}
 	
 	
 }
