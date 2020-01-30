@@ -23,7 +23,7 @@ function HoldOff(light=$('body')){
 	$(light).unblock();
 }
 function formRequiredMark(){
-	$('label').each((k,v)=>{
+	$('form').find('label').each((k,v)=>{
 		if(!$(v).hasClass('norequired')){
 			$(v).append(' <span class="text-danger">*</span>')
 		}
