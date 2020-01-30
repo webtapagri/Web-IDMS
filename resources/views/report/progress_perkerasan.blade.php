@@ -326,7 +326,7 @@ function loadGrid(){
 				dom: '<"datatable-header"Bfl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
-							text: 'Download CSV',
+							text: '<i class="icon-file-excel"></i><o></o> Export to Excel',
 							className: 'btn bg-teal-400',
 							action: function(e, dt, node, config) {
 								
