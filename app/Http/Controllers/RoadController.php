@@ -14,6 +14,7 @@ use App\Models\TRRoadStatus;
 use App\Models\GeneralData;
 use App\Models\Company;
 use App\Models\Estate;
+use App\Models\Afdeling;
 use App\Models\Block;
 use Session;
 use AccessRight;
@@ -475,18 +476,35 @@ class RoadController extends Controller
 				foreach($sheet as $k=>$dt){
 					
 					$land_use_code = '0601';
-					$cat = RoadCategory::where('category_code',$dt['category_code'])->first();
 					$stat = RoadStatus::where('status_code',$dt['status_code'])->first();
 					
-					if(!$cat){
-						$respon['error'][] = ['line'=>($k+1),'status'=>'category_code_not_found'];
-						// continue;
-					}
 					if(!$stat){
 						$respon['error'][] = ['line'=>($k+1),'status'=>'status_code_not_found'];
 						continue;
 					}
 					
+					$cat = RoadCategory::where('category_code',$dt['category_code'])->where('status_id',$stat->id)->first();
+					
+					if(!$cat){
+						$respon['error'][] = ['line'=>($k+1),'status'=>'category_code_not_found'];
+						continue;
+					}
+					$getCom = Company::where('company_code',$dt['company_code'])->first();
+					if(!$getCom){
+						$respon['error'][] = ['line'=>($k+1),'status'=>'company_code_not_found'];
+						continue;
+					}
+					$getW = Estate::where('werks',$dt['werks'])->where('company_id',$getCom->id)->where('estate_code',$dt['estate_code'])->first();
+					if(!$getW){
+						$respon['error'][] = ['line'=>($k+1),'status'=>'estate_code_or_werks_not_found'];
+						continue;
+					}
+					$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
+					if(!$getAfd){
+						$respon['error'][] = ['line'=>($k+1),'status'=>'afdeling_code_not_found'];
+						continue;
+					}
+						
 					if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
 						
 						$getGD = GeneralData::select('description_code','description')->join('TM_COMPANY','TM_COMPANY.company_code','=','TM_GENERAL_DATA.description_code')
@@ -495,23 +513,14 @@ class RoadController extends Controller
 										->first();
 										
 						if(!$getGD){
-							$respon['error'][] = ['line'=>($k+1),'status'=>'company_code_not_found'];
+							$respon['error'][] = ['line'=>($k+1),'status'=>'company_code_not_found_in_general_data'];
 							continue;
 						}
 						
 						$bcc = $getGD->description_code.'-'.$getGD->description;
 					}else{
-						$getCom = Company::where('company_code',$dt['company_code'])->first();
-						if(!$getCom){
-							$respon['error'][] = ['line'=>($k+1),'status'=>'company_code_not_found'];
-							continue;
-						}
-						$getW = Estate::where('werks',$dt['werks'])->where('company_id',$getCom->id)->where('estate_code',$dt['estate_code'])->first();
-						if(!$getW){
-							$respon['error'][] = ['line'=>($k+1),'status'=>'estate_code_or_werks_not_found'];
-							continue;
-						}
-						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->first();
+						
+						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$getAfd->id)->first();
 						if(!$getBlc){
 							$respon['error'][] = ['line'=>($k+1),'status'=>'block_code_not_found'];
 							continue;
@@ -539,7 +548,7 @@ class RoadController extends Controller
 						'road_id'		=> $road->id,
 						'updated_by'	=> \Session::get('user_id'),
 						'total_length'	=> $dt['total_length'],
-						'asset_code'	=> $dt['asset_code'],
+						'asset_code'	=> @$dt['asset_code'],
 					];
 					$ts_data = [
 						'road_id'		=> $road->id,
