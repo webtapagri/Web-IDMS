@@ -223,26 +223,34 @@ $(document).ready(()=>{
             dataSpinnerSize: 16,
             timeout: 2000
         });
+	
+	if('{{ old('company_code') }}' != ''){
+		load_status({{ old('status_id') }})
+		load_category('{{ old('status_id') }}','{{ old('category_id') }}')
 		
-	load_company();
-	load_status();
+		load_company({{ old('company_code') }})
+		load_estate('{{ old('company_code') }}','{{ old('werks') }}')
+		load_afdeling('{{ old('werks') }}','{{ old('afdeling_code') }}')
+		load_block('{{ old('afdeling_code') }}','{{ old('werks') }}','{{ old('block_code') }}')
+	}else{
+		load_status();
+		load_company();
+	}
+	
+	
+	
 	
 	$('.select-clear').select2({
 		allowClear: true
 	});
+	
 	formRequiredMark()
 	
 	$('select[name="category_id"]').change(()=>{
-		let v = $('select[name="category_id"]').val()    
-		let htm = $('select[name="category_id"]').find('option[value='+v+']').html() 
-		if( $.inArray( htm.toUpperCase(), [ "JALAN AKSES", "JALAN DESA", "JALAN NEGARA" ] ) != -1 ){
-			$('.block_code').removeAttr('required')
-			$('.fg-block').addClass('d-none')
-		}else{
-			$('.block_code').attr('required','required')
-			$('.fg-block').removeClass('d-none')
-		}
+		hideBlock();
 	})
+	
+	
 });
 
 $('.company_code').change(()=>{
@@ -266,7 +274,7 @@ $('.status_id').change(()=>{
 	load_category(id)
 })
 
-function load_company(){
+function load_company(x=null){
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/company') }}/",
@@ -286,7 +294,12 @@ function load_company(){
 		if(rsp.code=200){
 			var cont = rsp.contents
 			$.each(cont, (k,v)=>{
-				$('.company_code').append('<option value="'+v.company_code+'">'+v.company_code+' - '+v.company_name+'</option>')
+				if(x==v.company_code){
+					$('.company_code').append('<option selected value="'+v.company_code+'">'+v.company_code+' - '+v.company_name+'</option>')
+				}else{
+					$('.company_code').append('<option value="'+v.company_code+'">'+v.company_code+' - '+v.company_name+'</option>')
+				}
+				
 			})
 		}else{
 			$('.company_code').html(rsp.code+' - '+rsp.contents)
@@ -298,7 +311,19 @@ function load_company(){
 	});
 }
 
-function load_estate(id){
+function hideBlock(){
+	let v = $('select[name="category_id"]').val()    
+	let htm = $('select[name="category_id"]').find('option[value='+v+']').html() 
+	if( $.inArray( htm.toUpperCase(), [ "JALAN AKSES", "JALAN DESA", "JALAN NEGARA" ] ) != -1 ){
+		$('.block_code').removeAttr('required')
+		$('.fg-block').addClass('d-none')
+	}else{
+		$('.block_code').attr('required','required')
+		$('.fg-block').removeClass('d-none')
+	}
+}
+
+function load_estate(id, x=null){
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/estate_tree/') }}/"+id,
@@ -319,7 +344,14 @@ function load_estate(id){
 		if(rsp.code=200){
 			var cont = rsp.contents
 			$.each(cont, (k,v)=>{
-				$('.estate_code').append('<option value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+				console.log(123)
+				console.log(x)
+				console.log(v.werks+'-'+v.estate_code)
+				if(x == v.werks+'-'+v.estate_code){
+					$('.estate_code').append('<option selected value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+				}else{
+					$('.estate_code').append('<option value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+				}
 			})
 		}else{
 			$('.estate_code').html(rsp.code+' - '+rsp.contents)
@@ -331,7 +363,7 @@ function load_estate(id){
 	});
 }
 
-function load_afdeling(id){
+function load_afdeling(id, x=null){
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/afdeling_tree/') }}/"+id,
@@ -352,7 +384,11 @@ function load_afdeling(id){
 		if(rsp.code=200){
 			var cont = rsp.contents
 			$.each(cont, (k,v)=>{
-				$('.afdeling_code').append('<option value="'+v.afdeling_code+'">'+v.afdeling_code+' - '+v.afdeling_name+'</option>')
+				if(x==v.afdeling_code){
+					$('.afdeling_code').append('<option selected value="'+v.afdeling_code+'">'+v.afdeling_code+' - '+v.afdeling_name+'</option>')
+				}else{
+					$('.afdeling_code').append('<option value="'+v.afdeling_code+'">'+v.afdeling_code+' - '+v.afdeling_name+'</option>')
+				}
 			})
 		}else{
 			$('.afdeling_code').html(rsp.code+' - '+rsp.contents)
@@ -364,7 +400,7 @@ function load_afdeling(id){
 	});
 }
 
-function load_block(id,w){
+function load_block(id,w,x=null){
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/block_tree/') }}/"+id+"/"+w,
@@ -385,7 +421,11 @@ function load_block(id,w){
 		if(rsp.code=200){
 			var cont = rsp.contents
 			$.each(cont, (k,v)=>{
-				$('.block_code').append('<option value="'+v.block_code+'-'+v.block_name+'">'+v.block_code+' - '+v.block_name+'</option>')
+				if(x==v.block_code+'-'+v.block_name){
+					$('.block_code').append('<option selected value="'+v.block_code+'-'+v.block_name+'">'+v.block_code+' - '+v.block_name+'</option>')
+				}else{
+					$('.block_code').append('<option value="'+v.block_code+'-'+v.block_name+'">'+v.block_code+' - '+v.block_name+'</option>')
+				}
 			})
 		}else{
 			$('.block_code').html(rsp.code+' - '+rsp.contents)
@@ -397,7 +437,7 @@ function load_block(id,w){
 	});
 }
 
-function load_status(){
+function load_status(x=null){
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/road-status') }}/",
@@ -418,7 +458,11 @@ function load_status(){
 		if(rsp.code=200){
 			var cont = rsp.contents
 			$.each(cont, (k,v)=>{
-				$('.status_id').append('<option value="'+v.id+'">'+v.status_name+'</option>')
+				if(x==v.id){
+					$('.status_id').append('<option selected value="'+v.id+'">'+v.status_name+'</option>')
+				}else{
+					$('.status_id').append('<option value="'+v.id+'">'+v.status_name+'</option>')
+				}
 			})
 		}else{
 			$('.status_id').html(rsp.code+' - '+rsp.contents)
@@ -430,7 +474,7 @@ function load_status(){
 	});
 }
 
-function load_category(id){
+function load_category(id, x=null){
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/road-category/') }}/"+id,
@@ -451,7 +495,12 @@ function load_category(id){
 		if(rsp.code=200){
 			var cont = rsp.contents
 			$.each(cont, (k,v)=>{
-				$('.category_id').append('<option value="'+v.id+'">'+v.category_name+'</option>')
+				if(x==v.id){
+					$('.category_id').append('<option selected value="'+v.id+'">'+v.category_name+'</option>')
+					hideBlock()
+				}else{
+					$('.category_id').append('<option value="'+v.id+'">'+v.category_name+'</option>')
+				}
 			})
 		}else{
 			$('.category_id').html(rsp.code+' - '+rsp.contents)
