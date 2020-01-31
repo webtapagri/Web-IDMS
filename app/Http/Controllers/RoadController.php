@@ -387,7 +387,7 @@ class RoadController extends Controller
 					throw new \Exception('Road code sudah terdaftar.');
 				}
 			
-			$road 				= Road::create($request->except('werks','status_id','category_id','total_length','asset_code','block_code')+$data);
+			$road 				= Road::create($request->except('segment','werks','status_id','category_id','total_length','asset_code','block_code')+$data);
 						
 			//insert into TR_ROAD_LOG
 			$tr_data = [

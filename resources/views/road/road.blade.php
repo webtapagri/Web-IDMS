@@ -337,7 +337,26 @@ function loadGrid(){
 				$($('tbody>tr')[0]).css('background-color','#d0eeff')
 			}
 			this.api().columns().every(function (k) {
-				if(k > -1 && k < 11){
+				if(k ==5){
+					var column = this;
+					var select = $('<select class="form-control"><option value=""></option></select>')
+						.appendTo( $(column.footer()).empty() )
+						.on( 'change', function () {
+							var val = $.fn.dataTable.util.escapeRegex(
+								$(this).val()
+							);
+	 
+							column
+								.search( val ? '^'+val+'$' : '', true, false )
+								.draw();
+						} );
+ 
+					column.data().unique().sort().each( function ( d, j ) {
+						select.append( '<option value="'+d+'">'+d+'</option>' )
+					} );
+				
+					
+				}else{
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())
@@ -346,6 +365,7 @@ function loadGrid(){
 					}).attr('placeholder',' Search').addClass('form-control');
 				}
 			});
+			
 		}
     } );
 	

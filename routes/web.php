@@ -82,7 +82,6 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::post('/progres-perkerasan/bulksave', 	'TransactionController@progres_perkerasan_bulksave')->name('history.progres_perkerasan_bulksave');
 		Route::get('/progres-perkerasan-datatables', 	'TransactionController@progres_perkerasan_datatables')->name('history.progres_perkerasan_datatables');
 		Route::post('/progres-perkerasan-update', 	'TransactionController@progres_perkerasan_update')->name('history.progres_perkerasan_update');
-		Route::post('/progres-perkerasan-download', 	'TransactionController@progres_perkerasan_download')->name('history.progres_perkerasan_download');
 		
 		Route::get('/road-status', 	'TransactionController@road_status')->name('history.road_status');
 		Route::get('/road-status-datatables', 	'TransactionController@road_status_datatables')->name('history.road_status_datatables');
@@ -94,8 +93,10 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::get('/road', 	'ReportsController@road')->name('report.road');
 		Route::get('/road-datatables', 	'ReportsController@road_datatables')->name('report.road_datatables');
 		Route::post('/download-road', 	'ReportsController@download_road')->name('report.download_road');
-		Route::get('/download', 'ReportsController@download')->name('report.download');
 
+		Route::get('/progress-perkerasan', 	'ReportsController@progress_perkerasan')->name('report.progress_perkerasan');
+		Route::get('/progress-perkerasan-datatables', 	'ReportsController@progress_perkerasan_datatables')->name('report.progress_perkerasan_datatables');
+		Route::post('/progress-perkerasan-download', 	'ReportsController@progress_perkerasan_download')->name('report.progress_perkerasan_download');
 	});
 
 	// Route::get('/report/road', function(RoadDataTable $dataTable) {

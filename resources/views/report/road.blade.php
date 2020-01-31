@@ -8,8 +8,9 @@
 
 @section('theme_js')
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
-<!-- <script src="{{ asset('vendor/datatables/button.server-side.js') }}"></script> -->
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/fixed_columns.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/extensions/jquery_ui/interactions.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
@@ -17,14 +18,7 @@
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
-<!-- <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script> -->
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/forms/inputs/touchspin.min.js') }}"></script>
 <!-- <style>
 /* .btexcel {
     margin-right: 20px;
@@ -41,8 +35,6 @@
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" id="reloadGrid" data-action="reload"></a>
-				<!-- <a id="btn-download" class="btn btn-outline-primary download">Download</a> -->
-				<a id="btn-download" href="{{ route('report.download') }}" class="btn btn-outline-primary">Download</a>
 
 
 			</div>
@@ -112,12 +104,17 @@
 	</table>
 </div>
 
+<form action="{{ route('report.download_road') }}" id="formDownload" method="post">
+	@csrf
+	<input type="hidden" name="que" id="que">
+	<input type="hidden" name="que_global" id="que_global">
+</form>
 
 @endsection
 
 @section('my_script')
 <script>
-var table
+var table, col, que
 
 $(document).ready(()=>{
 	
@@ -169,15 +166,20 @@ function loadGrid(){
 								// dt.page.len( -1 ).draw()
 								// donlot = true
 
-								$.ajax({
-									url: "{{ URL::to('report/download') }}/",
-									type: 'post',
-									data: table.row().data().toArray(),
-									dataType: 'json',
-									success: function(returnedData) {
-										console.log(returnedData);
-									}
-								});
+								que = [];
+								que_global = $('input[type="search"]').val()
+								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
+								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
+									if( $(v).val() != '' ){
+										console.log(k-tbll)
+										que.push( { col: col[k-tbll]['name'], val : $(v).val()} )
+									}    
+								})
+								
+								$('#que').val( JSON.stringify(que) )
+								$('#que_global').val( que_global )
+								$('#formDownload').submit()
+									
 															
 							}
 						}
@@ -188,7 +190,6 @@ function loadGrid(){
 						$('.toCsv').click()
 						donlot = false
 					}
-					// console.log( api.rows( {page:'current'} ).data() );
 				},
 			lengthMenu: [
 				[ 10, 25, 50, -1 ],
@@ -223,23 +224,6 @@ function loadGrid(){
             { data: 'total_length', 	name: 'total_length' },
             { data: 'asset_code', 		name: 'asset_code' },
 		],
-			// dom: 'Blfrtip',
-            // buttons: {
-            //             buttons: [
-            //                 {   
-			// 					extend: 'excel', 
-            //                     exportOptions: {
-            //                                     modifier: {
-			// 										order : 'applied',  // 'current', 'applied', 'index',  'original'
-			// 										page : 'all',      // 'all',     'current'
-			// 										search : 'applied'     // 'none',    'applied', 'removed'
-            //                                     },
-            //                     },
-            //                     text : '<i class="icon-file-excel"></i> Export to Excel',
-			// 					className: 'btn bg-teal-400 btn-labeled btexcel',
-            //                 }
-            //             ],
-			//         },
 			
 		initComplete: function () {
 			this.api().columns().every(function (k) {
@@ -249,35 +233,13 @@ function loadGrid(){
 					$(input).appendTo($(column.footer()).empty())
 					.on('change', function () {
 						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
+					}).attr('placeholder',' Search').addClass('form-control tfsearch');
 				}
 			});
 		}
     } );
 }
 
-
-// $(function () {
-//     $('.download').on('click', function () {
-// 		var keyword = $( "input[type=search]" ).val();
-// 		$.ajax({
-// 			type: 'POST',
-// 			url: "{{ URL::to('report/download_road/') }}",
-// 			data: keyword,
-// 			cache:false,
-// 			headers: {
-// 				"X-CSRF-TOKEN": "{{ csrf_token() }}"
-// 			},
-// 			success:function(rsp){
-// 					if(rsp.code==200){
-// 						alert("Berhasil Download");
-// 					}else{
-// 						alert("Respon error. "+rsp.code+" - "+rsp.contents);
-// 					}
-// 				}
-// 		})
-// 	});
-// });
 
 </script>
 @endsection
