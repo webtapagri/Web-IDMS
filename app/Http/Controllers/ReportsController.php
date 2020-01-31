@@ -6,19 +6,21 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\VRoad;
 use App\Models\VListProgressPerkerasan;
+use Yajra\DataTables\Facades\DataTables;
 use Session;
 use AccessRight;
 use App\RoleAccess;
-use Yajra\DataTables\Facades\DataTables;
 use URL;
 use DB;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProgressPerkerasan;
+use App\Exports\RoadMaster;
 
 class ReportsController extends Controller
 {
-    //
+	//
+	
     public function road(Request $request)
 	{
 		$access = AccessRight::roleaccess();
@@ -50,14 +52,7 @@ class ReportsController extends Controller
 		
 		$model = VRoad::whereRaw("deleted_at is null and $where")->orderBy('id','desc');
 		
-		
 		return Datatables::eloquent($model)
-			// ->addColumn('action', '<div class="">
-			// 		'.$update_action.'
-			// 		'.$delete_action.'
-			// 	<div>
-			// 	')
-			// ->rawColumns(['action'])
 			->make(true);
 	}
 	
@@ -113,6 +108,22 @@ class ReportsController extends Controller
 			$where = $request->all();			
 			$file = 'REPORT_PROGRESS_PERKERASAN_JALAN_'.date('Ymd').'.xlsx';
 			return Excel::download(new ProgressPerkerasan($where), $file);
+			
+		}catch (\Throwable $e) {
+            \Session::flash('error', throwable_msg($e));
+            return redirect()->back()->withInput($request->input());
+        }catch (\Exception $e) {
+            \Session::flash('error', exception_msg($e));
+            return redirect()->back()->withInput($request->input());
+		}
+	}
+
+	public function download_road(Request $request)
+	{
+		try {
+			$where = $request->all();			
+			$file = 'REPORT_ROAD_MASTER_'.date('Ymd').'.xlsx';
+			return Excel::download(new RoadMaster($where), $file);
 			
 		}catch (\Throwable $e) {
             \Session::flash('error', throwable_msg($e));
