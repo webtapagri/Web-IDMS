@@ -6,23 +6,20 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\VRoad;
 use Maatwebsite\Excel\Facades\Excel;
-use Session;
-use AccessRight;
-use App\RoleAccess;
 use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\Facades\Buttons;
 use App\DataTables\RoadDataTable;
+use Session;
+use AccessRight;
+use App\RoleAccess;
 use URL;
 use DB;
 use Carbon\Carbon;
+use App\Exports\RoadMaster;
 
 class ReportsController extends Controller
 {
 	//
-	public function index(RoadDataTable $dataTable)
-    {
-        return $dataTable->render('report.road_master');
-    }
 	
     public function road(Request $request)
 	{
@@ -70,7 +67,13 @@ class ReportsController extends Controller
 			->make(true);
 	}
 
-	public function downloadExcel() {
-		return Excel::download(new RequestExport(), 'road_master.xlsx');
-	 }
+	public function download_road(Request $request) {
+		dd($request);
+		// return Excel::download(new RoadMaster($request), 'road_master.xlsx');
+	}
+
+	public function download()
+	{
+	return Excel::download(new RoadMaster, 'road_master.xlsx');
+	}
 }

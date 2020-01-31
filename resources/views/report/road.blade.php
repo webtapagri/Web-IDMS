@@ -41,6 +41,10 @@
 		<div class="header-elements">
 			<div class="list-icons">
 				<a class="list-icons-item" id="reloadGrid" data-action="reload"></a>
+				<!-- <a id="btn-download" class="btn btn-outline-primary download">Download</a> -->
+				<a id="btn-download" href="{{ route('report.download') }}" class="btn btn-outline-primary">Download</a>
+
+
 			</div>
 		</div>
 	</div>
@@ -162,9 +166,18 @@ function loadGrid(){
 							className: 'btn bg-teal-400',
 							action: function(e, dt, node, config) {
 								
-								dt.page.len( -1 ).draw()
-								
-								donlot = true
+								// dt.page.len( -1 ).draw()
+								// donlot = true
+
+								$.ajax({
+									url: "{{ URL::to('report/download') }}/",
+									type: 'post',
+									data: table.row().data().toArray(),
+									dataType: 'json',
+									success: function(returnedData) {
+										console.log(returnedData);
+									}
+								});
 															
 							}
 						}
@@ -242,5 +255,29 @@ function loadGrid(){
 		}
     } );
 }
+
+
+// $(function () {
+//     $('.download').on('click', function () {
+// 		var keyword = $( "input[type=search]" ).val();
+// 		$.ajax({
+// 			type: 'POST',
+// 			url: "{{ URL::to('report/download_road/') }}",
+// 			data: keyword,
+// 			cache:false,
+// 			headers: {
+// 				"X-CSRF-TOKEN": "{{ csrf_token() }}"
+// 			},
+// 			success:function(rsp){
+// 					if(rsp.code==200){
+// 						alert("Berhasil Download");
+// 					}else{
+// 						alert("Respon error. "+rsp.code+" - "+rsp.contents);
+// 					}
+// 				}
+// 		})
+// 	});
+// });
+
 </script>
 @endsection

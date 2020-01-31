@@ -93,6 +93,9 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 	Route::group(['prefix'=>'report'], function () {
 		Route::get('/road', 	'ReportsController@road')->name('report.road');
 		Route::get('/road-datatables', 	'ReportsController@road_datatables')->name('report.road_datatables');
+		Route::post('/download-road', 	'ReportsController@download_road')->name('report.download_road');
+		Route::get('/download', 'ReportsController@download')->name('report.download');
+
 	});
 
 	// Route::get('/report/road', function(RoadDataTable $dataTable) {
