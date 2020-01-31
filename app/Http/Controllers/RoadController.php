@@ -385,7 +385,7 @@ class RoadController extends Controller
 				//cek road_code is exist ?
 				$ceki = Road::where('road_code',$data['road_code'])->count();
 				if($ceki > 0){
-					throw new \Exception('Road code sudah terdaftar.');
+					throw new \Exception('Road code atau segment sudah terdaftar.');
 				}
 			
 			$road 				= Road::create($request->except('segment','werks','status_id','category_id','total_length','asset_code','block_code')+$data);
