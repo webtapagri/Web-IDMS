@@ -27,7 +27,6 @@
             <td>{{ $data->category_name }}</td>
             <td>{{ $data->segment }}</td>
             <td>{{ $data->road_name }}</td>
-            <td>{{ $data->company_name }}</td>
             <td>{{ $data->road_code }}</td>
             <td>{{ $data->total_length }}</td>
             <td>{{ $data->asset_code }}</td>
