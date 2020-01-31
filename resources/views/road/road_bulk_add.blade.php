@@ -28,7 +28,9 @@
 				<p class="">Gunakan shortcuts <kbd>Ctrl (Cmd) + C</kbd> and <kbd>Ctrl (Cmd) + V</kbd> untuk menyalin data dari file excel atau csv anda.</p>
 			</div>
 			<div class="col-md-4 text-right">
+			{{-- 
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
+			--}}
 				<button type="submit" class="btn btn-primary">Simpan</button>
 			</div>
 		</div>
@@ -98,7 +100,7 @@ HotContextMenu = function() {
 			}	
 		var car_data = [
 				{company_code: "", estate_code:"", werks: "", afdeling_code: "", block_code: "", status_code: "", category_code: "", segment: ""
-				, road_code: "", total_length: "", asset_code: ""},
+				, total_length: "", asset_code: ""},
 			];
 			
 		var hot_context_copy = document.getElementById('hot_context_copy');
@@ -140,7 +142,7 @@ HotContextMenu = function() {
 				rowHeaders: true,
 				stretchH: 'all',
 				colHeaders: ['Company Code', 'Estate Code', 'Plant', 'Afdeling Code', 'Block Code','Status Code','Category Code','Segment'
-				,'Road Code','Total Length','Asset Code'],
+				,'Total Length','Asset Code'],
 				columns: [
 					{
 						data: 'company_code',
@@ -182,11 +184,7 @@ HotContextMenu = function() {
 						type: 'numeric',
 						validator: cekNumSegment
 					},
-					{
-						data: 'road_code',
-						type: 'numeric',
-						validator: cekNum
-					},
+					
 					{
 						data: 'total_length',
 						type: 'numeric',
@@ -194,7 +192,7 @@ HotContextMenu = function() {
 					},
 					{
 						data: 'asset_code',
-						validator: cekString
+						// validator: cekString
 					},
 				],
 				afterCopy: function(changes) {
@@ -269,7 +267,7 @@ function save(){
 			
 			let dataFix = [];
 			$.each(hot_context_copy_init.getData(), (k,v)=>{
-				dataFix.push({company_code: v[0], estate_code:v[1], werks: v[2], afdeling_code: v[3], block_code: v[4], status_code: v[5], category_code: v[6], segment: v[7], road_code: v[8], total_length: v[9], asset_code: v[10]}) });
+				dataFix.push({company_code: v[0], estate_code:v[1], werks: v[2], afdeling_code: v[3], block_code: v[4], status_code: v[5], category_code: v[6], segment: v[7], total_length: v[8], asset_code: v[9]}) });
 			
 			$.ajax({
 				type:'post',

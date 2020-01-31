@@ -70,7 +70,7 @@ class GeneralDataController extends Controller
 					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
 				}
 			}
-			$sql .= " and (GENERAL_CODE != 'company_initial' or (GENERAL_CODE='company_initial' and DESCRIPTION_CODE in ($ww))) ";
+			$sql .= " and (GENERAL_CODE != 'company_initial' or (GENERAL_CODE='company_initial' and DESCRIPTION_CODE in (select company_code from TM_ESTATE a join TM_COMPANY b on b.id = a.company_id where werks in ($ww)))) ";
 		}
 		
 		
