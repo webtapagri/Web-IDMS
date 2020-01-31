@@ -479,29 +479,29 @@ class RoadController extends Controller
 					$stat = RoadStatus::where('status_code',$dt['status_code'])->first();
 					
 					if(!$stat){
-						$respon['error'][] = ['line'=>($k+1),'status'=>'status_code_not_found'];
+						$respon['error'][] = ['line'=>($k+1),'status'=>'status code not found'];
 						continue;
 					}
 					
 					$cat = RoadCategory::where('category_code',$dt['category_code'])->where('status_id',$stat->id)->first();
 					
 					if(!$cat){
-						$respon['error'][] = ['line'=>($k+1),'status'=>'category_code_not_found'];
+						$respon['error'][] = ['line'=>($k+1),'status'=>'category code not found'];
 						continue;
 					}
 					$getCom = Company::where('company_code',$dt['company_code'])->first();
 					if(!$getCom){
-						$respon['error'][] = ['line'=>($k+1),'status'=>'company_code_not_found'];
+						$respon['error'][] = ['line'=>($k+1),'status'=>'company code not found'];
 						continue;
 					}
 					$getW = Estate::where('werks',$dt['werks'])->where('company_id',$getCom->id)->where('estate_code',$dt['estate_code'])->first();
 					if(!$getW){
-						$respon['error'][] = ['line'=>($k+1),'status'=>'estate_code_or_werks_not_found'];
+						$respon['error'][] = ['line'=>($k+1),'status'=>'estate code or plant not found'];
 						continue;
 					}
 					$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
 					if(!$getAfd){
-						$respon['error'][] = ['line'=>($k+1),'status'=>'afdeling_code_not_found'];
+						$respon['error'][] = ['line'=>($k+1),'status'=>'afdeling code not found'];
 						continue;
 					}
 						
@@ -513,7 +513,7 @@ class RoadController extends Controller
 										->first();
 										
 						if(!$getGD){
-							$respon['error'][] = ['line'=>($k+1),'status'=>'company_code_not_found_in_general_data'];
+							$respon['error'][] = ['line'=>($k+1),'status'=>'company code not found in general data'];
 							continue;
 						}
 						
@@ -522,7 +522,7 @@ class RoadController extends Controller
 						
 						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$getAfd->id)->first();
 						if(!$getBlc){
-							$respon['error'][] = ['line'=>($k+1),'status'=>'block_code_not_found'];
+							$respon['error'][] = ['line'=>($k+1),'status'=>'block code not found'];
 							continue;
 						}
 						$bcc = $getBlc->block_code.'-'.$getBlc->block_name;
@@ -537,9 +537,20 @@ class RoadController extends Controller
 						//cek road_code is exist ?
 						$ceki = Road::where('road_code',$data['road_code'])->count();
 						if($ceki > 0){
-							$respon['error'][] = ['line'=>($k+1),'status'=>'road_code_is_exist'];
+							$respon['error'][] = ['line'=>($k+1),'status'=>'road code or segment is exist'];
 							continue;
 						}
+						
+						$str 		= $data['road_code'];
+						$min_str 	= -(strlen($str));
+						$str_lenks 	= strlen($str)-1;
+						$sip 		= substr($str,$min_str,$str_lenks);
+						$cko 		= Road::whereRaw(" substring(road_code,$min_str,$str_lenks) = '$sip' ")->count();
+						if($cko==9){
+							$respon['error'][] = ['line'=>($k+1),'status'=>'Segment is full'];
+							continue;
+						}
+						
 					
 					$road 				= Road::create($data+Arr::except($dt,['status_code','category_code','segment','total_length','asset_code']));
 								
