@@ -213,7 +213,7 @@ function loadGrid(){
             
             { data: 'estate_name', 		name: 'estate_name' },
             { data: 'werks', 	    	name: 'werks' },
-            { data: 'afdeling_name', 	name: 'afdeling_name' },
+            { data: 'afdeling_code', 	name: 'afdeling_code' },
             { data: 'block_code', 		name: 'block_code' },
             { data: 'block_name', 		name: 'block_name' },
             { data: 'status_name', 		name: 'status_name' },

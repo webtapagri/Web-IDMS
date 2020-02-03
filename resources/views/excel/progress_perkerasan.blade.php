@@ -30,7 +30,7 @@
             <td>{{ $data->category_name }}</td>
             <td>{{ $data->company_name }}</td>
             <td>{{ $data->estate_name }}</td>
-            <td>{{ $data->afdeling_name }}</td>
+            <td>{{ $data->afdeling_code }}</td>
             <td>{{ $data->block_name }}</td>
         </tr>
     @endforeach
