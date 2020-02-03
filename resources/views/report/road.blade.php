@@ -159,7 +159,7 @@ function loadGrid(){
 							extension: '.csv',
 						},
 						{
-							text: '<i class="icon-file-spreadsheet mr-2"></i>Download CSV',
+							text: '<i class="icon-file-excel mr-2"></i>Export to EXCEL',
 							className: 'btn bg-teal-400',
 							action: function(e, dt, node, config) {
 								
