@@ -414,7 +414,7 @@ function loadGrid(){
             { data: 'category_name', 	name: 'category_name' },
 			{ data: 'company_name', 	name: 'company_name' },
             { data: 'estate_name', 		name: 'estate_name' },
-            { data: 'afdeling_name', 	name: 'afdeling_name' },
+            { data: 'afdeling_code', 	name: 'afdeling_code' },
             { data: 'block_name', 		name: 'block_name' },
             { data: 'action', 			name: 'action' },
         ];

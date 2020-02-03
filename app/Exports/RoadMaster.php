@@ -45,7 +45,7 @@ class RoadMaster implements FromView
 			$data->whereRaw(" (
 						estate_name like '%$que_global%' 
 						or werks like '%$que_global%'
-						or afdeling_name like '%$que_global%'
+						or afdeling_code like '%$que_global%'
 						or block_code like '%$que_global%'
 						or block_name like '%$que_global%'
 						or status_name like '%$que_global%'
