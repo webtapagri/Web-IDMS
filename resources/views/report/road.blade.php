@@ -171,8 +171,7 @@ function loadGrid(){
 								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
 								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
 									if( $(v).val() != '' ){
-										console.log(k-tbll)
-										que.push( { col: col[k-tbll]['name'], val : $(v).val()} )
+										que.push( { col: col[k]['name'], val : $(v).val()} )
 									}    
 								})
 								
@@ -203,13 +202,7 @@ function loadGrid(){
 				}
 			});
 	
-
-	table = $('.datatable-responsive').DataTable( {
-        processing: true,
-        serverSide: true,
-        ajax: '{{ route("report.road_datatables") }}',
-		"order": [[1,"asc"],[2, "asc" ]], 
-        columns: [
+	var col = [
             
             { data: 'estate_name', 		name: 'estate_name' },
             { data: 'werks', 	    	name: 'werks' },
@@ -223,11 +216,18 @@ function loadGrid(){
             { data: 'road_code', 		name: 'road_code' },
             { data: 'total_length', 	name: 'total_length' },
             { data: 'asset_code', 		name: 'asset_code' },
-		],
+		];
+
+	table = $('.datatable-responsive').DataTable( {
+        processing: true,
+        serverSide: true,
+        ajax: '{{ route("report.road_datatables") }}',
+		"order": [[1,"asc"],[2, "asc" ]], 
+        columns: col,
 			
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k > 0 && k < 12){
+				if(k > -1 && k < 12){
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())
