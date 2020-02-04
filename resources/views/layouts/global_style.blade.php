@@ -20,4 +20,7 @@
     padding: 4px;
     font-size: 7pt;
 }
+.sidebar-dark .nav-sidebar .nav-item>.nav-link.active, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-item>.nav-link.active {
+    background-color: #000000;
+}
 </style>
