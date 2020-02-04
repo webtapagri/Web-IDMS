@@ -14,7 +14,7 @@ class AlterTmRoadModifySegmentNotMandatory extends Migration
     public function up()
     {
         Schema::table('TM_ROAD', function (Blueprint $table) {
-            $table->dropColumn('segment');
+            // $table->dropColumn('segment');
         });
     }
 
@@ -26,7 +26,7 @@ class AlterTmRoadModifySegmentNotMandatory extends Migration
     public function down()
     {
         Schema::table('TM_ROAD', function (Blueprint $table) {
-            $table->integer('segment');
+            // $table->integer('segment');
         });
     }
 }
