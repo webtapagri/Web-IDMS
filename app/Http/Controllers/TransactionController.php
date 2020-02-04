@@ -276,10 +276,12 @@ class TransactionController extends Controller
 			TRRoadStatus::create($request->all()+['updated_by'=>\Session::get('user_id'),'road_code'=>$road_code,'road_name'=>$road_name]);
 		
 			// update TM_ROAD
-			$RS->road_code = $road_code;
-			$RS->road_name = $road_name;
-			// $RS->segment = $request->segment;
-			$RS->updated_by = \Session::get('user_id');
+			$RS->road_code 		= $road_code;
+			$RS->road_name		= $road_name;
+			$RS->segment 		= $request->segment;
+			$RS->status_id 		= $request->status_id;
+			$RS->category_id 	= $request->category_id;
+			$RS->updated_by 	= \Session::get('user_id');
 			$RS->save();
 
 		}catch (\Throwable $e) {

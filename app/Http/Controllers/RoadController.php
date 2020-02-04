@@ -388,7 +388,7 @@ class RoadController extends Controller
 					throw new \Exception('Road code atau segment sudah terdaftar.');
 				}
 			
-			$road 				= Road::create($request->except('segment','werks','status_id','category_id','total_length','asset_code','block_code')+$data);
+			$road 				= Road::create($request->except('werks','block_code')+$data);
 						
 			//insert into TR_ROAD_LOG
 			$tr_data = [
@@ -444,16 +444,24 @@ class RoadController extends Controller
 	
 	public function road_update(Request $request)
 	{
+		DB::beginTransaction();
 		try {
 			RoadLog::create($request->all()+['updated_by'=>\Session::get('user_id')]);
+			$R = Road::find($request->road_id);
+			$R->total_length 	= $request->total_length;
+			$R->asset_code 		= $request->asset_code;
+			$R->save();
+			
 		}catch (\Throwable $e) {
+			DB::rollBack();
             \Session::flash('error', throwable_msg($e));
             return redirect()->back()->withInput($request->input());
         }catch (\Exception $e) {
+			DB::rollBack();
             \Session::flash('error', exception_msg($e));
             return redirect()->back()->withInput($request->input());
 		}
-		
+		DB::commit();
 		\Session::flash('success', 'Berhasil mengupdate data');
         return redirect()->route('master.road');
 	}
@@ -493,6 +501,9 @@ class RoadController extends Controller
 						$respon['error'][] = ['line'=>($k+1),'status'=>'category code not found'];
 						continue;
 					}
+					
+					$data['status_id'] 		= $stat->id;
+					$data['category_id'] 	= $cat->id;
 					$getCom = Company::where('company_code',$dt['company_code'])->first();
 					if(!$getCom){
 						$respon['error'][] = ['line'=>($k+1),'status'=>'company code not found'];
@@ -556,7 +567,7 @@ class RoadController extends Controller
 						}
 						
 					
-					$road 				= Road::create($data+Arr::except($dt,['status_code','category_code','segment','total_length','asset_code']));
+					$road 				= Road::create($data+Arr::except($dt,['status_code','category_code']));
 								
 					//insert into TR_ROAD_LOG
 					$tr_data = [
