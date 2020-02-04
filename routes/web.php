@@ -7,7 +7,8 @@ use App\DataTables\RoadDataTable;
 Auth::routes();
 
 Route::group(['middleware' => ['web']], function () {
-
+	Route::get('/cace', 	'MasterController@cace')->name('sksskm');
+	Route::get('/caces', 	'MasterController@caces')->name('sksskms');
 });
 
 Route::group(['middleware' => [ 'auth' ]], function () {

@@ -373,7 +373,7 @@ class RoadController extends Controller
 					throw new \Exception('Company code belum didaftarkan di <a href="'.URL::to('setting/general-data').'">General Data</a>.');
 				}
 				
-				$bcc = $getGD->description_code.'-'.$getGD->description;
+				$bcc = '000-'.$getGD->description;
 			}
 			
 			$blck 				= explode('-',$bcc);
@@ -476,6 +476,10 @@ class RoadController extends Controller
 				foreach($sheet as $k=>$dt){
 					
 					$land_use_code = '0601';
+					if(!isset($dt['status_code'])){
+						$respon['error'][] = ['line'=>($k+1),'status'=>'INDEX status code not found'];
+						continue;
+					}
 					$stat = RoadStatus::where('status_code',$dt['status_code'])->first();
 					
 					if(!$stat){
@@ -499,11 +503,7 @@ class RoadController extends Controller
 						$respon['error'][] = ['line'=>($k+1),'status'=>'estate code or plant not found'];
 						continue;
 					}
-					$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
-					if(!$getAfd){
-						$respon['error'][] = ['line'=>($k+1),'status'=>'afdeling code not found'];
-						continue;
-					}
+					
 						
 					if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
 						
@@ -517,9 +517,13 @@ class RoadController extends Controller
 							continue;
 						}
 						
-						$bcc = $getGD->description_code.'-'.$getGD->description;
+						$bcc = '000-'.$getGD->description;
 					}else{
-						
+						$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
+						if(!$getAfd){
+							$respon['error'][] = ['line'=>($k+1),'status'=>'afdeling code not found'];
+							continue;
+						}
 						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$getAfd->id)->first();
 						if(!$getBlc){
 							$respon['error'][] = ['line'=>($k+1),'status'=>'block code not found'];
