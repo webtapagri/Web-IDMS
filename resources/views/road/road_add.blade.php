@@ -113,7 +113,7 @@
 					</div>
 				</div>
 				
-				<div class="form-group row">
+				<div class="form-group row fg-afdeling d-none">
 					<label class="col-form-label col-sm-3">Afdeling</label>
 					<div class="col-sm-9">
 						<select required data-placeholder="Select Afdeling" name="afdeling_code"  class="form-control select-clear afdeling_code" data-fouc>
@@ -212,8 +212,10 @@ $(document).ready(()=>{
 		
 		load_company({{ old('company_code') }})
 		load_estate('{{ old('company_code') }}','{{ old('werks') }}')
-		load_afdeling('{{ old('werks') }}','{{ old('afdeling_code') }}')
-		load_block('{{ old('afdeling_code') }}','{{ old('werks') }}','{{ old('block_code') }}')
+		if('{{ old('afdeling_code') }}' != ''){
+			load_afdeling('{{ old('werks') }}','{{ old('afdeling_code') }}')
+			load_block('{{ old('afdeling_code') }}','{{ old('werks') }}','{{ old('block_code') }}')
+		}
 	}else{
 		load_status();
 		load_company();
@@ -299,9 +301,13 @@ function hideBlock(){
 	if( $.inArray( htm.toUpperCase(), [ "JALAN AKSES", "JALAN DESA", "JALAN NEGARA" ] ) != -1 ){
 		$('.block_code').removeAttr('required')
 		$('.fg-block').addClass('d-none')
+		$('.afdeling_code').removeAttr('required')
+		$('.fg-afdeling').addClass('d-none')
 	}else{
 		$('.block_code').attr('required','required')
 		$('.fg-block').removeClass('d-none')
+		$('.afdeling_code').attr('required','required')
+		$('.fg-afdeling').removeClass('d-none')
 	}
 }
 

@@ -201,6 +201,7 @@ return array(
     'App\\Models\\VBlock' => $baseDir . '/app/Models/VBlock.php',
     'App\\Models\\VEstate' => $baseDir . '/app/Models/VEstate.php',
     'App\\Models\\VListProgressPerkerasan' => $baseDir . '/app/Models/VListProgressPerkerasan.php',
+    'App\\Models\\VReportProgressPerkerasan' => $baseDir . '/app/Models/VReportProgressPerkerasan.php',
     'App\\Models\\VRoad' => $baseDir . '/app/Models/VRoad.php',
     'App\\Models\\VRoadCategory' => $baseDir . '/app/Models/VRoadCategory.php',
     'App\\Models\\VRoadLog' => $baseDir . '/app/Models/VRoadLog.php',

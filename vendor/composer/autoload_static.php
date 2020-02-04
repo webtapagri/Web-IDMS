@@ -822,6 +822,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'App\\Models\\VBlock' => __DIR__ . '/../..' . '/app/Models/VBlock.php',
         'App\\Models\\VEstate' => __DIR__ . '/../..' . '/app/Models/VEstate.php',
         'App\\Models\\VListProgressPerkerasan' => __DIR__ . '/../..' . '/app/Models/VListProgressPerkerasan.php',
+        'App\\Models\\VReportProgressPerkerasan' => __DIR__ . '/../..' . '/app/Models/VReportProgressPerkerasan.php',
         'App\\Models\\VRoad' => __DIR__ . '/../..' . '/app/Models/VRoad.php',
         'App\\Models\\VRoadCategory' => __DIR__ . '/../..' . '/app/Models/VRoadCategory.php',
         'App\\Models\\VRoadLog' => __DIR__ . '/../..' . '/app/Models/VRoadLog.php',
