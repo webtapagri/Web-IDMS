@@ -13,7 +13,7 @@ class AddSomeColumnToTmRoad extends Migration
      */
     public function up()
     {
-        Schema::table('tm_road', function (Blueprint $table) {
+        Schema::table('TM_ROAD', function (Blueprint $table) {
             $table->integer('total_length');
             $table->string('asset_code',100);
 			$table->integer('segment');
@@ -31,7 +31,7 @@ class AddSomeColumnToTmRoad extends Migration
      */
     public function down()
     {
-        Schema::table('tm_road', function (Blueprint $table) {
+        Schema::table('TM_ROAD', function (Blueprint $table) {
             $table->dropColumn('total_length');
             $table->dropColumn('asset_code');
 			$table->dropColumn('segment');
