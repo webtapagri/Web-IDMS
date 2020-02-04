@@ -32,6 +32,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 			Route::get('/block_tree/{id}/{werks}', 		'MasterController@api_block_tree')->name('api.master.api_block_tree');
 			
 			Route::get('/estate', 	'MasterController@api_estate')->name('api.master.estate');
+			Route::get('/werks', 				['as'=>'master.api_werks', 'uses'=>'ConfigurationController@api_werks']);
 		});
 		
 		Route::group(['prefix'=>'history'], function () {
@@ -102,6 +103,15 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 	// Route::get('/report/road', function(RoadDataTable $dataTable) {
 	// 	return $dataTable->render('report.road');
 	// });
+
+	Route::group(['prefix'=>'setting'], function () {
+		Route::get('/period', 	'ConfigurationController@period')->name('setting.period');
+		Route::post('/period-save', 			['as'=>'setting.period_save', 'uses'=>'ConfigurationController@period_save']);
+		Route::post('/period-update', 			['as'=>'setting.period_update', 'uses'=>'ConfigurationController@period_update']);
+		Route::get('/period-delete/{id}', 			['as'=>'setting.period_delete', 'uses'=>'ConfigurationController@delete']);
+		Route::get('/period-datatables', 			['as'=>'setting.period_datatables', 'uses'=>'ConfigurationController@period_datatables']);
+	});
+
 
 });
 

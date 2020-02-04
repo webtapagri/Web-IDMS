@@ -171,8 +171,8 @@ function loadGrid(){
 								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
 								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
 									if( $(v).val() != '' ){
-										console.log(k-tbll)
-										que.push( { col: col[k-tbll]['name'], val : $(v).val()} )
+										console.log(k)
+										que.push( { col: col[k]['name'], val : $(v).val()} )
 									}    
 								})
 								
@@ -202,32 +202,32 @@ function loadGrid(){
 					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
 				}
 			});
-	
-
+			
+	col = [
+		
+		{ data: 'estate_name', 		name: 'estate_name' },
+		{ data: 'werks', 	    	name: 'werks' },
+		{ data: 'afdeling_code', 	name: 'afdeling_code' },
+		{ data: 'block_code', 		name: 'block_code' },
+		{ data: 'block_name', 		name: 'block_name' },
+		{ data: 'status_name', 		name: 'status_name' },
+		{ data: 'category_name', 	name: 'category_name' },
+		{ data: 'segment',      	name: 'segment' },
+		{ data: 'road_name', 		name: 'road_name' },
+		{ data: 'road_code', 		name: 'road_code' },
+		{ data: 'total_length', 	name: 'total_length' },
+		{ data: 'asset_code', 		name: 'asset_code' },
+	];
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
         serverSide: true,
         ajax: '{{ route("report.road_datatables") }}',
 		"order": [[1,"asc"],[2, "asc" ]], 
-        columns: [
-            
-            { data: 'estate_name', 		name: 'estate_name' },
-            { data: 'werks', 	    	name: 'werks' },
-            { data: 'afdeling_code', 	name: 'afdeling_code' },
-            { data: 'block_code', 		name: 'block_code' },
-            { data: 'block_name', 		name: 'block_name' },
-            { data: 'status_name', 		name: 'status_name' },
-            { data: 'category_name', 	name: 'category_name' },
-			{ data: 'segment',      	name: 'segment' },
-            { data: 'road_name', 		name: 'road_name' },
-            { data: 'road_code', 		name: 'road_code' },
-            { data: 'total_length', 	name: 'total_length' },
-            { data: 'asset_code', 		name: 'asset_code' },
-		],
+        columns: col,
 			
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k > 0 && k < 12){
+				if(k > -1 && k < 12){
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())
