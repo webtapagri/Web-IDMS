@@ -116,7 +116,7 @@
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			</div>
 
-			<form action="{{ route('history.progres_perkerasan_update') }}" method="post" class="form-horizontal">
+			<form action="{{ route('history.progres_perkerasan_update') }}" method="post" class="form-horizontal f-detail needs-validation" novalidate>
 				@csrf
 				<input type="hidden" id="rc_id" name="road_id">
 				<div class="modal-body">
@@ -142,6 +142,9 @@
 									}
 								?>
 							</select>
+							<div class="invalid-feedback">
+							  Please set Month.
+							</div>
 						</div>
 					</div>
 					<?php 
@@ -160,13 +163,16 @@
 									}
 								?>
 							</select>
+							<div class="invalid-feedback">
+							  Please set Year.
+							</div>
 						</div>
 					</div>
 				</div>
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-link" data-dismiss="modal">Tutup</button>
-					<button type="submit" class="btn btn-primary btn-ladda btn-ladda-spinner ladda-button legitRipple" data-style="expand-left" data-spinner-color="#333" data-spinner-size="20">
+					<button type="submit" class="btn btn-primary btn-ladda btn-ladda-spinner ladda-button legitRipple btn-f-detail" data-style="expand-left" data-spinner-color="#333" data-spinner-size="20">
 						<span class="ladda-label">SImpan</span>
 						<span class="ladda-spinner"></span><div class="ladda-progress" style="width: 0px;"></div>
 					</button>
@@ -244,13 +250,33 @@ $(document).ready(()=>{
 	
 	formRequiredMark()
 	
+	// $('.btn-f-detail').click(()=>{
+		// swal({
+			// title: 'Data yang anda input',
+			// html: '<table border="0" style="margin-left: 25%;"><tr><td align="left">Panjang perkerasan</td><td> : </td><td>'+$('#rc_length').val()+' m</td></tr><tr><td align="left">Bulan</td><td> : </td><td>'+$('select[name=month]').val()+'</td></tr><tr><td align="left">Tahun</td><td> : </td><td>'+$('select[name=year]').val()+'</td></tr></table>',
+			// type: 'info',
+			// showCancelButton: true,
+			// confirmButtonText: 'Simpan',
+			// cancelButtonText: 'Batal',
+			// confirmButtonClass: 'btn btn-success',
+			// cancelButtonClass: 'btn btn-danger',
+			// buttonsStyling: false
+		// }).then(function (is) {
+			// if(is.value){
+				// return true
+			// }else{
+				// return false
+			// }
+		// });
+	// })
+	
 });
 
 function edit(id,max,cur){
 	var maxi = (max-cur);
 	if(maxi==0){
 		swal({
-			title: 'For your information',
+			title: 'Information',
 			text: 'Jalan ini sudah dilakukan perkerasan jalan.',
 			type: 'info'
 		});
@@ -258,7 +284,8 @@ function edit(id,max,cur){
 	};
 	$('#rc_id').val(id)
 	$('#modal_edit').modal('show')
-	$('.tsp').html('<input required type="number" value="1" min="1" name="length" id="rc_length" placeholder="Total Length" class="touchspin-vertical'+id+' form-control">')
+	$('.tsp').html('<input required type="number" value="1" min="1"	 name="length" id="rc_length" placeholder="Total Length" class="touchspin-vertical'+id+' form-control">')
+	
 	$('.touchspin-vertical'+id).TouchSpin({
 			max: maxi,
             verticalbuttons: true,

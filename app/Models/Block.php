@@ -24,5 +24,7 @@ class Block extends Model
 		'werks_afd_block_code',
 		'latitude_block',
 		'longitude_block',
+		'start_valid',
+		'end_valid',
 	];
 }
