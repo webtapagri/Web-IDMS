@@ -476,7 +476,7 @@ class RoadController extends Controller
 	public function road_bulk_save(Request $request)
 	{		
 		DB::beginTransaction();
-		// try {
+		try {
 			$respon['error'] 	= [];
 			$respon['success'] 	= [];
 			$sheet = $request->data;
@@ -593,15 +593,15 @@ class RoadController extends Controller
 					$respon['success'][] = $k+1;
 				}
 			}
-		// }catch (\Throwable $e) {
-			// DB::rollBack();
-            // return response()->error('Error',throwable_msg($e));
-        // }catch (\Exception $e) {
-			// DB::rollBack();
-            // return response()->error('Error',exception_msg($e));
-		// }
-		DB::rollBack();
-		// DB::commit();
+		}catch (\Throwable $e) {
+			DB::rollBack();
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+			DB::rollBack();
+            return response()->error('Error',exception_msg($e));
+		}
+		// DB::rollBack();
+		DB::commit();
 		return response()->success('Success', $respon);
 		
 		\Session::flash('success', 'Berhasil menyimpan data');
