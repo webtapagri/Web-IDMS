@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterTmRoadModifySegmentNotMandatory extends Migration
+class CreateTRPeriodTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class AlterTmRoadModifySegmentNotMandatory extends Migration
      */
     public function up()
     {
-        Schema::table('TM_ROAD', function (Blueprint $table) {
-            // $table->dropColumn('segment');
+        Schema::create('TR_PERIOD', function (Blueprint $table) {
+            $table->increments('id');
+			$table->string('werks',50);
+			$table->string('month',10);
+			$table->integer('year');
+			$table->timestamps();
+			$table->softDeletes();
         });
     }
 
@@ -25,8 +30,6 @@ class AlterTmRoadModifySegmentNotMandatory extends Migration
      */
     public function down()
     {
-        Schema::table('TM_ROAD', function (Blueprint $table) {
-            // $table->integer('segment');
-        });
+        Schema::dropIfExists('TR_PERIOD');
     }
 }

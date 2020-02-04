@@ -65,8 +65,10 @@
 			<tr>
 				<th>Road Code</th>
 				<th>Road Name</th>
-				<th>Length</th>
-				<th>Progress</th>
+				<th>Total Length</th>
+				<th>Pavement Length</th>
+				<th>Month</th>
+				<th>Year</th>
 				<th>Asset Code</th>
 				<th>Segment</th>
 				<th>Status</th>
@@ -75,15 +77,16 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
-				<th>Action</th>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
 				<th>Road Code</th>
 				<th>Road Name</th>
-				<th>Length</th>
-				<th>Progress</th>
+				<th>Total Length</th>
+				<th>Pavement Length</th>
+				<th>Month</th>
+				<th>Year</th>
 				<th>Asset Code</th>
 				<th>Segment</th>
 				<th>Status</th>
@@ -92,7 +95,6 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
-				<th>Action</th>
 			</tr>
 		</tfoot>
 	</table>
@@ -304,14 +306,6 @@ function loadGrid(){
 						width: 250,
 						targets: [ 5 ]
 					},
-					{ 
-						orderable: false,
-						targets: [ 0 ]
-					},
-					{ 
-						"searchable": false, 
-						"targets": 0 
-					},
 				],
 				dom: '<"datatable-header"Bfl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
@@ -361,7 +355,9 @@ function loadGrid(){
             { data: 'road_code', 		name: 'road_code' },
             { data: 'road_name', 		name: 'road_name' },
             { data: 'total_length', 	name: 'total_length' },
-            { data: 'progress', 		name: 'progress' },
+            { data: 'length', 			name: 'length' },
+            { data: 'month', 			name: 'month' },
+            { data: 'year', 			name: 'year' },
             { data: 'asset_code', 		name: 'asset_code' },
             { data: 'segment', 			name: 'segment' },
             { data: 'status_name', 		name: 'status_name' },
@@ -370,7 +366,6 @@ function loadGrid(){
             { data: 'estate_name', 		name: 'estate_name' },
             { data: 'afdeling_code', 	name: 'afdeling_code' },
             { data: 'block_name', 		name: 'block_name' },
-            { data: 'action', 			name: 'action' },
         ];
 
 	table = $('.datatable-responsive').DataTable( {
@@ -381,10 +376,10 @@ function loadGrid(){
 		scrollX: true,
 		scrollY: '350px',
 		scrollCollapse: true,
-		fixedColumns: {
-			leftColumns: 0,
-			rightColumns: 1
-		},
+		// fixedColumns: {
+			// leftColumns: 1,
+			// rightColumns: 0,
+		// },
         columns: col,
 		initComplete: function () {
 			this.api().columns().every(function (k) {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterTmRoadModifySegmentNotMandatory extends Migration
+class ModifyVRoadCaseAfdelingJalanUmum extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AlterTmRoadModifySegmentNotMandatory extends Migration
      */
     public function up()
     {
-        Schema::table('TM_ROAD', function (Blueprint $table) {
-            // $table->dropColumn('segment');
-        });
+        //
+        \DB::unprepared("DROP VIEW IF EXISTS v_road");
+        DB::unprepared(file_get_contents(__DIR__. '/../sql/v_road.sql'));
     }
 
     /**
@@ -25,8 +25,8 @@ class AlterTmRoadModifySegmentNotMandatory extends Migration
      */
     public function down()
     {
-        Schema::table('TM_ROAD', function (Blueprint $table) {
-            // $table->integer('segment');
-        });
+        //
+        \DB::unprepared("DROP VIEW IF EXISTS v_road");
+        DB::unprepared(file_get_contents(__DIR__. '/../sql/v_road.sql'));
     }
 }

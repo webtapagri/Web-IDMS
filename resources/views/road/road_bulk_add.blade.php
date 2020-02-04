@@ -163,11 +163,11 @@ HotContextMenu = function() {
 					},
 					{
 						data: 'afdeling_code',
-						validator: cekString
+						// validator: cekString
 					},
 					{
 						data: 'block_code',
-						validator: cekString
+						// validator: cekString
 					},
 					{
 						data: 'status_code',
@@ -267,7 +267,19 @@ function save(){
 			
 			let dataFix = [];
 			$.each(hot_context_copy_init.getData(), (k,v)=>{
-				dataFix.push({company_code: v[0], estate_code:v[1], werks: v[2], afdeling_code: v[3], block_code: v[4], status_code: v[5], category_code: v[6], segment: v[7], total_length: v[8], asset_code: v[9]}) });
+				dataFix.push({
+						company_code: v[0], 
+						estate_code:v[1], 
+						werks: v[2], 
+						afdeling_code: v[3], 
+						block_code: v[4], 
+						status_code: v[5], 
+						category_code: v[6], 
+						segment: v[7], 
+						total_length: v[8], 
+						asset_code: v[9]
+				})
+			});
 			
 			$.ajax({
 				type:'post',
@@ -304,7 +316,7 @@ function save(){
 							// var succ = cont.success.filter( distinct )
 							$.each(cont.success, (k,v)=>{
 								var km = k != 0 ? ',' : ''
-								$('.success_area').append( v+km );
+								$('.success_area').append( km+v );
 							})
 						}
 					}else{
