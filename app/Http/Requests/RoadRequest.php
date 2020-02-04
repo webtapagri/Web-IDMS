@@ -27,7 +27,7 @@ class RoadRequest extends FormRequest
         return [
 			'company_code' => 'required',
 			'werks' => 'required',
-			'afdeling_code' => 'required',
+			// 'afdeling_code' => 'required',
 			// 'block_code' => 'required',
 			'status_id' => 'required',
 			'category_id' => 'required',

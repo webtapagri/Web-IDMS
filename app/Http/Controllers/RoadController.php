@@ -517,7 +517,7 @@ class RoadController extends Controller
 							continue;
 						}
 						
-						$bcc = $getGD->description_code.'-'.$getGD->description;
+						$bcc = '000-'.$getGD->description;
 					}else{
 						
 						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$getAfd->id)->first();

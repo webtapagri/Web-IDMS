@@ -163,11 +163,11 @@ HotContextMenu = function() {
 					},
 					{
 						data: 'afdeling_code',
-						validator: cekString
+						// validator: cekString
 					},
 					{
 						data: 'block_code',
-						validator: cekString
+						// validator: cekString
 					},
 					{
 						data: 'status_code',
