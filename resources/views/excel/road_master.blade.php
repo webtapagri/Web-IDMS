@@ -20,7 +20,7 @@
         <tr>
             <td>{{ $data->estate_name }}</td>
             <td>{{ $data->werks }}</td>
-            <td>{{ $data->afdeling_name }}</td>
+            <td>{{ $data->afdeling_code }}</td>
             <td>{{ $data->block_code }}</td>
             <td>{{ $data->block_name }}</td>
             <td>{{ $data->status_name }}</td>

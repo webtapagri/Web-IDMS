@@ -53,7 +53,7 @@ class ProgressPerkerasan implements FromView
 						or category_name like '%$que_global%'
 						or company_name like '%$que_global%'
 						or estate_name like '%$que_global%'
-						or afdeling_name like '%$que_global%'
+						or afdeling_code like '%$que_global%'
 						or block_name like '%$que_global%'
 						) ");
 		}
