@@ -468,7 +468,7 @@ class RoadController extends Controller
 	public function road_bulk_save(Request $request)
 	{		
 		DB::beginTransaction();
-		// try {
+		try {
 			$respon['error'] 	= [];
 			$respon['success'] 	= [];
 			$sheet = $request->data;
@@ -476,6 +476,10 @@ class RoadController extends Controller
 				foreach($sheet as $k=>$dt){
 					
 					$land_use_code = '0601';
+					if(!isset($dt['status_code'])){
+						$respon['error'][] = ['line'=>($k+1),'status'=>'INDEX status code not found'];
+						continue;
+					}
 					$stat = RoadStatus::where('status_code',$dt['status_code'])->first();
 					
 					if(!$stat){
@@ -578,14 +582,14 @@ class RoadController extends Controller
 					$respon['success'][] = $k+1;
 				}
 			}
-		// }catch (\Throwable $e) {
-			// DB::rollBack();
-            // return response()->error('Error',throwable_msg($e));
-        // }catch (\Exception $e) {
+		}catch (\Throwable $e) {
 			DB::rollBack();
-            // return response()->error('Error',exception_msg($e));
-		// }
-		// DB::commit();
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+			DB::rollBack();
+            return response()->error('Error',exception_msg($e));
+		}
+		DB::commit();
 		return response()->success('Success', $respon);
 		
 		\Session::flash('success', 'Berhasil menyimpan data');
