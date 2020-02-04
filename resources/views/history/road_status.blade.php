@@ -379,7 +379,9 @@ function load_status(){
 		alert("Gagal Terhubung ke Server saat load data status (combobox)");
 		
 	});
-}function load_category(id){
+}
+
+function load_category(id){
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/road-category/') }}/"+id,
