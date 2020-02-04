@@ -171,10 +171,6 @@ function loadGrid(){
 								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
 								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
 									if( $(v).val() != '' ){
-<<<<<<< HEAD
-										console.log(k)
-=======
->>>>>>> b78d243bba9e3e90ba3689cea801b9f9ec9d5851
 										que.push( { col: col[k]['name'], val : $(v).val()} )
 									}    
 								})
