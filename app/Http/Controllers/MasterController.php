@@ -16,6 +16,8 @@ use AccessRight;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
 use API;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 
 class MasterController extends Controller
 {
@@ -447,5 +449,25 @@ class MasterController extends Controller
 
         return response()->json(array('data' => $arr));
 	}
-
+	
+	public function cace()
+	{
+		// $p = Redis::incr('p');
+		// return $p;
+		
+		$value = Cache::remember('company', 1/2, function () {
+			return Company::all();
+		});
+		return $value;
+	}
+	public function caces()
+	{
+		if (Cache::has('company')){
+			$value = Cache::get('company');
+		} else {
+			$value=  0;
+		}
+		return $value;
+	}
+	
 }
