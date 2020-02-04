@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\VListProgressPerkerasan;
+use App\Models\VReportProgressPerkerasan;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\Exportable;
@@ -39,13 +39,15 @@ class ProgressPerkerasan implements FromView
 			$where = "werks in ($ww)";
 		}
 		
-		$data 		= VListProgressPerkerasan::whereRaw($where);
+		$data 		= VReportProgressPerkerasan::whereRaw($where);
 		if($que_global){
 			$data->whereRaw(" (
 						road_code like '%$que_global%' 
 						or road_name like '%$que_global%'
 						or total_length like '%$que_global%'
-						or curr_progress like '%$que_global%'
+						or length like '%$que_global%'
+						or month like '%$que_global%'
+						or year like '%$que_global%'
 						or progress like '%$que_global%'
 						or asset_code like '%$que_global%'
 						or segment like '%$que_global%'
