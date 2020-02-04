@@ -473,8 +473,8 @@ class RoadController extends Controller
 			$respon['success'] 	= [];
 			$sheet = $request->data;
 			if(count($sheet) > 0){
-				\Log::info('START Coba')
-				\Log::info(json_encode($sheet))
+				\Log::info('START Coba');
+				\Log::info(json_encode($sheet));
 				foreach($sheet as $k=>$dt){
 					
 					$land_use_code = '0601';
