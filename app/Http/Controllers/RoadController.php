@@ -600,6 +600,7 @@ class RoadController extends Controller
 			DB::rollBack();
             return response()->error('Error',exception_msg($e));
 		}
+		// DB::rollBack();
 		DB::commit();
 		return response()->success('Success', $respon);
 		
