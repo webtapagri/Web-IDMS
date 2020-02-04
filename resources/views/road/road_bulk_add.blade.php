@@ -304,7 +304,7 @@ function save(){
 							// var succ = cont.success.filter( distinct )
 							$.each(cont.success, (k,v)=>{
 								var km = k != 0 ? ',' : ''
-								$('.success_area').append( v+km );
+								$('.success_area').append( km+v );
 							})
 						}
 					}else{
