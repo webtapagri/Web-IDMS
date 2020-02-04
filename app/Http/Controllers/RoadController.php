@@ -373,7 +373,7 @@ class RoadController extends Controller
 					throw new \Exception('Company code belum didaftarkan di <a href="'.URL::to('setting/general-data').'">General Data</a>.');
 				}
 				
-				$bcc = $getGD->description_code.'-'.$getGD->description;
+				$bcc = '000-'.$getGD->description;
 			}
 			
 			$blck 				= explode('-',$bcc);
