@@ -499,11 +499,7 @@ class RoadController extends Controller
 						$respon['error'][] = ['line'=>($k+1),'status'=>'estate code or plant not found'];
 						continue;
 					}
-					$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
-					if(!$getAfd){
-						$respon['error'][] = ['line'=>($k+1),'status'=>'afdeling code not found'];
-						continue;
-					}
+					
 						
 					if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
 						
@@ -519,7 +515,11 @@ class RoadController extends Controller
 						
 						$bcc = '000-'.$getGD->description;
 					}else{
-						
+						$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
+						if(!$getAfd){
+							$respon['error'][] = ['line'=>($k+1),'status'=>'afdeling code not found'];
+							continue;
+						}
 						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$getAfd->id)->first();
 						if(!$getBlc){
 							$respon['error'][] = ['line'=>($k+1),'status'=>'block code not found'];
