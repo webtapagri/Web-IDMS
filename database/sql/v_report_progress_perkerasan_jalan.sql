@@ -1,7 +1,6 @@
 create or replace view V_REPORT_PROGRESS_PERKERASAN_JALAN as 
 select tmr.company_name, tmr.estate_name, tmr.afdeling_name, tmr.block_name, tmrs.status_name, tmrc.category_name,
 trpp.length, trpp.month, trpp.year,
-
 tmr.total_length,
 tmr.asset_code,
 tmr.segment,
