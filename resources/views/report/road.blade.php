@@ -222,7 +222,7 @@ function loadGrid(){
         processing: true,
         serverSide: true,
         ajax: '{{ route("report.road_datatables") }}',
-		"order": [[1,"asc"],[2, "asc" ]], 
+		// "order": [[1,"asc"],[2, "asc" ]], 
         columns: col,
 			
 		initComplete: function () {
