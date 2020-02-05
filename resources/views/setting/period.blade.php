@@ -126,15 +126,26 @@
 					<?php 
 					$start = $month = strtotime('2009-01-01');
 					$end = strtotime('2010-01-01');
+					$curdate = strtotime(date('Y-m-d'));
+					$m = date('m',$curdate);
+					$s="";								
+
 					?>
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Bulan</label>
 						<div class="col-sm-9">
 							<select required data-placeholder="Select Month" name="month"  class="form-control month">
 								<option value=""></option>
-								<?php while($month < $end){ ?>
-									<option value="{{ date('m', $month) }}">{{ date('F', $month) }}</option>
 								<?php
+									while($month < $end){
+												if(date('m', $month)== $m){
+													$s = "selected='selected'";
+												}else{
+													$s = "";
+												}
+									?>
+									<option value="{{ date('m', $month) }}" {{$s}} >{{ date('F', $month) }}</option>
+									<?php
 										$month = strtotime("+1 month", $month);	 
 									}
 								?>
@@ -144,14 +155,26 @@
 					<?php 
 					$st = $mon = strtotime('2009-01-01');
 					$en = strtotime('2031-01-01');
+					$y = date('Y',$curdate);
+					$sl="";
 					?>
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Tahun</label>
 						<div class="col-sm-9">
 							<select required data-placeholder="Select Year" name="year"  class="form-control year">
 								<option value=""></option>
-								<?php while($mon < $en){ ?>
-									<option value="{{ date('Y', $mon) }}">{{ date('Y', $mon) }}</option>
+								<?php
+								$y = date('Y',$curdate);
+								$sl="";
+								 while($mon < $en){ 
+									 
+									if(date('Y', $mon)== $y){
+										$sl = "selected='selected'";
+									}else{
+										$sl = "";
+									}
+									 ?>
+									<option value="{{ date('Y', $mon) }}" {{$sl}} >{{ date('Y', $mon) }}</option>
 								<?php
 										$mon = strtotime("+1 year", $mon);	 
 									}
@@ -205,7 +228,7 @@
 							<select required data-placeholder="Select Month" name="month" id="month"  class="form-control month">
 								<option value=""></option>
 								<?php while($month < $end){ ?>
-									<option value="{{ date('m', $month) }}">{{ date('F', $month) }}</option>
+									<option value="{{ date('m', $month) }}" >{{ date('F', $month) }}</option>
 								<?php
 										$month = strtotime("+1 month", $month);	 
 									}
@@ -331,8 +354,8 @@ function load_werks(){
 			var htm = '<option value="">-- Pilih BA Code --</option>'
 			var htm2 = '<option value="">-- Pilih BA Code --</option>'
 			$.each(cont, (k,v)=>{
-				htm += '<option value="'+v.werks+'" >'+v.werks+'</option>'
-				htm2 += '<option value="'+v.werks+'" id="comboid_'+v.werks+'">'+v.werks+'</option>'
+				htm += '<option value="'+v.werks+'" >'+v.werks+' - '+v.estate_name+'</option>'
+				htm2 += '<option value="'+v.werks+'" id="comboid_'+v.werks+'">'+v.werks+' - '+v.estate_name+'</option>'
 			});
 			$('#werks').html(htm);
 			$('#werks_edit').html(htm2);

@@ -201,6 +201,7 @@ function loadGrid(){
 					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
 				}
 			});
+			
 	col = [
 		
 		{ data: 'estate_name', 		name: 'estate_name' },
