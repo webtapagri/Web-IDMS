@@ -84,8 +84,6 @@ class MasterController extends Controller
 		));
 		// $RestAPI->data;
 		// dd($RestAPI);
-		\Log::info('Jumlah Blok');
-		\Log::info(count($RestAPI->data));
 		if(count($RestAPI->data) > 0 ){
 			// 	if(count($RestAPI['data']) > 0 ){
 			// 		foreach($RestAPI['data'] as $data){
@@ -93,7 +91,7 @@ class MasterController extends Controller
 			foreach( $d as $data){
 				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
 					if($afd){
-						// try {
+						try {
 								$block = Block::firstOrNew(array('afdeling_id' => $afd['id'],'block_code' => $data['BLOCK_CODE']));
 								$block->block_name = $data['BLOCK_NAME'];
 								$block->region_code = $data['REGION_CODE'];
@@ -106,11 +104,11 @@ class MasterController extends Controller
 								$block->start_valid = date("Y-m-d", strtotime($data['START_VALID']));
 								$block->end_valid = date("Y-m-d", strtotime($data['END_VALID']));
 								$block->save();
-						// }catch (\Throwable $e) {
-							
-						// }catch (\Exception $e) {
-							
-						// }
+						}catch (\Throwable $e) {
+							//
+						}catch (\Exception $e) {
+							//
+						}
 					}else{
 						// masuk log  COMP_CODE  not found
 					}
