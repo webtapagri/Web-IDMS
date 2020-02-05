@@ -16,6 +16,9 @@ class ModifyVVReportProgressPerkerasanJalan extends Migration
         //
         \DB::unprepared("DROP VIEW IF EXISTS V_REPORT_PROGRESS_PERKERASAN_JALAN");
         DB::unprepared(file_get_contents(__DIR__. '/../sql/v_report_progress_perkerasan_jalan.sql'));
+        //
+        \DB::unprepared("DROP VIEW IF EXISTS V_ROAD");
+        DB::unprepared(file_get_contents(__DIR__. '/../sql/v_road.sql'));
     }
 
     /**
@@ -28,5 +31,8 @@ class ModifyVVReportProgressPerkerasanJalan extends Migration
         //
         \DB::unprepared("DROP VIEW IF EXISTS V_REPORT_PROGRESS_PERKERASAN_JALAN");
         DB::unprepared(file_get_contents(__DIR__. '/../sql/v_report_progress_perkerasan_jalan.sql'));
+        //
+        \DB::unprepared("DROP VIEW IF EXISTS V_ROAD");
+        DB::unprepared(file_get_contents(__DIR__. '/../sql/v_road.sql'));
     }
 }

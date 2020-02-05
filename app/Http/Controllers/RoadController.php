@@ -28,6 +28,7 @@ use URL;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
 
 class RoadController extends Controller
 {
@@ -333,13 +334,25 @@ class RoadController extends Controller
 		}
 		
 		return Datatables::eloquent($model)
-			->addColumn('action', '<div class="">
-					'.$update_action.'
-					'.$delete_action.'
-				<div>
-				')
-			->rawColumns(['action'])
-			->make(true);
+				->addColumn('action', '<div class="">
+						'.$update_action.'
+						'.$delete_action.'
+					<div>
+					')
+				->rawColumns(['action'])
+				->make(true);
+				
+		// $value = Cache::remember('road', 2, function () use($model, $update_action, $delete_action) {
+			// return Datatables::eloquent($model)
+				// ->addColumn('action', '<div class="">
+						// '.$update_action.'
+						// '.$delete_action.'
+					// <div>
+					// ')
+				// ->rawColumns(['action'])
+				// ->make(true);
+		// });
+		// return $value;
 	}
 	
 	public function road_add(Request $request)
