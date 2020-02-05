@@ -29,7 +29,9 @@
 				<p class="">Gunakan shortcuts <kbd>Ctrl (Cmd) + C</kbd> and <kbd>Ctrl (Cmd) + V</kbd> untuk menyalin data dari file excel atau csv anda.</p>
 			</div>
 			<div class="col-md-4 text-right">
+			{{--
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
+			--}}
 				<button type="button" class="btn btn-primary save save-bulk">Simpan</button>
 			</div>
 		</div>
