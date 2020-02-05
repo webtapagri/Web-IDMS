@@ -50,7 +50,9 @@ class ReportsController extends Controller
 			$where = "werks in ($ww)";
 		}
 		
-		$model = VRoad::whereRaw("deleted_at is null and $where")->orderBy('id','desc');
+		$model = VRoad::whereRaw("$where")
+					// ->orderBy('id','desc')
+					;
 		
 		return Datatables::eloquent($model)
 			->make(true);
