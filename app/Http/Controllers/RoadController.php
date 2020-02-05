@@ -314,7 +314,9 @@ class RoadController extends Controller
 			$where = "werks in ($ww)";
 		}
 		
-		$model = VRoad::whereRaw("$where")->orderBy('id','desc');
+		$model = VRoad::whereRaw("$where")
+					// ->orderBy('id','desc')
+					;
 		
 		$update_action = '';
 		$delete_action = '';
