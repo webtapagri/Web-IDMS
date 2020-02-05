@@ -39,6 +39,7 @@ class TransactionController extends Controller
 	}
     public function progres_perkerasan_bulksave(Request $request)
 	{
+		ini_set('memory_limit', '-1');
 		DB::beginTransaction();
 		try{
 			$respon['error'] 	= [];
