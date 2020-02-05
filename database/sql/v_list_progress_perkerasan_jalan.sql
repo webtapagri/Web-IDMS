@@ -1,5 +1,5 @@
 create or replace view V_LIST_PROGRESS_PERKERASAN_JALAN as 
-select company_name, tme.estate_name, tma.afdeling_name, tmb.block_name, tmrs.status_name, tmrc.category_name,
+select tmr.company_name, tmr.estate_name, tmr.afdeling_name, tmr.block_name, tmrs.status_name, tmrc.category_name,
 round(ifnull((select sum(length) from TR_ROAD_PAVEMENT_PROGRESS trpp where trpp.road_id = tmr.id ),0),2) as curr_progress,
 concat(round(ifnull((select sum(length) from TR_ROAD_PAVEMENT_PROGRESS trpp where trpp.road_id = tmr.id ),0)/
 tmr.total_length*100,2),'%') as progress,

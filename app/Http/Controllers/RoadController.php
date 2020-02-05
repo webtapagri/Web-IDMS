@@ -374,6 +374,12 @@ class RoadController extends Controller
 			$data['werks'] 		= $esw[0];
 			$data['estate_code']= $esw[1];
 			
+			$getCom = Company::where('company_code',$request->company_code)->first();
+			$data['company_name']	= $getCom->company_name;
+			
+			$getW = Estate::where('werks',$esw[0])->where('company_id',$getCom->id)->first();
+			$data['estate_name']	= $getW->estate_name;
+			
 			$bcc = $request->block_code;
 			if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
 				
@@ -387,6 +393,12 @@ class RoadController extends Controller
 				}
 				
 				$bcc = '000-'.$getGD->description;
+			}else{
+				$getAfd = Afdeling::where('company_code',$request->company_code)->where('werks',$esw[0])->where('afdeling_code',$request->afdeling_code)->first();
+				$data['afdeling_name']	= $getAfd->afdeling_name;
+				$blckx 				= explode('-',$bcc);
+				$getBlc = Block::where('block_code',$blckx[0])->where('werks',$esw[0])->where('afdeling_id',$getAfd->id)->first();
+				$data['block_name']		= $getBlc->block_name;
 			}
 			
 			$blck 				= explode('-',$bcc);
@@ -523,11 +535,14 @@ class RoadController extends Controller
 						$respon['error'][] = ['line'=>($k+1),'status'=>'company code not found'];
 						continue;
 					}
+					$data['company_name']	= $getCom->company_name;
+					
 					$getW = Estate::where('werks',$dt['werks'])->where('company_id',$getCom->id)->where('estate_code',$dt['estate_code'])->first();
 					if(!$getW){
 						$respon['error'][] = ['line'=>($k+1),'status'=>'estate code or plant not found'];
 						continue;
 					}
+					$data['estate_name']	= $getW->estate_name;
 					
 						
 					if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
@@ -546,14 +561,17 @@ class RoadController extends Controller
 					}else{
 						$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
 						if(!$getAfd){
-							$respon['error'][] = ['line'=>($k+1),'status'=>'afdeling code not found'];
+							$respon['error'][] 	= ['line'=>($k+1),'status'=>'afdeling code not found'];
 							continue;
 						}
+						$data['afdeling_name']	= $getAfd->afdeling_name;
+						
 						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$getAfd->id)->first();
 						if(!$getBlc){
-							$respon['error'][] = ['line'=>($k+1),'status'=>'block code not found'];
+							$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not found'];
 							continue;
 						}
+						$data['block_name']		= $getBlc->block_name;
 						$bcc = $getBlc->block_code.'-'.$getBlc->block_name;
 					}
 					
