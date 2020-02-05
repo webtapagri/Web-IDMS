@@ -201,24 +201,6 @@ function loadGrid(){
 					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
 				}
 			});
-<<<<<<< HEAD
-	
-	var col = [
-            
-            { data: 'estate_name', 		name: 'estate_name' },
-            { data: 'werks', 	    	name: 'werks' },
-            { data: 'afdeling_code', 	name: 'afdeling_code' },
-            { data: 'block_code', 		name: 'block_code' },
-            { data: 'block_name', 		name: 'block_name' },
-            { data: 'status_name', 		name: 'status_name' },
-            { data: 'category_name', 	name: 'category_name' },
-			{ data: 'segment',      	name: 'segment' },
-            { data: 'road_name', 		name: 'road_name' },
-            { data: 'road_code', 		name: 'road_code' },
-            { data: 'total_length', 	name: 'total_length' },
-            { data: 'asset_code', 		name: 'asset_code' },
-		];
-=======
 			
 	col = [
 		
@@ -235,7 +217,6 @@ function loadGrid(){
 		{ data: 'total_length', 	name: 'total_length' },
 		{ data: 'asset_code', 		name: 'asset_code' },
 	];
->>>>>>> 53dda422ff8f4e08e5ef9238f446dd9f3f81750c
 
 	table = $('.datatable-responsive').DataTable( {
         processing: true,

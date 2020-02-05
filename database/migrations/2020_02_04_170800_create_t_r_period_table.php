@@ -18,6 +18,7 @@ class CreateTRPeriodTable extends Migration
 			$table->string('werks',50);
 			$table->string('month',10);
 			$table->integer('year');
+			$table->integer('updated_by');
 			$table->timestamps();
 			$table->softDeletes();
         });
