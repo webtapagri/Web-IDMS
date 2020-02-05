@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AlterTmRoadModifySegmentNotMandatory extends Migration
+class ModifyTmRoadSetNullableAssetCode extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AlterTmRoadModifySegmentNotMandatory extends Migration
     public function up()
     {
         Schema::table('TM_ROAD', function (Blueprint $table) {
-            $table->dropColumn('segment');
-        });
+			$table->string('asset_code',100)->nullable()->change();
+		});
     }
 
     /**
@@ -26,7 +26,7 @@ class AlterTmRoadModifySegmentNotMandatory extends Migration
     public function down()
     {
         Schema::table('TM_ROAD', function (Blueprint $table) {
-            $table->integer('segment');
-        });
+			$table->string('asset_code',100)->change();
+		});
     }
 }
