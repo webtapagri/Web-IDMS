@@ -171,10 +171,6 @@ function loadGrid(){
 								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
 								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
 									if( $(v).val() != '' ){
-<<<<<<< HEAD
-										console.log(k)
-=======
->>>>>>> b78d243bba9e3e90ba3689cea801b9f9ec9d5851
 										que.push( { col: col[k]['name'], val : $(v).val()} )
 									}    
 								})
@@ -205,24 +201,6 @@ function loadGrid(){
 					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
 				}
 			});
-<<<<<<< HEAD
-			
-	col = [
-		
-		{ data: 'estate_name', 		name: 'estate_name' },
-		{ data: 'werks', 	    	name: 'werks' },
-		{ data: 'afdeling_code', 	name: 'afdeling_code' },
-		{ data: 'block_code', 		name: 'block_code' },
-		{ data: 'block_name', 		name: 'block_name' },
-		{ data: 'status_name', 		name: 'status_name' },
-		{ data: 'category_name', 	name: 'category_name' },
-		{ data: 'segment',      	name: 'segment' },
-		{ data: 'road_name', 		name: 'road_name' },
-		{ data: 'road_code', 		name: 'road_code' },
-		{ data: 'total_length', 	name: 'total_length' },
-		{ data: 'asset_code', 		name: 'asset_code' },
-	];
-=======
 	
 	var col = [
             
@@ -240,7 +218,6 @@ function loadGrid(){
             { data: 'asset_code', 		name: 'asset_code' },
 		];
 
->>>>>>> b78d243bba9e3e90ba3689cea801b9f9ec9d5851
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
         serverSide: true,
