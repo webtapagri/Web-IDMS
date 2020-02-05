@@ -23,7 +23,7 @@ class ConfigurationController extends Controller
 	{
 		$access = AccessRight::roleaccess();
 		$title = 'Period Configuration';
-		$data['ctree'] = '/config/period';
+		$data['ctree'] = '/setting/period';
 		$data["access"] = (object)$access['access'];
 		return view('setting.period', compact('data','title'));
 	}

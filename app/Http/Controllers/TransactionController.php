@@ -19,6 +19,10 @@ use App\Models\Block;
 use App\Http\Requests\RoadStatusChangesRequest;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
+use URL;
+use Session;
+use AccessRight;
+use App\RoleAccess;
 use Illuminate\Support\Arr;
 
 class TransactionController extends Controller
@@ -189,7 +193,7 @@ class TransactionController extends Controller
 	public function road_status(Request $request)
 	{
 		$access = access($request);
-		$data['ctree'] = '/history/road_status';
+		$data['ctree'] = '/history/road-status';
 		return view('history.road_status', compact('access','data'));
 	}
 	
