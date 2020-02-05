@@ -32,7 +32,7 @@
 			{{-- 
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
 			--}}
-				<button type="submit" class="btn btn-primary">Simpan</button>
+				<button type="submit" class="btn btn-primary save-bulk">Simpan</button>
 			</div>
 		</div>
 		
@@ -293,10 +293,12 @@ function save(){
 					$('.error_area').html('')
 					$('.success').addClass('d-none')
 					$('.success_area').html('')
+					$('.save-bulk').attr('disabled','disabled').html('<b><i class="icon-spinner spinner"></i></b> Please wait...')
 				},
 				complete:function(){
 					HoldOff();
 					window.onbeforeunload = null
+					$('.save-bulk').removeAttr('disabled').html('Simpan')
 				},
 				headers: {
 					"Access-Control-Allow-Origin":"*",
