@@ -333,10 +333,7 @@ class RoadController extends Controller
 			';
 		}
 		
-		// dd(json_encode($request->all()));
-		
-		$value = Cache::remember('road', 1/2, function () use($model, $update_action, $delete_action) {
-			return Datatables::eloquent($model)
+		return Datatables::eloquent($model)
 				->addColumn('action', '<div class="">
 						'.$update_action.'
 						'.$delete_action.'
@@ -344,8 +341,18 @@ class RoadController extends Controller
 					')
 				->rawColumns(['action'])
 				->make(true);
-		});
-		return $value;
+				
+		// $value = Cache::remember('road', 2, function () use($model, $update_action, $delete_action) {
+			// return Datatables::eloquent($model)
+				// ->addColumn('action', '<div class="">
+						// '.$update_action.'
+						// '.$delete_action.'
+					// <div>
+					// ')
+				// ->rawColumns(['action'])
+				// ->make(true);
+		// });
+		// return $value;
 	}
 	
 	public function road_add(Request $request)
