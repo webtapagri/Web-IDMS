@@ -378,7 +378,7 @@ class RoadController extends Controller
 			$data['company_name']	= $getCom->company_name;
 			
 			$getW = Estate::where('werks',$esw[0])->where('company_id',$getCom->id)->first();
-			$data['estate_name']	= $getCom->estate_name;
+			$data['estate_name']	= $getW->estate_name;
 			
 			$bcc = $request->block_code;
 			if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
@@ -395,10 +395,10 @@ class RoadController extends Controller
 				$bcc = '000-'.$getGD->description;
 			}else{
 				$getAfd = Afdeling::where('company_code',$request->company_code)->where('werks',$esw[0])->where('afdeling_code',$request->afdeling_code)->first();
-				$data['afdeling_name']	= $getCom->afdeling_name;
+				$data['afdeling_name']	= $getAfd->afdeling_name;
 				$blckx 				= explode('-',$bcc);
 				$getBlc = Block::where('block_code',$blckx[0])->where('werks',$esw[0])->where('afdeling_id',$getAfd->id)->first();
-				$data['block_name']		= $getCom->block_name;
+				$data['block_name']		= $getBlc->block_name;
 			}
 			
 			$blck 				= explode('-',$bcc);
@@ -542,7 +542,7 @@ class RoadController extends Controller
 						$respon['error'][] = ['line'=>($k+1),'status'=>'estate code or plant not found'];
 						continue;
 					}
-					$data['estate_name']	= $getCom->estate_name;
+					$data['estate_name']	= $getW->estate_name;
 					
 						
 					if(in_array( strtoupper($cat->category_name) ,["JALAN AKSES", "JALAN DESA", "JALAN NEGARA"])){ // custom $request->block_code
@@ -564,14 +564,14 @@ class RoadController extends Controller
 							$respon['error'][] 	= ['line'=>($k+1),'status'=>'afdeling code not found'];
 							continue;
 						}
-						$data['afdeling_name']	= $getCom->afdeling_name;
+						$data['afdeling_name']	= $getAfd->afdeling_name;
 						
 						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$getAfd->id)->first();
 						if(!$getBlc){
 							$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not found'];
 							continue;
 						}
-						$data['block_name']		= $getCom->block_name;
+						$data['block_name']		= $getBlc->block_name;
 						$bcc = $getBlc->block_code.'-'.$getBlc->block_name;
 					}
 					
