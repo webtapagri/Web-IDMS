@@ -7,6 +7,7 @@
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/handsontable/sheetclip.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/noty.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
 @endsection
 
 @section('content')
@@ -312,14 +313,26 @@ function save(){
 							$('.success').removeClass('d-none');
 							$('.success_area').append('Berhasil memproses Road code: <br/>');
 							var succ = cont.success.filter( distinct )
-							$.each(succ, (k,v)=>{
-								
+							$.each(succ, (k,v)=>{								
 								$('.success_area').append( v+' <br/>' );
 							})
 						}
 					}else{
-						alert("Respon error. "+rsp.code+" - "+rsp.contents);
+						swal({
+							title: rsp.code,
+							text: 'Oops.. '+rsp.contents,
+							type: 'error',
+							padding: 30
+						});
 					}
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+					swal({
+						title: xhr.status,
+						text: 'Oops.. '+thrownError,
+						type: 'error',
+						padding: 30
+					});
 				}
 			})
 				
