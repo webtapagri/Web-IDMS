@@ -7,6 +7,7 @@
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/handsontable/sheetclip.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/jgrowl.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/noty.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
 @endsection
 
 @section('content')
@@ -31,7 +32,7 @@
 			{{-- 
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
 			--}}
-				<button type="submit" class="btn btn-primary">Simpan</button>
+				<button type="submit" class="btn btn-primary save-bulk">Simpan</button>
 			</div>
 		</div>
 		
@@ -292,10 +293,12 @@ function save(){
 					$('.error_area').html('')
 					$('.success').addClass('d-none')
 					$('.success_area').html('')
+					$('.save-bulk').attr('disabled','disabled').html('<b><i class="icon-spinner spinner"></i></b> Please wait...')
 				},
 				complete:function(){
 					HoldOff();
 					window.onbeforeunload = null
+					$('.save-bulk').removeAttr('disabled').html('Simpan')
 				},
 				headers: {
 					"Access-Control-Allow-Origin":"*",
@@ -322,6 +325,14 @@ function save(){
 					}else{
 						alert("Respon error. "+rsp.code+" - "+rsp.contents);
 					}
+				},
+				error: function (xhr, ajaxOptions, thrownError) {
+					swal({
+						title: xhr.status,
+						text: 'Oops.. '+thrownError,
+						type: 'error',
+						padding: 30
+					});
 				}
 			})
 				
