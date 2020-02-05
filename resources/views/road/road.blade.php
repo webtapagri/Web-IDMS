@@ -335,7 +335,8 @@ function loadGrid(){
 			this.api().columns().every(function (k) {
 				if(k ==5){
 					var column = this;
-					var select = $('<select class="form-control"><option value=""></option></select>')
+					var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+					var select = $('<select class="form-control"><option value="">'+dStatus+'</option></select>')
 						.appendTo( $(column.footer()).empty() )
 						.on( 'change', function () {
 							var val = $.fn.dataTable.util.escapeRegex(
@@ -347,9 +348,9 @@ function loadGrid(){
 								.draw();
 						} );
  
-					column.data().unique().sort().each( function ( d, j ) {
-						select.append( '<option value="'+d+'">'+d+'</option>' )
-					} );
+					// column.data().unique().sort().each( function ( d, j ) {
+						// select.append( '<option value="'+d+'">'+d+'</option>' )
+					// } );
 				
 					
 				}else{
