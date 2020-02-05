@@ -7,7 +7,7 @@ tmr.asset_code,
 tmr.segment,
 tmr.id, tmr.company_code, tmr.werks, tmr.afdeling_code, tmr.block_code, tmr.road_code, tmr.road_name, tmr.status_pekerasan, tmr.status_aktif, tmr.deleted_at, tmr.created_at, tmr.updated_at, tmr.estate_code, tmr.updated_by 
 from TM_ROAD tmr 
-left join TR_ROAD_PAVEMENT_PROGRESS trpp on trpp.road_id = tmr.id
+join TR_ROAD_PAVEMENT_PROGRESS trpp on trpp.road_id = tmr.id
 join TM_COMPANY tmc on tmc.company_code = tmr.company_code
 join TM_ESTATE tme on tme.werks = tmr.werks
 join TM_AFDELING tma on tma.afdeling_code = tmr.afdeling_code and tma.werks = tmr.werks
