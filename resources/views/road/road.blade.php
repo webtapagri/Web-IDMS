@@ -349,7 +349,7 @@ function loadGrid(){
 					"url":      conf.url,
 					"data":     request,
 					"dataType": "json",
-					"cache":    false,
+					"cache":    true,
 					"success":  function ( json ) {
 						cacheLastJson = $.extend(true, {}, json);
 	 
