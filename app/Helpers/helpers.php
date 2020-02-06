@@ -16,6 +16,14 @@ if (! function_exists('clean')) {
 	}	
 }
 
+if (! function_exists('cleans')) {
+	function cleans($string) {
+	   $string = str_replace(' ', '-', $string); // Replaces all spaces with hyphens.
+
+	   return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+	}
+}
+
 if (!function_exists('throwable_msg')) {
 	function throwable_msg($e)
 	{
