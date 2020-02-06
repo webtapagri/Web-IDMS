@@ -299,21 +299,12 @@ function loadGrid(){
 		'processing': true,
         serverSide: true,
         ajax: '{{ route("master.road_datatables") }}',
+		aLengthMenu: [
+			[25, 50, 100, 200, -1],
+			[25, 50, 100, 200, "All"]
+		],
 		// "order": [[1,"asc"],[2, "asc" ]],
-		/*
-		<th>Road Code</th>
-				<th>Road Name</th>
-				<th>Asset Code</th>
-				<th>Segment</th>
-				<th>Length</th>
-				<th>Status</th>
-				<th>Category</th>
-				<th>Company</th> 
-				<th>Estate</th>
-				<th>Afdeling</th>
-				<th>Block</th>
-				<th class="text-center">Aksi</th>
-		*/
+		
         columns: [
             { data: 'road_code', 		name: 'road_code' },
             { data: 'road_name', 		name: 'road_name' },
