@@ -300,8 +300,8 @@ function loadGrid(){
         serverSide: true,
         ajax: '{{ route("master.road_datatables") }}',
 		aLengthMenu: [
-			[25, 50, 100, 200, -1],
-			[25, 50, 100, 200, "All"]
+			[25, 50, 100, 200, 100000, -1],
+			[25, 50, 100, 200, 100000, "All"]
 		],
 		// "order": [[1,"asc"],[2, "asc" ]],
 		
