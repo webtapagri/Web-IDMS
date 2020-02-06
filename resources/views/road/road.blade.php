@@ -411,7 +411,12 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
-        ajax: '{{ route("master.road_datatables") }}',
+        // ajax: '{{ route("master.road_datatables") }}',
+        ajax: $.fn.dataTable.pipeline( {
+            url: '{{ route("master.road_datatables") }}',
+            pages: 5 // number of pages to cache
+        } ),
+		
 		// "order": [[1,"asc"],[2, "asc" ]],
 		
         columns: [
