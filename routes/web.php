@@ -71,7 +71,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::get('/road-bulk-add', 			['as'=>'master.road_bulk_add', 'uses'=>'RoadController@road_bulk_add']);
 		Route::post('/road-bulk-save', 			['as'=>'master.road_bulk_save', 'uses'=>'RoadController@road_bulk_save']);
 		Route::post('/road-save', 			['as'=>'master.road_save', 'uses'=>'RoadController@road_save']);
-		Route::get('/road-datatables', 	['as'=>'master.road_datatables', 'uses'=>'RoadController@road_datatables']);
+		Route::get('/road-datatables.json', 	['as'=>'master.road_datatables', 'uses'=>'RoadController@road_datatables']);
 		Route::post('/road-update', 	['as'=>'master.road_update', 'uses'=>'RoadController@road_update']);
 		Route::get('/road-delete/{id}', 	['as'=>'master.road_delete', 'uses'=>'RoadController@road_delete']);
 		
