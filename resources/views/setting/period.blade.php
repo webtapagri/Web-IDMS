@@ -26,11 +26,11 @@
 
 <div class="card">
 	<div class="card-header header-elements-inline">
-		@if($data['access']->create == 1)
 		<button 
 			data-toggle="modal" data-target="#modal_add"
 			type="button" class="btn bg-teal-400 btn-labeled btn-labeled-left"><b><i class="icon-plus3"></i></b> Tambah</button>
-		@endif
+		<!--<!-- @if($data['access']->create == 1) -->
+		<!-- @endif -->
 	
 		<div class="header-elements">
 			<div class="list-icons">
