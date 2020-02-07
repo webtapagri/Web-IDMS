@@ -67,6 +67,8 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
+				<th>Month</th>
+				<th>Year</th>
 				<th>Status</th>
 				<th>Category</th>
 				<th>Segment</th>
@@ -84,6 +86,8 @@
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
+				<th>Month</th>
+				<th>Year</th>
 				<th>Status</th>
 				<th>Category</th>
 				<th>Segment</th>
@@ -354,6 +358,8 @@ function loadGrid(){
             { data: 'estate_name', 		name: 'estate_name' },
             { data: 'afdeling_code', 	name: 'afdeling_code' },
             { data: 'block_name', 		name: 'block_name' },
+            { data: 'month', 			name: 'month' },
+            { data: 'year', 			name: 'year' },
             { data: 'status_name', 		name: 'status_name' },
             { data: 'category_name', 	name: 'category_name' },
             { data: 'segment', 			name: 'segment' },
@@ -361,8 +367,6 @@ function loadGrid(){
             { data: 'road_code', 		name: 'road_code' },
             { data: 'total_length', 	name: 'total_length' },
             { data: 'length', 			name: 'length' },
-            { data: 'month', 			name: 'month' },
-            { data: 'year', 			name: 'year' },
             { data: 'asset_code', 		name: 'asset_code' },
         ];
 
