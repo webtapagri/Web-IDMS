@@ -577,12 +577,30 @@ function loadGrid(){
 		initComplete: function () {
 			this.api().columns().every(function (k) {
 				if(k >= 0 && k < 12){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					if(k == 4){
+						var column = this;
+						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var select = $('<select class="form-control"><option value="">'+dStatus+'</option></select>')
+							.appendTo( $(column.footer()).empty() )
+							.on( 'change', function () {
+								var val = $.fn.dataTable.util.escapeRegex(
+									$(this).val()
+								);
+		 
+								column
+									.search( val ? '^'+val+'$' : '', true, false )
+									.draw();
+							} );
+						
+					}else{
+						var column = this;
+						var input = document.createElement("input");
+						$(input).appendTo($(column.footer()).empty())
+						.on('change', function () {
+							column.search($(this).val(), false, false, true).draw();
+						}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					}
+					
 				}
 			});
 		}
