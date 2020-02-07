@@ -5,6 +5,8 @@
             <th>Estate</th>
             <th>Afdeling</th>
             <th>Block</th>
+            <th>Month</th>
+            <th>Year</th>
             <th>Status</th>
             <th>Category</th>
             <th>Segment</th>
@@ -23,6 +25,8 @@
             <td>{{ $data->estate_name }}</td>
             <td>{{ $data->afdeling_code }}</td>
             <td>{{ $data->block_name }}</td>
+            <td>{{ $data->month }}</td>
+            <td>{{ $data->year }}</td>
             <td>{{ $data->status_name }}</td>
             <td>{{ $data->category_name }}</td>
             <td>{{ $data->segment }}</td>

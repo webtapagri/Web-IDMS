@@ -264,6 +264,11 @@ function loadGrid(){
 						width: 150,
 						targets: [ 1 ]
 					},
+					{ 
+						orderable: false,
+						width: 150,
+						targets: [ 7 ]
+					},
 					{
 						searchable: false,
 						targets: [ 0 ]
@@ -362,8 +367,8 @@ function loadGrid(){
 	// yadcf.init(table,
     //     [
     //         {
-    //             column_number : 1,
-    //             filter_type: "multi_select",
+    //             column_number : 7,
+	// 			filter_type: "multi_select",
 	// 			select_type: 'select2',
 	// 		}
     //     ],
@@ -374,7 +379,5 @@ function loadGrid(){
 
 	
 }
-
-
 </script>
 @endsection
