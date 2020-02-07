@@ -121,7 +121,8 @@ class TransactionController extends Controller
 			$where = "werks in ($ww)";
 		}
 		
-		$model = VListProgressPerkerasan::whereRaw($where);
+		// $model = VListProgressPerkerasan::whereRaw($where);
+		$model = Road::progress()->whereRaw($where);
 		
 		$update_action = '';
 		$delete_action = '';
