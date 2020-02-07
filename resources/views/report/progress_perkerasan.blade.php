@@ -367,6 +367,7 @@ function loadGrid(){
             { data: 'road_code', 		name: 'road_code' },
             { data: 'total_length', 	name: 'total_length' },
             { data: 'length', 			name: 'length' },
+            { data: 'progress', 			name: 'progress' },
             { data: 'asset_code', 		name: 'asset_code' },
         ];
 
