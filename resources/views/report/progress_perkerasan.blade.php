@@ -75,8 +75,7 @@
 				<th>Road Name</th>
 				<th>Road Code</th>
 				<th>Length</th>
-				<th>Progress (m)</th>
-				<th>Progress (%)</th>
+				<th>Pavement Length (m)</th>
 				<th>Asset Code</th>
 			</tr>
 		</thead>
@@ -94,8 +93,7 @@
 				<th>Road Name</th>
 				<th>Road Code</th>
 				<th>Length</th>
-				<th>Progress (m)</th>
-				<th>Progress (%)</th>
+				<th>Pavement Length (m)</th>
 				<th>Asset Code</th>
 			</tr>
 		</tfoot>
@@ -367,7 +365,6 @@ function loadGrid(){
             { data: 'road_code', 		name: 'road_code' },
             { data: 'total_length', 	name: 'total_length' },
             { data: 'length', 			name: 'length' },
-            { data: 'progress', 			name: 'progress' },
             { data: 'asset_code', 		name: 'asset_code' },
         ];
 
