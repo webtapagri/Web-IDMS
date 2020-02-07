@@ -33,16 +33,19 @@ class Road extends Model
 		// DB::connection()->enableQueryLog();
 		
 		$que = "SELECT IFNULL(SUM(LENGTH),0) jml FROM TR_ROAD_PAVEMENT_PROGRESS trpp where trpp.road_id = {$this->id} ";
-		$cName = clean($que);
-		if (Cache::has($cName)){
-			$get = Cache::get($cName);
-			\Log::info('Ini data dari CACHE - getCurrProgressAttribute');
-		} else {
-			$get = Cache::remember($cName, 2, function () use($que) {
-				return DB::select( DB::raw($que));
-			});
-			\Log::info('Ini data dari DATABASE - getCurrProgressAttribute ');
-		}
+		
+		$get = DB::select( DB::raw($que));
+		
+		// $cName = clean($que);
+		// if (Cache::has($cName)){
+			// $get = Cache::get($cName);
+			// \Log::info('Ini data dari CACHE - getCurrProgressAttribute');
+		// } else {
+			// $get = Cache::remember($cName, 2, function () use($que) {
+				// return DB::select( DB::raw($que));
+			// });
+			// \Log::info('Ini data dari DATABASE - getCurrProgressAttribute ');
+		// }
         
 		// $queries = DB::getQueryLog();
 		// last($queries)['query']
