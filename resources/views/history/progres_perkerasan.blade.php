@@ -572,6 +572,7 @@ function loadGrid(){
 			leftColumns: 0,
 			rightColumns: 1
 		},
+		"deferLoading": 10000,
         columns: col,
 		initComplete: function () {
 			this.api().columns().every(function (k) {
