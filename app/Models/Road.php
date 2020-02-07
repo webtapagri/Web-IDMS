@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 use DB;
+use Illuminate\Support\Facades\Cache;
 
 class Road extends Model
 {
@@ -29,7 +30,26 @@ class Road extends Model
 	}
 	public function getCurrProgressAttribute()
     {
-        $get = DB::select( DB::raw("SELECT IFNULL(SUM(LENGTH),0) jml FROM TR_ROAD_PAVEMENT_PROGRESS trpp where trpp.road_id = {$this->id} "));
+		// DB::connection()->enableQueryLog();
+		
+		$que = "SELECT IFNULL(SUM(LENGTH),0) jml FROM TR_ROAD_PAVEMENT_PROGRESS trpp where trpp.road_id = {$this->id} ";
+		
+		$get = DB::select( DB::raw($que));
+		
+		// $cName = clean($que);
+		// if (Cache::has($cName)){
+			// $get = Cache::get($cName);
+			// \Log::info('Ini data dari CACHE - getCurrProgressAttribute');
+		// } else {
+			// $get = Cache::remember($cName, 2, function () use($que) {
+				// return DB::select( DB::raw($que));
+			// });
+			// \Log::info('Ini data dari DATABASE - getCurrProgressAttribute ');
+		// }
+        
+		// $queries = DB::getQueryLog();
+		// last($queries)['query']
+		
 		if($get){
 			return $get[0]->jml;
 		}
