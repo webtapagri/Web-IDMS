@@ -25,7 +25,7 @@ class Road extends Model
         if($this->curr_progress){
 			$prg = $this->curr_progress / $this->total_length * 100;
 		}
-		return $prg.'%';
+		return round($prg).'%';
 	}
 	public function getCurrProgressAttribute()
     {
