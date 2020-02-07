@@ -86,8 +86,8 @@ class ReportsController extends Controller
 			$where = "werks in ($ww)";
 		}
 		
-		// $model = VReportProgressPerkerasan::whereRaw($where);
-		$model = Road::progress()->whereRaw($where);
+		$model = VReportProgressPerkerasan::whereRaw($where);
+		// $model = Road::progress()->whereRaw($where);
 		
 		
 		return Datatables::eloquent($model)
