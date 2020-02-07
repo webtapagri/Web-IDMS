@@ -33,6 +33,7 @@
 	<script src="{{ asset('limitless/global_assets/js/plugins/ui/ripple.min.js') }}"></script>
 	<script src="{{ asset('limitless/global_assets/js/plugins/buttons/spin.min.js') }}"></script>
 	<script src="{{ asset('limitless/global_assets/js/plugins/buttons/ladda.min.js') }}"></script>
+	<script src="{{ asset('limitless/global_assets/js/jquery.dataTables.yadcf.js') }}"></script>
 	@endif
 	
 	<!-- /core JS files -->

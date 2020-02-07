@@ -71,14 +71,14 @@
 	<table class="table datatable-responsive">
 		<thead>
 			<tr>
+				<th>Company</th>
 				<th>Estate</th>
-				<th>BA Code</th>
 				<th>Afdeling</th>
-				<th>Block Code</th>
-				<th>Block Name</th>
+				<th>Block</th>
 				<th>Status</th>
 				<th>Category</th>
 				<th>Segment</th> 
+				<th>BA Code</th>
 				<th>Road Name</th>
 				<th>Road Code</th>
 				<th>Length</th>
@@ -87,14 +87,14 @@
 		</thead>
 		<tfoot>
 			<tr>
-                <th>Estate</th>
-				<th>BA Code</th>
+				<th>Company</th>
+				<th>Estate</th>
 				<th>Afdeling</th>
-				<th>Block Code</th>
-				<th>Block Name</th>
+				<th>Block</th>
 				<th>Status</th>
 				<th>Category</th>
 				<th>Segment</th> 
+				<th>BA Code</th>
 				<th>Road Name</th>
 				<th>Road Code</th>
 				<th>Length</th>
@@ -118,6 +118,7 @@ var table, col, que
 
 $(document).ready(()=>{
 	
+	
 	loadGrid();
 	
 	$('#reloadGrid').click(()=>{
@@ -132,18 +133,136 @@ $(document).ready(()=>{
 
 function loadGrid(){
 	var donlot = false
+
+	//------- cache client --------
+	$.fn.dataTable.pipeline = function ( opts ) {
+		// Configuration options
+		var conf = $.extend( {
+			pages: 5,     // number of pages to cache
+			url: '',      // script url
+			data: null,   // function or object with parameters to send to the server
+						  // matching how `ajax.data` works in DataTables
+			method: 'GET' // Ajax HTTP method
+		}, opts );
+	 
+		// Private variables for storing the cache
+		var cacheLower = -1;
+		var cacheUpper = null;
+		var cacheLastRequest = null;
+		var cacheLastJson = null;
+	 
+		return function ( request, drawCallback, settings ) {
+			var ajax          = false;
+			var requestStart  = request.start;
+			var drawStart     = request.start;
+			var requestLength = request.length;
+			var requestEnd    = requestStart + requestLength;
+			 
+			if ( settings.clearCache ) {
+				// API requested that the cache be cleared
+				ajax = true;
+				settings.clearCache = false;
+			}
+			else if ( cacheLower < 0 || requestStart < cacheLower || requestEnd > cacheUpper ) {
+				// outside cached data - need to make a request
+				ajax = true;
+			}
+			else if ( JSON.stringify( request.order )   !== JSON.stringify( cacheLastRequest.order ) ||
+					  JSON.stringify( request.columns ) !== JSON.stringify( cacheLastRequest.columns ) ||
+					  JSON.stringify( request.search )  !== JSON.stringify( cacheLastRequest.search )
+			) {
+				// properties changed (ordering, columns, searching)
+				ajax = true;
+			}
+			 
+			// Store the request for checking next time around
+			cacheLastRequest = $.extend( true, {}, request );
+	 
+			if ( ajax ) {
+				// Need data from the server
+				if ( requestStart < cacheLower ) {
+					requestStart = requestStart - (requestLength*(conf.pages-1));
+	 
+					if ( requestStart < 0 ) {
+						requestStart = 0;
+					}
+				}
+				 
+				cacheLower = requestStart;
+				cacheUpper = requestStart + (requestLength * conf.pages);
+	 
+				request.start = requestStart;
+				request.length = requestLength*conf.pages;
+	 
+				// Provide the same `data` options as DataTables.
+				if ( typeof conf.data === 'function' ) {
+					// As a function it is executed with the data object as an arg
+					// for manipulation. If an object is returned, it is used as the
+					// data object to submit
+					var d = conf.data( request );
+					if ( d ) {
+						$.extend( request, d );
+					}
+				}
+				else if ( $.isPlainObject( conf.data ) ) {
+					// As an object, the data given extends the default
+					$.extend( request, conf.data );
+				}
+	 
+				settings.jqXHR = $.ajax( {
+					"type":     conf.method,
+					"url":      conf.url,
+					"data":     request,
+					"dataType": "json",
+					"cache":    false,
+					"success":  function ( json ) {
+						cacheLastJson = $.extend(true, {}, json);
+	 
+						if ( cacheLower != drawStart ) {
+							json.data.splice( 0, drawStart-cacheLower );
+						}
+						if ( requestLength >= -1 ) {
+							json.data.splice( requestLength, json.data.length );
+						}
+						 
+						drawCallback( json );
+					}
+				} );
+			}
+			else {
+				json = $.extend( true, {}, cacheLastJson );
+				json.draw = request.draw; // Update the echo for each response
+				json.data.splice( 0, requestStart-cacheLower );
+				json.data.splice( requestLength, json.data.length );
+	 
+				drawCallback(json);
+			}
+		}
+	};
+	 
+	// Register an API method that will empty the pipelined data, forcing an Ajax
+	// fetch on the next draw (i.e. `table.clearPipeline().draw()`)
+	$.fn.dataTable.Api.register( 'clearPipeline()', function () {
+		return this.iterator( 'table', function ( settings ) {
+			settings.clearCache = true;
+		} );
+	} );
+
+	//------- cache client --------
+
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
 				columnDefs: [
 					{ 
 						orderable: false,
-						width: 250,
+						width: 150,
 						targets: [ 0 ]
 					},
 					{ 
 						orderable: false,
-						targets: [ 0 ]
+						width: 150,
+						targets: [ 1 ]
 					},
 					{
 						searchable: false,
@@ -202,16 +321,15 @@ function loadGrid(){
 				}
 			});
 			
-	col = [
-		
+	col = [		
+		{ data: 'company_name', 	name: 'company_name' },
 		{ data: 'estate_name', 		name: 'estate_name' },
-		{ data: 'werks', 	    	name: 'werks' },
 		{ data: 'afdeling_code', 	name: 'afdeling_code' },
 		{ data: 'block_code', 		name: 'block_code' },
-		{ data: 'block_name', 		name: 'block_name' },
 		{ data: 'status_name', 		name: 'status_name' },
 		{ data: 'category_name', 	name: 'category_name' },
 		{ data: 'segment',      	name: 'segment' },
+		{ data: 'werks', 	    	name: 'werks' },
 		{ data: 'road_name', 		name: 'road_name' },
 		{ data: 'road_code', 		name: 'road_code' },
 		{ data: 'total_length', 	name: 'total_length' },
@@ -220,7 +338,7 @@ function loadGrid(){
 
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
-        serverSide: true,
+		serverSide: true,
         ajax: '{{ route("report.road_datatables") }}',
 		// "order": [[1,"asc"],[2, "asc" ]], 
         columns: col,
@@ -237,7 +355,24 @@ function loadGrid(){
 				}
 			});
 		}
-    } );
+	} );
+
+	
+	// 'use strict';
+	// yadcf.init(table,
+    //     [
+    //         {
+    //             column_number : 1,
+    //             filter_type: "multi_select",
+	// 			select_type: 'select2',
+	// 		}
+    //     ],
+    //     {
+    //         cumulative_filtering: true
+    //     }
+	// );
+
+	
 }
 
 

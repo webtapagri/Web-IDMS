@@ -66,33 +66,33 @@
 	<table class="table datatable-responsive table-xs">
 		<thead>
 			<tr>
-				<th>Road Code</th>
-				<th>Road Name</th>
-				<th>Length</th>
-				<th>Asset Code</th>
-				<th>Segment</th>
-				<th>Status</th>
-				<th>Category</th>
-				<th>Company</th> 
+				<th>Company</th>
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
+				<th>Status</th>
+				<th>Category</th>
+				<th>Segment</th>
+				<th>Road Name</th> 
+				<th>Road Code</th>
+				<th>Length</th>
+				<th>Asset Code</th>
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
 		<tfoot>
 			<tr>
-				<th>Road Code</th>
-				<th>Road Name</th>
-				<th>Length</th>
-				<th>Asset Code</th>
-				<th>Segment</th>
-				<th>Status</th>
-				<th>Category</th>
-				<th>Company</th> 
+				<th>Company</th>
 				<th>Estate</th>
 				<th>Afdeling</th>
 				<th>Block</th>
+				<th>Status</th>
+				<th>Category</th>
+				<th>Segment</th>
+				<th>Road Name</th> 
+				<th>Road Code</th>
+				<th>Length</th>
+				<th>Asset Code</th>
 				<th class="text-center">Action</th>
 			</tr>
 		</tfoot>
@@ -420,17 +420,17 @@ function loadGrid(){
 		// "order": [[1,"asc"],[2, "asc" ]],
 		
         columns: [
-            { data: 'road_code', 		name: 'road_code' },
-            { data: 'road_name', 		name: 'road_name' },
-            { data: 'total_length', 	name: 'total_length' },
-            { data: 'asset_code', 		name: 'asset_code' },
-            { data: 'segment', 			name: 'segment' },
-            { data: 'status_name', 		name: 'status_name' },
-            { data: 'category_name', 	name: 'category_name' },
 			{ data: 'company_name', 	name: 'company_name' },
             { data: 'estate_name', 		name: 'estate_name' },
             { data: 'afdeling_code', 	name: 'afdeling_code' },
             { data: 'block_name', 		name: 'block_name' },
+            { data: 'status_name', 		name: 'status_name' },
+            { data: 'category_name', 	name: 'category_name' },
+            { data: 'segment', 			name: 'segment' },
+            { data: 'road_name', 		name: 'road_name' },
+            { data: 'road_code', 		name: 'road_code' },
+            { data: 'total_length', 	name: 'total_length' },
+            { data: 'asset_code', 		name: 'asset_code' },
             { data: 'action', 			name: 'action' },
         ],
 		initComplete: function () {
