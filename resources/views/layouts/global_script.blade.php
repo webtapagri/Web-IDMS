@@ -34,9 +34,7 @@ function formRequiredMark(){
 (function() {
   'use strict';
   window.addEventListener('load', function() {
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.getElementsByClassName('needs-validation');
-    // Loop over them and prevent submission
     var validation = Array.prototype.filter.call(forms, function(form) {
       form.addEventListener('submit', function(event) {
         if (form.checkValidity() === false) {
@@ -48,4 +46,53 @@ function formRequiredMark(){
     });
   }, false);
 })();
+
+//cache $.ajax respon
+var localCache = {
+    
+    timeout: 30000,
+    
+    data: {},
+    remove: function (url) {
+        delete localCache.data[url];
+    },
+    exist: function (url) {
+        return !!localCache.data[url] && ((new Date().getTime() - localCache.data[url]._) < localCache.timeout);
+    },
+    get: function (url) {
+        // console.log('Getting in cache for url' + url);
+        return localCache.data[url].data;
+    },
+    set: function (url, cachedData, callback) {
+        localCache.remove(url);
+        localCache.data[url] = {
+            _: new Date().getTime(),
+            data: cachedData
+        };
+        if ($.isFunction(callback)) callback(cachedData);
+    }
+};
+
+$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+    if (options.cache) {
+        var success = originalOptions.success || $.noop,
+            url = originalOptions.url;
+		options.cache = false;
+        options.beforeSend = function () {
+			$(options.param.elTarget).html(options.param.elValue)
+			HoldOn()
+            if (localCache.exist(url)) {
+                var rsp = localCache.get(url)
+				success(rsp.responseJSON)
+				HoldOff()
+                return false;
+            }
+            return true;
+        };
+        options.complete = function (data, textStatus) {
+            localCache.set(url, data, success);
+			HoldOff()
+        };
+    }
+});
 </script>

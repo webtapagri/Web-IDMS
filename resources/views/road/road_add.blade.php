@@ -237,55 +237,6 @@ $(document).ready(()=>{
 	
 });
 
-var localCache = {
-    
-    timeout: 30000,
-    
-    data: {},
-    remove: function (url) {
-        delete localCache.data[url];
-    },
-    exist: function (url) {
-        return !!localCache.data[url] && ((new Date().getTime() - localCache.data[url]._) < localCache.timeout);
-    },
-    get: function (url) {
-        console.log('Getting in cache for url' + url);
-        return localCache.data[url].data;
-    },
-    set: function (url, cachedData, callback) {
-        localCache.remove(url);
-        localCache.data[url] = {
-            _: new Date().getTime(),
-            data: cachedData
-        };
-        if ($.isFunction(callback)) callback(cachedData);
-    }
-};
-
-$.ajaxPrefilter(function (options, originalOptions, jqXHR) {
-    if (options.cache) {
-        var success = originalOptions.success || $.noop,
-            url = originalOptions.url;
-        
-		options.cache = false;
-        options.beforeSend = function () {
-			$('.block_code').html('<option value=""></option>')
-			HoldOn(light)
-            if (localCache.exist(url)) {
-                var rsp = localCache.get(url)
-				success(rsp.responseJSON)
-				HoldOff(light)
-                return false;
-            }
-            return true;
-        };
-        options.complete = function (data, textStatus) {
-            localCache.set(url, data, success);
-			HoldOff()
-        };
-    }
-});
-
 $('.company_code').change(()=>{
 	var id = $('.company_code').val()
 	load_estate(id)
@@ -362,10 +313,14 @@ function hideBlock(){
 
 function load_estate(id, x=null){
 	$.ajax({
+		param:{
+			elTarget:'.estate_code',
+			elValue:'<option value=""></option>',
+		},
 		type: 'GET',
 		url: "{{ URL::to('api/master/estate_tree/') }}/"+id,
 		data: null,
-		cache:false,
+		cache:true,
 		beforeSend:function(){
 			$('.estate_code').html('<option value=""></option>')
 			HoldOn(light)
@@ -375,35 +330,43 @@ function load_estate(id, x=null){
 		},
 		headers: {
 			"X-CSRF-TOKEN": "{{ csrf_token() }}"
+		},
+		success:(rsp)=>{
+			if(rsp.code=200){
+				var cont = rsp.contents
+				$.each(cont, (k,v)=>{
+					
+					if(x == v.werks+'-'+v.estate_code){
+						$('.estate_code').append('<option selected value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+					}else{
+						$('.estate_code').append('<option value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+					}
+				})
+			}else{
+				$('.estate_code').html(rsp.code+' - '+rsp.contents)
+			}
+		},
+		error:(xhr, ajaxOptions, thrownError)=>{
+			swal({
+				title: xhr.status.toString(),
+				text: 'Oops.. '+thrownError,
+				type: 'error',
+				padding: 30
+			});
 		}
-	}).done(function(rsp){
-		
-		if(rsp.code=200){
-			var cont = rsp.contents
-			$.each(cont, (k,v)=>{
-				
-				if(x == v.werks+'-'+v.estate_code){
-					$('.estate_code').append('<option selected value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
-				}else{
-					$('.estate_code').append('<option value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
-				}
-			})
-		}else{
-			$('.estate_code').html(rsp.code+' - '+rsp.contents)
-		}
-	}).fail(function(errors) {
-		
-		alert("Gagal Terhubung ke Server");
-		
 	});
 }
 
 function load_afdeling(id, x=null){
 	$.ajax({
+		param:{
+			elTarget:'.afdeling_code',
+			elValue:'<option value=""></option>',
+		},
 		type: 'GET',
 		url: "{{ URL::to('api/master/afdeling_tree/') }}/"+id,
 		data: null,
-		cache:false,
+		cache:true,
 		beforeSend:function(){
 			$('.afdeling_code').html('<option value=""></option>')
 			HoldOn()
@@ -413,30 +376,38 @@ function load_afdeling(id, x=null){
 		},
 		headers: {
 			"X-CSRF-TOKEN": "{{ csrf_token() }}"
+		},
+		success:(rsp)=>{
+			if(rsp.code=200){
+				var cont = rsp.contents
+				$.each(cont, (k,v)=>{
+					if(x==v.afdeling_code){
+						$('.afdeling_code').append('<option selected value="'+v.afdeling_code+'">'+v.afdeling_code+' - '+v.afdeling_name+'</option>')
+					}else{
+						$('.afdeling_code').append('<option value="'+v.afdeling_code+'">'+v.afdeling_code+' - '+v.afdeling_name+'</option>')
+					}
+				})
+			}else{
+				$('.afdeling_code').html(rsp.code+' - '+rsp.contents)
+			}
+		},
+		error:(xhr, ajaxOptions, thrownError)=>{
+			swal({
+				title: xhr.status.toString(),
+				text: 'Oops.. '+thrownError,
+				type: 'error',
+				padding: 30
+			});
 		}
-	}).done(function(rsp){
-		
-		if(rsp.code=200){
-			var cont = rsp.contents
-			$.each(cont, (k,v)=>{
-				if(x==v.afdeling_code){
-					$('.afdeling_code').append('<option selected value="'+v.afdeling_code+'">'+v.afdeling_code+' - '+v.afdeling_name+'</option>')
-				}else{
-					$('.afdeling_code').append('<option value="'+v.afdeling_code+'">'+v.afdeling_code+' - '+v.afdeling_name+'</option>')
-				}
-			})
-		}else{
-			$('.afdeling_code').html(rsp.code+' - '+rsp.contents)
-		}
-	}).fail(function(errors) {
-		
-		alert("Gagal Terhubung ke Server");
-		
 	});
 }
 
 function load_block(id,w,x=null){
 	$.ajax({
+		param:{
+			elTarget:'.block_code',
+			elValue:'<option value=""></option>',
+		},
 		type: 'GET',
 		url: "{{ URL::to('api/master/block_tree/') }}/"+id+"/"+w,
 		data: null,
@@ -467,7 +438,7 @@ function load_block(id,w,x=null){
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
 			swal({
-				title: xhr.status,
+				title: xhr.status.toString(),
 				text: 'Oops.. '+thrownError,
 				type: 'error',
 				padding: 30
@@ -515,10 +486,14 @@ function load_status(x=null){
 
 function load_category(id, x=null){
 	$.ajax({
+		param:{
+			elTarget:'.category_id',
+			elValue:'<option value=""></option>',
+		},
 		type: 'GET',
 		url: "{{ URL::to('api/master/road-category/') }}/"+id,
 		data: null,
-		cache:false,
+		cache:true,
 		beforeSend:function(){
 			$('.category_id').html('<option value=""></option>')
 			HoldOn(light)
@@ -528,26 +503,35 @@ function load_category(id, x=null){
 		},
 		headers: {
 			"X-CSRF-TOKEN": "{{ csrf_token() }}"
+		},
+		success:(rsp)=>{
+			if(rsp.code=200){
+				var cont = rsp.contents
+				$.each(cont, (k,v)=>{
+					if(x==v.id){
+						$('.category_id').append('<option selected value="'+v.id+'">'+v.category_name+'</option>')
+						hideBlock()
+					}else{
+						$('.category_id').append('<option value="'+v.id+'">'+v.category_name+'</option>')
+					}
+				})
+			}else{
+				$('.category_id').html(rsp.code+' - '+rsp.contents)
+			}
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			swal({
+				title: xhr.status.toString(),
+				text: 'Oops.. '+thrownError,
+				type: 'error',
+				padding: 30
+			});
+		},
+		statusCode: {
+			500: function() {
+			  // alert("Script exhausted");
+			},
 		}
-	}).done(function(rsp){
-		
-		if(rsp.code=200){
-			var cont = rsp.contents
-			$.each(cont, (k,v)=>{
-				if(x==v.id){
-					$('.category_id').append('<option selected value="'+v.id+'">'+v.category_name+'</option>')
-					hideBlock()
-				}else{
-					$('.category_id').append('<option value="'+v.id+'">'+v.category_name+'</option>')
-				}
-			})
-		}else{
-			$('.category_id').html(rsp.code+' - '+rsp.contents)
-		}
-	}).fail(function(errors) {
-		
-		alert("Gagal Terhubung ke Server");
-		
 	});
 }
 

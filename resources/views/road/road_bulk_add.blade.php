@@ -328,7 +328,7 @@ function save(){
 				},
 				error: function (xhr, ajaxOptions, thrownError) {
 					swal({
-						title: xhr.status,
+						title: xhr.status.toString(),
 						text: 'Oops.. '+thrownError,
 						type: 'error',
 						padding: 30
