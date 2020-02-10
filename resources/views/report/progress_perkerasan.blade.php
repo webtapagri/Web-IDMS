@@ -388,7 +388,7 @@ function loadGrid(){
 					if(k == 6){
 						var column = this;
 						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
-						var select = $('<select class="form-control"><option value="">'+dStatus+'</option></select>')
+						var select = $('<select class="form-control tfsearch"><option value="">'+dStatus+'</option></select>')
 							.appendTo( $(column.footer()).empty() )
 							.on( 'change', function () {
 								var val = $.fn.dataTable.util.escapeRegex(
