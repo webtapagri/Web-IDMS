@@ -216,7 +216,8 @@ class TransactionController extends Controller
 			}
 			$where = "werks in ($ww)";
 		}		
-		$model = VRoadLog::whereRaw($where);
+		// $model = VRoadLog::whereRaw($where);
+		$model = Road::perubahanStatus()->whereRaw($where);
 		$update_action = '';
 		$delete_action = '';
 		if($access['update']==1){
