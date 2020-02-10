@@ -23,4 +23,18 @@
 .sidebar-dark .nav-sidebar .nav-item>.nav-link.active, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-item>.nav-link.active {
     background-color: #000000;
 }
+.dataTables_processing {
+    
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(222, 222, 222, 0.4) !important;
+	margin:0 !important;
+}
+.dataTables_processing i.fa.fa-spinner.fa-spin.fa-3x.fa-fw {
+    margin-top: 5%;
+}
 </style>
