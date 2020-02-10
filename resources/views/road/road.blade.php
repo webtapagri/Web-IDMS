@@ -436,7 +436,7 @@ function loadGrid(){
         ],
 		initComplete: function () {
 			if(hl != ''){
-				$($('tbody>tr')[0]).css('background-color','#d0eeff')
+				// $($('tbody>tr')[0]).css('background-color','#d0eeff')
 			}
 			this.api().columns().every(function (k) {
 				if(k ==4){
