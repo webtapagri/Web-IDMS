@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProgressPerkerasan;
 use App\Exports\RoadMaster;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ReportsController extends Controller
 {
@@ -113,7 +114,7 @@ class ReportsController extends Controller
 		}
 	}
 
-	public function download_road(Request $request)
+	public function xdownload_road(Request $request)
 	{
 		ini_set('memory_limit', '-1');
 		try {
@@ -128,6 +129,59 @@ class ReportsController extends Controller
             \Session::flash('error', exception_msg($e));
             return redirect()->back()->withInput($request->input());
 		}
+	}
+	
+	public function download_road(Request $request)
+	{
+		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', 0);
+		$response = new StreamedResponse(function(){
+            // Open output stream
+            $handle = fopen('php://output', 'w');
+
+            // Add CSV headers
+            fputcsv($handle, [
+                'Company',
+				'Estate',
+				'Afdeling',
+				'Block',
+				'Status',
+				'Category',
+				'Segment', 
+				'BA Code',
+				'Road Name',
+				'Road Code',
+				'Length',
+				'Asset Code',
+            ]);
+
+            // Get all users
+            foreach (VRoad::all() as $data) {
+                // Add a new row with data
+                fputcsv($handle, [
+                    $data->company_name,
+					$data->estate_name,
+					$data->afdeling_code,
+					$data->block_code,
+					$data->status_name,
+					$data->category_name,
+					$data->segment,
+					$data->werks,
+					$data->road_name,
+					$data->road_code,
+					$data->total_length,
+					$data->asset_code
+                ]);
+            }
+
+            // Close the output stream
+            fclose($handle);
+        }, 200, [
+                'Content-Type' => 'text/csv',
+                'Content-Disposition' => 'attachment; filename="REPORT_ROAD_MASTER_'.date('Ymd').'.csv"',
+            ]);
+
+        return $response;
 	}
 	
 	
