@@ -114,7 +114,7 @@ class ReportsController extends Controller
 		}
 	}
 
-	public function xdownload_road(Request $request)
+	public function x_download_road(Request $request)
 	{
 		ini_set('memory_limit', '-1');
 		try {
@@ -135,7 +135,27 @@ class ReportsController extends Controller
 	{
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 0);
-		$response = new StreamedResponse(function(){
+		$post = $request->all();
+		
+		$que 		= json_decode($post['que']);
+		$que_global = $post['que_global'];
+		
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			$where = "1=1";
+		}else{
+			$ww = '';
+			foreach($werks as $k=>$w){
+				if($w != 'All'){
+					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+				}
+			}
+			$where = "werks in ($ww)";
+		}
+		
+		
+		$response = new StreamedResponse(function() use($where,$que, $que_global){
             // Open output stream
             $handle = fopen('php://output', 'w');
 
@@ -153,26 +173,7 @@ class ReportsController extends Controller
 				'Road Code',
 				'Length',
 				'Asset Code',
-            ]);
-			
-			$where = $request->all();	
-			
-			$que 		= json_decode($where['que']);
-			$que_global = $where['que_global'];
-			
-			$werks = explode(',',session('area_code'));
-			$cek =  collect($werks);
-			if( $cek->contains('All') ){
-				$where = "1=1";
-			}else{
-				$ww = '';
-				foreach($werks as $k=>$w){
-					if($w != 'All'){
-						$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
-					}
-				}
-				$where = "werks in ($ww)";
-			}
+            ]);			
 			
 			$data 		= VRoad::whereRaw($where);
 			if($que_global){
@@ -191,14 +192,18 @@ class ReportsController extends Controller
 							or asset_code like '%$que_global%'
 							) ");
 			}
-			
-			if( count($que) > 0 ){
-				foreach($que as $q){
-					$data->where($q->col,'like',"%{$q->val}%");
+			if($que){
+				if( count($que) > 0 ){
+					foreach($que as $q){
+						if($q->col=='status_name'){
+							$data->where($q->col,$q->val);
+						}else{
+							$data->where($q->col,'like',"%{$q->val}%");
+						}
+					}
 				}
 			}
-
-            // Get all users
+			
             foreach ($data->get() as $data) {
                 // Add a new row with data
                 fputcsv($handle, [
