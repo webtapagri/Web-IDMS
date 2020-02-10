@@ -154,9 +154,52 @@ class ReportsController extends Controller
 				'Length',
 				'Asset Code',
             ]);
+			
+			$where = $request->all();	
+			
+			$que 		= json_decode($where['que']);
+			$que_global = $where['que_global'];
+			
+			$werks = explode(',',session('area_code'));
+			$cek =  collect($werks);
+			if( $cek->contains('All') ){
+				$where = "1=1";
+			}else{
+				$ww = '';
+				foreach($werks as $k=>$w){
+					if($w != 'All'){
+						$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
+					}
+				}
+				$where = "werks in ($ww)";
+			}
+			
+			$data 		= VRoad::whereRaw($where);
+			if($que_global){
+				$data->whereRaw(" (
+							estate_name like '%$que_global%' 
+							or werks like '%$que_global%'
+							or afdeling_code like '%$que_global%'
+							or block_code like '%$que_global%'
+							or block_name like '%$que_global%'
+							or status_name like '%$que_global%'
+							or category_name like '%$que_global%'
+							or segment like '%$que_global%'
+							or road_name like '%$que_global%'
+							or road_code like '%$que_global%'
+							or total_length like '%$que_global%'
+							or asset_code like '%$que_global%'
+							) ");
+			}
+			
+			if( count($que) > 0 ){
+				foreach($que as $q){
+					$data->where($q->col,'like',"%{$q->val}%");
+				}
+			}
 
             // Get all users
-            foreach (VRoad::all() as $data) {
+            foreach ($data->get() as $data) {
                 // Add a new row with data
                 fputcsv($handle, [
                     $data->company_name,
