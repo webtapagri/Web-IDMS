@@ -115,6 +115,7 @@ class ReportsController extends Controller
 
 	public function download_road(Request $request)
 	{
+		ini_set('memory_limit', '-1');
 		try {
 			$where = $request->all();			
 			$file = 'REPORT_ROAD_MASTER_'.date('Ymd').'.xlsx';
