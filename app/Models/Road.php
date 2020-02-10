@@ -66,4 +66,14 @@ class Road extends Model
 				->where('TM_ROAD_STATUS.status_name','PRODUKSI');
 		return $query;
 	}
+	
+	public function scopePerubahanStatus($query): Builder
+	{
+		$query	->select(['status_name','category_name',DB::raw('TM_ROAD_STATUS.status_code as status_id')])
+				->addSelect(DB::raw('TM_ROAD.*'))
+				->join('TM_ROAD_STATUS', 'TM_ROAD_STATUS.id', '=', 'TM_ROAD.status_id')
+				->join('TM_ROAD_CATEGORY', 'TM_ROAD_CATEGORY.id', '=', 'TM_ROAD.category_id')
+				->whereNull('TM_ROAD.deleted_at');
+		return $query;
+	}
 }
