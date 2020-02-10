@@ -64,8 +64,11 @@ class RoadMaster implements FromView
 			}
 		}
 		
-		return view('excel.road_master', [
-            'data' => $data->get()
-        ]);
+		\Log::info('ceki:');
+		\Log::info($data->count);
+		
+		// return view('excel.road_master', [
+            // 'data' => $data->get()
+        // ]);
     }
 }
