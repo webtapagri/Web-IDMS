@@ -445,9 +445,10 @@ class RoadController extends Controller
             return redirect()->back()->withInput($request->input());
 		}
 		
-		dispatch((new FlushCache)->onQueue('high'));
-		
 		DB::commit();
+		
+		dispatch((new FlushCache)->onQueue('low'));
+		
 		\Session::flash('success', 'Berhasil menyimpan data');
 		\Session::flash('hl', 'Highlight');
         return redirect()->route('master.road');
@@ -637,7 +638,11 @@ class RoadController extends Controller
 			DB::rollBack();
             return response()->error('Error',exception_msg($e));
 		}
+		
 		DB::commit();
+		
+		dispatch((new FlushCache)->onQueue('low'));
+		
 		return response()->success('Success', $respon);
 		
 		\Session::flash('success', 'Berhasil menyimpan data');

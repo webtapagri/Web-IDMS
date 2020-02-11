@@ -157,6 +157,8 @@ class TransactionController extends Controller
 	{
 		try {
 			RoadPavementProgress::create($request->all()+['updated_by'=>\Session::get('user_id')]);
+			
+			dispatch((new FlushCache)->onQueue('low'));
 		}catch (\Throwable $e) {
             \Session::flash('error', throwable_msg($e));
             return redirect()->back()->withInput($request->input());
@@ -299,6 +301,9 @@ class TransactionController extends Controller
             return redirect()->back()->withInput($request->input());
 		}
 		DB::commit();
+		
+		dispatch((new FlushCache)->onQueue('low'));
+			
 		\Session::flash('success', 'Berhasil mengupdate data');
         return redirect()->route('history.road_status');
 	}
