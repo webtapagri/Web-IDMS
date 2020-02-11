@@ -502,7 +502,7 @@ function loadGrid(){
 						targets: [ 0 ]
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
 							text: 'Download CSV',
@@ -538,7 +538,8 @@ function loadGrid(){
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
 					lengthMenu: '<span>Show:</span> _MENU_',
-					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' },
+					processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
 				},
 				
 			});
@@ -548,8 +549,8 @@ function loadGrid(){
             { data: 'estate_name', 		name: 'estate_name' },
             { data: 'afdeling_code', 	name: 'afdeling_code' },
             { data: 'block_name', 		name: 'block_name' },
-            { data: 'status_name', 		name: 'status_name' },
-            { data: 'category_name', 	name: 'category_name' },
+            { data: 'status_name', 		name: 'TM_ROAD_STATUS.status_name' },
+            { data: 'category_name', 	name: 'TM_ROAD_CATEGORY.category_name' },
             { data: 'segment', 			name: 'segment' },
             { data: 'road_name', 		name: 'road_name' },
             { data: 'road_code', 		name: 'road_code' },
@@ -572,16 +573,35 @@ function loadGrid(){
 			leftColumns: 0,
 			rightColumns: 1
 		},
+		"deferLoading": 10000,
         columns: col,
 		initComplete: function () {
 			this.api().columns().every(function (k) {
 				if(k >= 0 && k < 12){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					if(k == 4){
+						var column = this;
+						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var select = $('<select class="form-control"><option value="">'+dStatus+'</option></select>')
+							.appendTo( $(column.footer()).empty() )
+							.on( 'change', function () {
+								var val = $.fn.dataTable.util.escapeRegex(
+									$(this).val()
+								);
+		 
+								column
+									.search( val ? '^'+val+'$' : '', true, false )
+									.draw();
+							} );
+						
+					}else{
+						var column = this;
+						var input = document.createElement("input");
+						$(input).appendTo($(column.footer()).empty())
+						.on('change', function () {
+							column.search($(this).val(), false, false, true).draw();
+						}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					}
+					
 				}
 			});
 		}

@@ -275,11 +275,12 @@ function edit(id,stat){
 	return false;
 }
 
-function detail(id,stat){
+function detail(btn,id,stat){
 	if(table_detail){
 		table_detail.destroy()
 	};
-	loadGridDetail( "{{ URL::to('api/history/road-status-detail') }}/"+id )
+	$(btn).html('<i class="icon-spinner spinner"></i> History')
+	loadGridDetail(btn, "{{ URL::to('api/history/road-status-detail') }}/"+id )
 	return false;
 }
 
@@ -309,44 +310,6 @@ function del(url){
 		}
 	});
 }
-
-// function loadStatus(){
-// 	$.ajax({
-// 		type: 'GET',
-// 		url: "{{ URL::to('api/master/road-status') }}/",
-// 		data: null,
-// 		cache:false,
-// 		beforeSend:function(){
-// 			// HoldOn(light);
-// 		},
-// 		complete:function(){
-// 			// HoldOff(light);
-// 		},
-// 		headers: {
-// 			"X-CSRF-TOKEN": "{{ csrf_token() }}"
-// 		}
-// 	}).done(function(rsp){
-		
-// 		if(rsp.code=200){
-// 			var cont = rsp.contents;
-// 			var htm = '<option value="">-- Pilih Status --</option>'
-// 			var htm2 = '<option value="">-- Pilih Status --</option>'
-// 			$.each(cont, (k,v)=>{
-// 				htm += '<option value="'+v.id+'" >'+v.status_name+'</option>'
-// 				htm2 += '<option value="'+v.id+'" id="comboid_'+v.id+'">'+v.status_name+'</option>'
-// 			});
-// 			$('#rc_status_id').html(htm);
-// 			$('#rc_status_id_edit').html(htm2);
-// 		}else{
-// 			$('#rc_status_id').html('<option value="">Gagal mengambil data</option>');	
-// 			$('#rc_status_id_edit').html('<option value="">Gagal mengambil data</option>');	
-// 		}
-// 	}).fail(function(errors) {
-		
-// 		alert("Gagal Terhubung ke Server");
-		
-// 	});
-// }
 
 function load_status(){
 	$.ajax({
@@ -551,12 +514,13 @@ function loadGrid(){
 						"targets": 0 
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
 					lengthMenu: '<span>Show:</span> _MENU_',
-					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' },
+					processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
 				},
 				
 			});
@@ -579,8 +543,8 @@ function loadGrid(){
             { data: 'estate_name', 		name: 'estate_name' },
             { data: 'afdeling_code', 	name: 'afdeling_code' },
             { data: 'block_name', 		name: 'block_name' },
-            { data: 'status_name', 		name: 'status_name' },
-            { data: 'category_name', 	name: 'category_name' },
+            { data: 'status_name', 		name: 'TM_ROAD_STATUS.status_name' },
+            { data: 'category_name', 	name: 'TM_ROAD_CATEGORY.category_name' },
             { data: 'segment', 			name: 'segment' },
             { data: 'road_name', 		name: 'road_name' },
             { data: 'road_code', 		name: 'road_code' },
@@ -591,12 +555,29 @@ function loadGrid(){
 		initComplete: function () {
 			this.api().columns().every(function (k) {
 				if(k > -1 && k < 11){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
+					if(k == 4){
+						var column = this;
+						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var select = $('<select class="form-control"><option value="">'+dStatus+'</option></select>')
+							.appendTo( $(column.footer()).empty() )
+							.on( 'change', function () {
+								var val = $.fn.dataTable.util.escapeRegex(
+									$(this).val()
+								);
+		 
+								column
+									.search( val ? '^'+val+'$' : '', true, false )
+									.draw();
+							} );
+						
+					}else{
+						var column = this;
+						var input = document.createElement("input");
+						$(input).appendTo($(column.footer()).empty())
+						.on('change', function () {
+							column.search($(this).val(), false, false, true).draw();
+						}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					}
 				}
 			});
 		}
@@ -610,7 +591,7 @@ function loadGrid(){
     // } ).draw();
 }
 
-function loadGridDetail(url){
+function loadGridDetail(btn,url){
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -660,7 +641,7 @@ function loadGridDetail(url){
 					}).attr('placeholder',' Cari').addClass('form-control');
 				}
 			});
-			
+			$(btn).html('<i class="icon-list3"></i> History')
 			$('#modal_detail').modal('show')
 		}
     } );

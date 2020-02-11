@@ -37,6 +37,7 @@ return [
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily'],
+			'permission' => 0777,
         ],
 
         'single' => [

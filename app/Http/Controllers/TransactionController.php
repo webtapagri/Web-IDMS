@@ -216,7 +216,8 @@ class TransactionController extends Controller
 			}
 			$where = "werks in ($ww)";
 		}		
-		$model = VRoadLog::whereRaw($where);
+		// $model = VRoadLog::whereRaw($where);
+		$model = Road::perubahanStatus()->whereRaw($where);
 		$update_action = '';
 		$delete_action = '';
 		if($access['update']==1){
@@ -231,7 +232,7 @@ class TransactionController extends Controller
 		}
 		
 		$update_action .= '
-			<button title="List history status jalan" class="btn btn-sm btn-info " onclick="detail({{ $id }},  \'{{ $status_id }}\'); return false;">
+			<button title="List history status jalan" class="btn btn-sm btn-info " onclick="detail(this,{{ $id }},  \'{{ $status_id }}\'); return false;">
 				<i class="icon-list3"></i> History
 			</button>
 		';

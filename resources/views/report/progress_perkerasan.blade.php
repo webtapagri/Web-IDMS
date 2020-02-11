@@ -75,8 +75,7 @@
 				<th>Road Name</th>
 				<th>Road Code</th>
 				<th>Length</th>
-				<th>Progress (m)</th>
-				<th>Progress (%)</th>
+				<th>Pavement Length (m)</th>
 				<th>Asset Code</th>
 			</tr>
 		</thead>
@@ -94,8 +93,7 @@
 				<th>Road Name</th>
 				<th>Road Code</th>
 				<th>Length</th>
-				<th>Progress (m)</th>
-				<th>Progress (%)</th>
+				<th>Pavement Length (m)</th>
 				<th>Asset Code</th>
 			</tr>
 		</tfoot>
@@ -309,7 +307,7 @@ function loadGrid(){
 						targets: [ 5 ]
 					},
 				],
-				dom: '<"datatable-header"Bfl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Bfrl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
 							text: '<i class="icon-file-excel"></i><o></o> Export to Excel',
@@ -348,7 +346,8 @@ function loadGrid(){
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
 					lengthMenu: '<span>Show:</span> _MENU_',
-					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' },
+					processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
 				},
 				
 			});
@@ -386,12 +385,29 @@ function loadGrid(){
 		initComplete: function () {
 			this.api().columns().every(function (k) {
 				if(k >= 0 && k < 12){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					if(k == 6){
+						var column = this;
+						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var select = $('<select class="form-control tfsearch"><option value="">'+dStatus+'</option></select>')
+							.appendTo( $(column.footer()).empty() )
+							.on( 'change', function () {
+								var val = $.fn.dataTable.util.escapeRegex(
+									$(this).val()
+								);
+		 
+								column
+									.search( val ? '^'+val+'$' : '', true, false )
+									.draw();
+							} );
+						
+					}else{
+						var column = this;
+						var input = document.createElement("input");
+						$(input).appendTo($(column.footer()).empty())
+						.on('change', function () {
+							column.search($(this).val(), false, false, true).draw();
+						}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					}
 				}
 			});
 		}
@@ -420,12 +436,13 @@ function loadGridDetail(btn, url, kode){
 						targets: [ 0]
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
 					lengthMenu: '<span>Show:</span> _MENU_',
-					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' }
+					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' },
+					processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
 				}
 			});
 	
