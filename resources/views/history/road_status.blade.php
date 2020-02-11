@@ -530,7 +530,11 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
-        ajax: '{{ route("history.road_status_datatables") }}',
+        // ajax: '{{ route("history.road_status_datatables") }}',
+		ajax: $.fn.dataTable.pipeline( {
+            url: '{{ route("history.road_status_datatables") }}',
+            pages: 5 // number of pages to cache
+        } ),
 		scrollX: true,
 		scrollY: '350px',
 		scrollCollapse: true,
