@@ -16,6 +16,7 @@ use App\Models\VRoadStatus;
 use App\Models\RoadStatus;
 use App\Models\RoadCategory;
 use App\Models\Block;
+use App\Jobs\FlushCache;
 use App\Http\Requests\RoadStatusChangesRequest;
 use Yajra\DataTables\Facades\DataTables;
 use DB;
@@ -158,7 +159,7 @@ class TransactionController extends Controller
 		try {
 			RoadPavementProgress::create($request->all()+['updated_by'=>\Session::get('user_id')]);
 			
-			dispatch((new FlushCache)->onQueue('low'));
+			// dispatch((new FlushCache)->onQueue('low'));
 		}catch (\Throwable $e) {
             \Session::flash('error', throwable_msg($e));
             return redirect()->back()->withInput($request->input());
@@ -302,7 +303,7 @@ class TransactionController extends Controller
 		}
 		DB::commit();
 		
-		dispatch((new FlushCache)->onQueue('low'));
+		// dispatch((new FlushCache)->onQueue('low'));
 			
 		\Session::flash('success', 'Berhasil mengupdate data');
         return redirect()->route('history.road_status');
