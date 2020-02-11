@@ -564,7 +564,11 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
-        ajax: '{{ route("history.progres_perkerasan_datatables") }}',
+        // ajax: '{{ route("history.progres_perkerasan_datatables") }}',
+		ajax: $.fn.dataTable.pipeline( {
+            url: '{{ route("history.progres_perkerasan_datatables") }}',
+            pages: 5 // number of pages to cache
+        } ),
 		scrollX: true,
 		scrollY: '350px',
 		scrollCollapse: true,
