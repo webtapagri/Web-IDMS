@@ -21,7 +21,7 @@
     font-size: 7pt;
 }
 .sidebar-dark .nav-sidebar .nav-item>.nav-link.active, .sidebar-light .card[class*=bg-]:not(.bg-light):not(.bg-white):not(.bg-transparent) .nav-sidebar .nav-item>.nav-link.active {
-    background-color: #000000;
+    background-color: #26a69a;
 }
 .dataTables_processing {
     
@@ -37,4 +37,8 @@
 .dataTables_processing i.fa.fa-spinner.fa-spin.fa-3x.fa-fw {
     margin-top: 5%;
 }
+.sidebar-dark .nav-sidebar>.nav-item-open>.nav-link:not(.disabled){
+	background-color: rgba(38, 166, 154, 0);
+}
+
 </style>
