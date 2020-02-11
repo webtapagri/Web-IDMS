@@ -275,11 +275,12 @@ function edit(id,stat){
 	return false;
 }
 
-function detail(id,stat){
+function detail(btn,id,stat){
 	if(table_detail){
 		table_detail.destroy()
 	};
-	loadGridDetail( "{{ URL::to('api/history/road-status-detail') }}/"+id )
+	$(btn).html('<i class="icon-spinner spinner"></i> History')
+	loadGridDetail(btn, "{{ URL::to('api/history/road-status-detail') }}/"+id )
 	return false;
 }
 
@@ -309,44 +310,6 @@ function del(url){
 		}
 	});
 }
-
-// function loadStatus(){
-// 	$.ajax({
-// 		type: 'GET',
-// 		url: "{{ URL::to('api/master/road-status') }}/",
-// 		data: null,
-// 		cache:false,
-// 		beforeSend:function(){
-// 			// HoldOn(light);
-// 		},
-// 		complete:function(){
-// 			// HoldOff(light);
-// 		},
-// 		headers: {
-// 			"X-CSRF-TOKEN": "{{ csrf_token() }}"
-// 		}
-// 	}).done(function(rsp){
-		
-// 		if(rsp.code=200){
-// 			var cont = rsp.contents;
-// 			var htm = '<option value="">-- Pilih Status --</option>'
-// 			var htm2 = '<option value="">-- Pilih Status --</option>'
-// 			$.each(cont, (k,v)=>{
-// 				htm += '<option value="'+v.id+'" >'+v.status_name+'</option>'
-// 				htm2 += '<option value="'+v.id+'" id="comboid_'+v.id+'">'+v.status_name+'</option>'
-// 			});
-// 			$('#rc_status_id').html(htm);
-// 			$('#rc_status_id_edit').html(htm2);
-// 		}else{
-// 			$('#rc_status_id').html('<option value="">Gagal mengambil data</option>');	
-// 			$('#rc_status_id_edit').html('<option value="">Gagal mengambil data</option>');	
-// 		}
-// 	}).fail(function(errors) {
-		
-// 		alert("Gagal Terhubung ke Server");
-		
-// 	});
-// }
 
 function load_status(){
 	$.ajax({
@@ -628,7 +591,7 @@ function loadGrid(){
     // } ).draw();
 }
 
-function loadGridDetail(url){
+function loadGridDetail(btn,url){
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -678,7 +641,7 @@ function loadGridDetail(url){
 					}).attr('placeholder',' Cari').addClass('form-control');
 				}
 			});
-			
+			$(btn).html('<i class="icon-list3"></i> History')
 			$('#modal_detail').modal('show')
 		}
     } );

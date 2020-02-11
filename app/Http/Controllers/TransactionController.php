@@ -232,7 +232,7 @@ class TransactionController extends Controller
 		}
 		
 		$update_action .= '
-			<button title="List history status jalan" class="btn btn-sm btn-info " onclick="detail({{ $id }},  \'{{ $status_id }}\'); return false;">
+			<button title="List history status jalan" class="btn btn-sm btn-info " onclick="detail(this,{{ $id }},  \'{{ $status_id }}\'); return false;">
 				<i class="icon-list3"></i> History
 			</button>
 		';
