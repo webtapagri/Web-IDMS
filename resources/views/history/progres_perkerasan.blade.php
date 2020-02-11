@@ -498,7 +498,7 @@ function loadGrid(){
 					},
 					{ 
 						orderable: false,
-						targets: [ 10,11 ]
+						targets: [ 0,10,11 ]
 					},
 				],
 				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
