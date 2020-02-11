@@ -16,6 +16,7 @@ return [
     'name' => env('APP_NAME', 'Laravel'),
     'company' => env('COMPANY', 'Laravel'),
     'brand' => env('BRAND', 'Laravel'),
+    'cache_query_time' => env('CACHE_QUERY_TIME', '5'),
 
     
     /*

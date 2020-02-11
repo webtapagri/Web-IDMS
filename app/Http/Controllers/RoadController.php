@@ -16,6 +16,7 @@ use App\Models\Company;
 use App\Models\Estate;
 use App\Models\Afdeling;
 use App\Models\Block;
+use App\Jobs\FlushCache;
 use Session;
 use AccessRight;
 use App\RoleAccess;
@@ -443,6 +444,8 @@ class RoadController extends Controller
             \Session::flash('error', exception_msg($e));
             return redirect()->back()->withInput($request->input());
 		}
+		
+		dispatch((new FlushCache)->onQueue('high'));
 		
 		DB::commit();
 		\Session::flash('success', 'Berhasil menyimpan data');

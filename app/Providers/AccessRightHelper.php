@@ -131,4 +131,15 @@ class AccessRightHelper extends ServiceProvider
  
         return $data;
      }
+	
+	static public function plants()
+	{
+		$werks = explode(',',session('area_code'));
+		$cek =  collect($werks);
+		if( $cek->contains('All') ){
+			return ['all'];
+		}else{
+			return $werks;
+		}
+	}
 }
