@@ -68,7 +68,6 @@
 	<table class="table datatable-responsive table-xs">
     <thead>
 			<tr>
-				<th>No.</th>
 				<th>Estate</th>
 				<th>BA Code</th>
 				<th>Month</th>
@@ -78,7 +77,6 @@
 		</thead>
 		<tfoot>
 			<tr>
-				<th>Pencarian</th>
 				<th>Estate</th>
 				<th>BA Code</th>
 				<th>Month</th>
@@ -380,15 +378,11 @@ function loadGrid(){
 					{ 
 						orderable: false,
 						width: 250,
-						targets: [ 5 ]
+						targets: [ 0 ]
 					},
 					{ 
 						orderable: false,
 						targets: [ 0 ]
-					},
-					{ 
-						"searchable": false, 
-						"targets": 0 
 					},
 				],
 				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -409,7 +403,6 @@ function loadGrid(){
         ajax: '{{ route("setting.period_datatables") }}',
 		"order": [[1,"asc"],[2, "asc" ]],
         columns: [
-            { data: 'no', 	name: 'no' },
             { data: 'estate_name', 	name: 'estate_name' },
             { data: 'werks', 	name: 'werks' },
             { data: 'month', 	name: 'month' },
@@ -418,7 +411,7 @@ function loadGrid(){
         ],
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k > 0 && k < 5){
+				if(k > -1 && k < 4){
 					var column = this;
 					var input = document.createElement("input");
 					$(input).appendTo($(column.footer()).empty())
