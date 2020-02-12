@@ -114,6 +114,24 @@ class ReportsController extends Controller
 		}
 	}
 
+	
+	public function download_road(Request $request)
+	{
+		ini_set('memory_limit', '-1');
+		try {
+			$where = $request->all();			
+			$file = 'REPORT_ROAD_MASTER_'.date('Ymd').'.csv';
+			return (new RoadMaster($where))->download($file);
+			
+		}catch (\Throwable $e) {
+            \Session::flash('error', throwable_msg($e));
+            return redirect()->back()->withInput($request->input());
+        }catch (\Exception $e) {
+            \Session::flash('error', exception_msg($e));
+            return redirect()->back()->withInput($request->input());
+		}
+	}
+
 	public function x_download_road(Request $request)
 	{
 		ini_set('memory_limit', '-1');
@@ -131,7 +149,7 @@ class ReportsController extends Controller
 		}
 	}
 	
-	public function download_road(Request $request)
+	public function xx_download_road(Request $request)
 	{
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 0);

@@ -15,7 +15,7 @@ return [
         | Here you can specify how big the chunk should be.
         |
         */
-        'chunk_size'             => 1000,
+        'chunk_size'             => 100000,
 
         /*
         |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ return [
         |
         */
         'csv'                    => [
-            'delimiter'              => ',',
+            'delimiter'              => ';', //',',
             'enclosure'              => '"',
             'line_ending'            => PHP_EOL,
             'use_bom'                => false,
