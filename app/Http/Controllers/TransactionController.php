@@ -99,6 +99,7 @@ class TransactionController extends Controller
             return response()->error('Error',exception_msg($e));
 		}
 		DB::commit();
+		dispatch((new FlushCache)->onQueue('low'));
 		return response()->success('Success', $respon);
 	}
 	
