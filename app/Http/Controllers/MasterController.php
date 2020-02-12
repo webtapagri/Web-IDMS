@@ -110,6 +110,7 @@ class MasterController extends Controller
 							//
 						}
 					}else{
+						\Log::info('Not found ini- '.$data['AFD_CODE'].' - '.$data['WERKS']);
 						// masuk log  COMP_CODE  not found
 					}
 				
