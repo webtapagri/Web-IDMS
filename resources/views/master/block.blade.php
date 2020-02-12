@@ -121,12 +121,12 @@ function sync(dis){
 		if(rsp.code=200){
 			swal({
                 title: 'Success!',
-                text: 'Success sync!',
+                text: 'Success sync! please refresh this page to view newest data',
                 type: 'success'
             });
 			
-			table.destroy()
-			loadGrid()
+			// table.destroy()
+			// loadGrid()
 		}else{
 			alert("Gagal sync");
 			console.log(rsp);

@@ -421,13 +421,13 @@ function loadGrid(){
 					{ 
 						orderable: false,
 						width: 250,
-						targets: [ 5 ]
+						targets: [ 0 ]
 					},
 				],
 				dom: '<"datatable-header"Bfrl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
-							text: '<i class="icon-file-excel"></i><o></o> Export to Excel',
+							text: '<i class="icon-file-excel"></i><o></o> Export to CSV',
 							className: 'btn bg-teal-400',
 							action: function(e, dt, node, config) {
 								
