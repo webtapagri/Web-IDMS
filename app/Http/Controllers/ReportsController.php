@@ -158,7 +158,7 @@ class ReportsController extends Controller
 				'Length',
 				'Pavement Length (m)',
 				'Asset Code',
-            ]);			
+            ],';');			
 			
 			$data 		= VReportProgressPerkerasan::whereRaw($where);
 			if($que_global){
@@ -204,7 +204,7 @@ class ReportsController extends Controller
 					$data->total_length,
 					$data->length,
 					$data->asset_code
-                ]);
+                ], ';');
             }
 
             // Close the output stream
