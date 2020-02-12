@@ -31,7 +31,11 @@ class FlushCache implements ShouldQueue
      */
     public function handle()
     {
-		\Log::info('flush cache...');
-        Cache::tags( AccessRight::plants() )->flush();
+		if(config('cache.default') == 'redis'){
+			Cache::tags( AccessRight::plants() )->flush();
+		}else{
+			Cache::flush();
+		}
+		
     }
 }
