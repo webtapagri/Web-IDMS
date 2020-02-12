@@ -447,7 +447,7 @@ class RoadController extends Controller
 		
 		DB::commit();
 		
-		// dispatch((new FlushCache)->onQueue('low'));
+		dispatch((new FlushCache)->onQueue('low'));
 		
 		\Session::flash('success', 'Berhasil menyimpan data');
 		\Session::flash('hl', 'Highlight');
@@ -641,7 +641,7 @@ class RoadController extends Controller
 		
 		DB::commit();
 		
-		// dispatch((new FlushCache)->onQueue('low'));
+		dispatch((new FlushCache)->onQueue('low'));
 		
 		return response()->success('Success', $respon);
 		
