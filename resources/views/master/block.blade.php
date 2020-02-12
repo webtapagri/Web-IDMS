@@ -125,8 +125,8 @@ function sync(dis){
                 type: 'success'
             });
 			
-			table.destroy()
-			loadGrid()
+			// table.destroy()
+			// loadGrid()
 		}else{
 			alert("Gagal sync");
 			console.log(rsp);
