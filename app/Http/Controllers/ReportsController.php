@@ -118,6 +118,7 @@ class ReportsController extends Controller
 	public function download_road(Request $request)
 	{
 		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', 0);
 		try {
 			$where = $request->all();			
 			$file = 'REPORT_ROAD_MASTER_'.date('Ymd').'.csv';
