@@ -45,7 +45,8 @@ class ConfigurationController extends Controller
 					$ww .= $k!=0 ? " ,'$w' " : " '$w' ";
 				}
 			}
-			$where = "company_id in (select distinct company_id from TM_ESTATE where werks in ($ww))";
+			// $where = "company_id in (select distinct company_id from TM_ESTATE where werks in ($ww))";
+			$where = "trp.werks in ($ww)";
 		}
 
 		$model = DB::select( DB::raw('select @rank  := ifnull(@rank, '.$start.')  + 1  AS no, trp.*, tme.estate_name from TR_PERIOD as trp join TM_ESTATE as tme on trp.werks = tme.werks  where trp.deleted_at is null and '.$where));
