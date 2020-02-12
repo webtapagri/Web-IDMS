@@ -225,7 +225,7 @@ class QueryDataTable extends DataTableAbstract
 			$LOG = 'Ini data dari DATABASE - datatables count()';
 		}	
 		if(config('app.debug')){
-			\Log::info("CName: $cName");
+			// \Log::info("CName: $cName");
 			\Log::info($LOG);
         }
 		return $value;
@@ -310,7 +310,7 @@ class QueryDataTable extends DataTableAbstract
 		}	
 		
 		if(config('app.debug')){
-			\Log::info("CName: $cName");
+			// \Log::info("CName: $cName");
 			\Log::info($LOG);
         }
 		return $value;
