@@ -345,7 +345,11 @@ function loadGrid(){
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
 		serverSide: true,
-        ajax: '{{ route("report.road_datatables") }}',
+        // ajax: '{{ route("report.road_datatables") }}',
+		ajax: $.fn.dataTable.pipeline( {
+            url: '{{ route("report.road_datatables") }}',
+            pages: 5 // number of pages to cache
+        } ),
 		// "order": [[1,"asc"],[2, "asc" ]], 
         columns: col,
 			

@@ -493,13 +493,12 @@ function loadGrid(){
 				responsive: false,
 				columnDefs: [
 					{ 
-						orderable: false,
 						width: 250,
 						targets: [ 5 ]
 					},
 					{ 
 						orderable: false,
-						targets: [ 0 ]
+						targets: [ 0,10,11 ]
 					},
 				],
 				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -565,7 +564,11 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
-        ajax: '{{ route("history.progres_perkerasan_datatables") }}',
+        // ajax: '{{ route("history.progres_perkerasan_datatables") }}',
+		ajax: $.fn.dataTable.pipeline( {
+            url: '{{ route("history.progres_perkerasan_datatables") }}',
+            pages: 5 // number of pages to cache
+        } ),
 		scrollX: true,
 		scrollY: '350px',
 		scrollCollapse: true,
@@ -577,7 +580,7 @@ function loadGrid(){
         columns: col,
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k >= 0 && k < 12){
+				if(k >= 0 && k < 9){
 					if(k == 4){
 						var column = this;
 						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';

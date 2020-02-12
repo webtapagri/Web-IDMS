@@ -13,8 +13,7 @@
             <th>Road Name</th>
             <th>Road Code</th>
             <th>Length</th>
-            <th>Progress (m)</th>
-            <th>Progress (%)</th>
+            <th>Pavement Length (m)</th>
             <th>Asset Code</th>
         </tr>
     </thead>
@@ -33,8 +32,7 @@
             <td>{{ $data->road_name }}</td>
             <td>{{ $data->road_code }}</td>
             <td>{{ $data->total_length }}</td>
-            <td>{{ $data->curr_progress }}</td>
-            <td>{{ $data->progress }}</td>
+            <td>{{ $data->length }}</td>
             <td>{{ $data->asset_code }}</td>
         </tr>
     @endforeach

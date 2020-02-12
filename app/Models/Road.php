@@ -62,7 +62,7 @@ class Road extends Model
 				->addSelect(DB::raw('TM_ROAD.*'))
 				->join('TM_ROAD_STATUS', 'TM_ROAD_STATUS.id', '=', 'TM_ROAD.status_id')
 				->join('TM_ROAD_CATEGORY', 'TM_ROAD_CATEGORY.id', '=', 'TM_ROAD.category_id')
-				->whereNull('TM_ROAD.deleted_at')
+				// ->whereNull('TM_ROAD.deleted_at')
 				->where('TM_ROAD_STATUS.status_name','PRODUKSI');
 		return $query;
 	}
