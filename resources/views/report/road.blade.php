@@ -67,7 +67,6 @@
 			</div>
 		@endif
 	</div>
-    
 	<table class="table datatable-responsive">
 		<thead>
 			<tr>
@@ -108,6 +107,7 @@
 	@csrf
 	<input type="hidden" name="que" id="que">
 	<input type="hidden" name="que_global" id="que_global">
+    <input type="hidden" name="exp" id="exp">
 </form>
 
 @endsection
@@ -274,15 +274,10 @@ function loadGrid(){
 						targets: [ 0 ]
 					},
 				],
-				dom: '<"datatable-header"Bfrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Blfrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				
 				buttons: [
-					   {
-							extend: 'csv',
-							className: 'btn btn-light d-none toCsv',
-							text: '<i class="icon-file-spreadsheet mr-2"></i> CSV',
-							extension: '.csv',
-						},
-						{
+					  	{
 							text: '<i class="icon-file-excel mr-2"></i>Export to CSV',
 							className: 'btn bg-teal-400',
 							action: function(e, dt, node, config) {
@@ -299,13 +294,39 @@ function loadGrid(){
 									}    
 								})
 								
+								$('#exp').val('csvlama')
 								$('#que').val( JSON.stringify(que) )
 								$('#que_global').val( que_global )
 								$('#formDownload').submit()
 									
 															
 							}
-						}
+						},
+						{
+							text: '<i class="icon-file-excel mr-2"></i>Export to CSV',
+							className: 'btn',
+							action: function(e, dt, node, config) {
+								
+								// dt.page.len( -1 ).draw()
+								// donlot = true
+
+								que = [];
+								que_global = $('input[type="search"]').val()
+								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
+								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
+									if( $(v).val() != '' ){
+										que.push( { col: col[k]['name'], val : $(v).val()} )
+									}    
+								})
+								
+								$('#exp').val('csvbaru')
+								$('#que').val( JSON.stringify(que) )
+								$('#que_global').val( que_global )
+								$('#formDownload').submit()
+									
+															
+							}
+						},
 					],
 				"drawCallback": function( settings ) {
 					// var api = this.api();
@@ -314,17 +335,17 @@ function loadGrid(){
 						donlot = false
 					}
 				},
-			lengthMenu: [
-				[ 10, 25, 50, -1 ],
-				[ '10', '25', '50', 'All' ]
-			],
+			// lengthMenu: [
+			// 	[ 10, 25, 50, -1 ],
+			// 	[ '10', '25', '50', 'All' ]
+			// ],
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
 					lengthMenu: '<span>Show:</span> _MENU_',
 					paginate: { 'first': 'First', 'last': 'Last', 'next': $('html').attr('dir') == 'rtl' ? '&larr;' : '&rarr;', 'previous': $('html').attr('dir') == 'rtl' ? '&rarr;' : '&larr;' },
 					processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
-				}
+				},
 			});
 			
 	col = [		
