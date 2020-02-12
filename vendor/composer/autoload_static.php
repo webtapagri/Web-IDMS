@@ -816,6 +816,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'App\\Http\\Requests\\RoadRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RoadRequest.php',
         'App\\Http\\Requests\\RoadStatusChangesRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RoadStatusChangesRequest.php',
         'App\\Http\\Requests\\RoadStatusRequest' => __DIR__ . '/../..' . '/app/Http/Requests/RoadStatusRequest.php',
+        'App\\Jobs\\FlushCache' => __DIR__ . '/../..' . '/app/Jobs/FlushCache.php',
         'App\\Mail\\FamsEmail' => __DIR__ . '/../..' . '/app/Mail/FamsEmail.php',
         'App\\Menu' => __DIR__ . '/../..' . '/app/Menu.php',
         'App\\Models\\Afdeling' => __DIR__ . '/../..' . '/app/Models/Afdeling.php',

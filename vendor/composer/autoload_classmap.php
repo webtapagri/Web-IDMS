@@ -184,6 +184,7 @@ return array(
     'App\\Http\\Requests\\RoadRequest' => $baseDir . '/app/Http/Requests/RoadRequest.php',
     'App\\Http\\Requests\\RoadStatusChangesRequest' => $baseDir . '/app/Http/Requests/RoadStatusChangesRequest.php',
     'App\\Http\\Requests\\RoadStatusRequest' => $baseDir . '/app/Http/Requests/RoadStatusRequest.php',
+    'App\\Jobs\\FlushCache' => $baseDir . '/app/Jobs/FlushCache.php',
     'App\\Mail\\FamsEmail' => $baseDir . '/app/Mail/FamsEmail.php',
     'App\\Menu' => $baseDir . '/app/Menu.php',
     'App\\Models\\Afdeling' => $baseDir . '/app/Models/Afdeling.php',
