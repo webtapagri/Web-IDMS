@@ -107,7 +107,7 @@
 	@csrf
 	<input type="hidden" name="que" id="que">
 	<input type="hidden" name="que_global" id="que_global">
-    <input type="hidden" name="exp" id="exp">
+    <!-- <input type="hidden" name="exp" id="exp"> -->
 </form>
 
 @endsection
@@ -294,7 +294,7 @@ function loadGrid(){
 									}    
 								})
 								
-								$('#exp').val('csvlama')
+								// $('#exp').val('csvlama')
 								$('#que').val( JSON.stringify(que) )
 								$('#que_global').val( que_global )
 								$('#formDownload').submit()
@@ -302,31 +302,31 @@ function loadGrid(){
 															
 							}
 						},
-						{
-							text: '<i class="icon-file-excel mr-2"></i>Export to CSV',
-							className: 'btn',
-							action: function(e, dt, node, config) {
+						// {
+						// 	text: '<i class="icon-file-excel mr-2"></i>Export to CSV',
+						// 	className: 'btn',
+						// 	action: function(e, dt, node, config) {
 								
-								// dt.page.len( -1 ).draw()
-								// donlot = true
+						// 		// dt.page.len( -1 ).draw()
+						// 		// donlot = true
 
-								que = [];
-								que_global = $('input[type="search"]').val()
-								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
-								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
-									if( $(v).val() != '' ){
-										que.push( { col: col[k]['name'], val : $(v).val()} )
-									}    
-								})
+						// 		que = [];
+						// 		que_global = $('input[type="search"]').val()
+						// 		var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
+						// 		$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
+						// 			if( $(v).val() != '' ){
+						// 				que.push( { col: col[k]['name'], val : $(v).val()} )
+						// 			}    
+						// 		})
 								
-								$('#exp').val('csvbaru')
-								$('#que').val( JSON.stringify(que) )
-								$('#que_global').val( que_global )
-								$('#formDownload').submit()
+						// 		$('#exp').val('csvbaru')
+						// 		$('#que').val( JSON.stringify(que) )
+						// 		$('#que_global').val( que_global )
+						// 		$('#formDownload').submit()
 									
 															
-							}
-						},
+						// 	}
+						// },
 					],
 				"drawCallback": function( settings ) {
 					// var api = this.api();

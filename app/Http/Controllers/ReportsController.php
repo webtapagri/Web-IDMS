@@ -219,7 +219,7 @@ class ReportsController extends Controller
 	}
 
 	
-	public function download_road(Request $request)
+	public function xx_download_road(Request $request)
 	{
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 0);
@@ -352,7 +352,7 @@ class ReportsController extends Controller
 		}
 	}
 	
-	public function xx_download_road(Request $request)
+	public function download_road(Request $request)
 	{
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 0);
