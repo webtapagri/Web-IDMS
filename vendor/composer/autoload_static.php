@@ -752,6 +752,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'Adldap\\Utilities' => __DIR__ . '/..' . '/adldap2/adldap2/src/Utilities.php',
         'App\\Console\\Commands\\SchedulerMasterData' => __DIR__ . '/../..' . '/app/Console/Commands/SchedulerMasterData.php',
         'App\\Console\\Commands\\SchedulerMasterData2' => __DIR__ . '/../..' . '/app/Console/Commands/SchedulerMasterData2.php',
+        'App\\Console\\Commands\\ViewGenerator' => __DIR__ . '/../..' . '/app/Console/Commands/ViewGenerator.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\DataTables\\RoadDataTable' => __DIR__ . '/../..' . '/app/DataTables/RoadDataTable.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',

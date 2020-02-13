@@ -120,6 +120,7 @@ return array(
     'Adldap\\Utilities' => $vendorDir . '/adldap2/adldap2/src/Utilities.php',
     'App\\Console\\Commands\\SchedulerMasterData' => $baseDir . '/app/Console/Commands/SchedulerMasterData.php',
     'App\\Console\\Commands\\SchedulerMasterData2' => $baseDir . '/app/Console/Commands/SchedulerMasterData2.php',
+    'App\\Console\\Commands\\ViewGenerator' => $baseDir . '/app/Console/Commands/ViewGenerator.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\DataTables\\RoadDataTable' => $baseDir . '/app/DataTables/RoadDataTable.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
