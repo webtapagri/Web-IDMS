@@ -394,7 +394,7 @@ class ReportsController extends Controller
 				'Road Code',
 				'Length',
 				'Asset Code',
-            ]);			
+            ], ';');			
 			
 			$data 		= VRoad::whereRaw($where);
 			if($que_global){
