@@ -95,8 +95,8 @@ class MasterController extends Controller
 								$block = Block::firstOrNew(array(
 									'afdeling_id' => $afd['id'],
 									'block_code' => $data['BLOCK_CODE'],
-									'start_valid' => $data['START_VALID'],									
-									'end_valid' => $data['END_VALID'],									
+									// 'start_valid' => $data['START_VALID'],									
+									// 'end_valid' => $data['END_VALID'],									
 								));
 								$block->block_name = $data['BLOCK_NAME'];
 								$block->region_code = $data['REGION_CODE'];

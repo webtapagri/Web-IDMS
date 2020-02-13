@@ -21,3 +21,4 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+vendor/yajra/laravel-datatables-oracle/src/QueryDataTable_ORIGINAL.php
