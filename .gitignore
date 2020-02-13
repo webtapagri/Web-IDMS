@@ -4,14 +4,7 @@
 /public/storage
 /storage/*.key
 
-/vendor/*
-!/vendor/yajra
-/vendor/yajra/laravel-datatables-html
-/vendor/yajra/laravel-datatables-buttons
-/vendor/yajra/laravel-datatables-oracle/*
-!vendor/yajra/laravel-datatables-oracle/src/
-vendor/yajra/laravel-datatables-oracle/src/*
-!vendor/yajra/laravel-datatables-oracle/src/*QueryDataTable*
+/vendor
 
 .env
 !/docker-utility/.env
@@ -21,4 +14,3 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-vendor/yajra/laravel-datatables-oracle/src/QueryDataTable_ORIGINAL.php
