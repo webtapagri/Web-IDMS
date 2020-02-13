@@ -440,7 +440,7 @@ class ReportsController extends Controller
 					$data->road_code,
 					$data->total_length,
 					$data->asset_code
-                ]);
+                ], ';');
             }
 
             // Close the output stream
