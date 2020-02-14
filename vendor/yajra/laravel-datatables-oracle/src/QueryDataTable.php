@@ -220,6 +220,7 @@ class QueryDataTable extends DataTableAbstract
 									->setBindings($builder->getBindings())
 									->count();
 				});
+				
 			}
 			
 			$LOG = 'Ini data dari DATABASE - datatables count()';
