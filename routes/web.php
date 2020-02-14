@@ -123,7 +123,6 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 
 /* USER SETTINGS */
 
-Route::get('/home', 'ApprovalController@index')->name('home');
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::post('/ldaplogin', 'LDAPController@login');
 Route::post('/ldaplogout', 'LDAPController@logout');
