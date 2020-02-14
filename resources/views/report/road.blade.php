@@ -406,9 +406,8 @@ function loadGrid(){
 	// yadcf.init(table,
     //     [
     //         {
-    //             column_number : 7,
+    //             column_number : 0,
 	// 			filter_type: "multi_select",
-	// 			select_type: 'chosen', 
 	// 			filter_default_label: "Company",
 	// 			select_type: 'select2',
 	// 		}
