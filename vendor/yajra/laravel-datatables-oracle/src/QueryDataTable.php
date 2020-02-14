@@ -221,6 +221,7 @@ class QueryDataTable extends DataTableAbstract
 									->count();
 				});
 				
+				
 			}
 			
 			$LOG = 'Ini data dari DATABASE - datatables count()';
