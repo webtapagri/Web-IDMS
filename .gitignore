@@ -4,7 +4,8 @@
 /public/storage
 /storage/*.key
 
-/vendor
+/vendor/*
+!/vendor/yajra
 
 .env
 !/docker-utility/.env
