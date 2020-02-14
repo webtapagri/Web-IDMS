@@ -269,10 +269,6 @@ function loadGrid(){
 						width: 150,
 						targets: [ 7 ]
 					},
-					{
-						searchable: false,
-						targets: [ 0 ]
-					},
 				],
 				dom: '<"datatable-header"Blfrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				
