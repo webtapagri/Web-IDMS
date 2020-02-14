@@ -133,6 +133,7 @@ RUN chmod -R 777 /var/www/html/Web-IDMS
 RUN chown -R apache:apache /var/www/html/Web-IDMS
 COPY ./docker-utility/.env /var/www/html/Web-IDMS
 RUN ( cd /var/www/html/Web-IDMS; php artisan key:generate )
+RUN ( cd /var/www/html/Web-IDMS; php artisan optimize )
 RUN ( cd /var/www/html/Web-IDMS; php artisan view:recreate )
 RUN ( cd /var/www/html/Web-IDMS; php artisan optimize )
 
