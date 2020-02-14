@@ -408,6 +408,8 @@ function loadGrid(){
     //         {
     //             column_number : 7,
 	// 			filter_type: "multi_select",
+	// 			select_type: 'chosen', 
+	// 			filter_default_label: "Company",
 	// 			select_type: 'select2',
 	// 		}
     //     ],
