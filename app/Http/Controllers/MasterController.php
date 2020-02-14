@@ -106,8 +106,6 @@ class MasterController extends Controller
 								$block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
 								$block->latitude_block = $data['LATITUDE_BLOCK'];
 								$block->longitude_block = $data['LONGITUDE_BLOCK'];
-								$block->start_valid = date("Y-m-d", strtotime($data['START_VALID']));
-								$block->end_valid = date("Y-m-d", strtotime($data['END_VALID']));
 								$block->save();
 						}catch (\Throwable $e) {
 							//
