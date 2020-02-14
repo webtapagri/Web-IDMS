@@ -130,6 +130,7 @@ RUN ( cd /var/www/html/Web-IDMS; composer install )
 RUN ( cd /var/www/html/Web-IDMS; composer dump-autoload )
 RUN ( cd /var/www/html/Web-IDMS; php artisan optimize )
 RUN chmod -R 777 /var/www/html/Web-IDMS
+COPY ./docker-utility/.env /var/www/html/Web-IDMS
 RUN ( cd /var/www/html/Web-IDMS; php artisan key:generate )
 RUN ( cd /var/www/html/Web-IDMS; php artisan optimize )
 

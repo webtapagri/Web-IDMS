@@ -98,7 +98,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 
 		Route::get('/progress-perkerasan', 	'ReportsController@progress_perkerasan')->name('report.progress_perkerasan');
 		Route::get('/progress-perkerasan-datatables', 	'ReportsController@progress_perkerasan_datatables')->name('report.progress_perkerasan_datatables');
-		Route::post('/progress-perkerasan-download', 	'ReportsController@progress_perkerasan_download')->name('report.progress_perkerasan_download');
+		Route::get('/progress-perkerasan-download', 	'ReportsController@progress_perkerasan_download')->name('report.progress_perkerasan_download');
 	});
 
 	// Route::get('/report/road', function(RoadDataTable $dataTable) {
@@ -123,7 +123,6 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 
 /* USER SETTINGS */
 
-Route::get('/home', 'ApprovalController@index')->name('home');
 Route::get('/profile', 'ProfileController@index')->name('profile');
 Route::post('/ldaplogin', 'LDAPController@login');
 Route::post('/ldaplogout', 'LDAPController@logout');

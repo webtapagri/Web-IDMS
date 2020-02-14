@@ -6,12 +6,6 @@
 
 /vendor/*
 !/vendor/yajra
-/vendor/yajra/laravel-datatables-html
-/vendor/yajra/laravel-datatables-buttons
-/vendor/yajra/laravel-datatables-oracle/*
-!vendor/yajra/laravel-datatables-oracle/src/
-vendor/yajra/laravel-datatables-oracle/src/*
-!vendor/yajra/laravel-datatables-oracle/src/*QueryDataTable*
 
 .env
 !/docker-utility/.env
