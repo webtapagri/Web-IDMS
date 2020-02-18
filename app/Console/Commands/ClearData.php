@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use DB; 
+use App\Jobs\FlushCache;
 
 class ClearData extends Command
 {
@@ -60,5 +61,6 @@ class ClearData extends Command
         }catch (\Exception $e) {
             echo exception_msg($e);
 		}
+		dispatch((new FlushCache)->onQueue('low'));
     }
 }
