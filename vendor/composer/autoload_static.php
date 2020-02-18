@@ -215,6 +215,8 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'GeoIO\\WKB\\Parser\\' => 17,
+            'GeoIO\\' => 6,
         ),
         'F' => 
         array (
@@ -502,6 +504,14 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'GeoIO\\WKB\\Parser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/geo-io/wkb-parser/src',
+        ),
+        'GeoIO\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/geo-io/interface/src',
+        ),
         'Firebase\\JWT\\' => 
         array (
             0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
@@ -612,6 +622,13 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
             'Mockery' => 
             array (
                 0 => __DIR__ . '/..' . '/mockery/mockery/library',
+            ),
+        ),
+        'G' => 
+        array (
+            'GeoJson\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/jmikola/geojson/src',
             ),
         ),
         'D' => 
@@ -829,6 +846,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'App\\Models\\Road' => __DIR__ . '/../..' . '/app/Models/Road.php',
         'App\\Models\\RoadCategory' => __DIR__ . '/../..' . '/app/Models/RoadCategory.php',
         'App\\Models\\RoadLog' => __DIR__ . '/../..' . '/app/Models/RoadLog.php',
+        'App\\Models\\RoadMapview' => __DIR__ . '/../..' . '/app/Models/RoadMapview.php',
         'App\\Models\\RoadPavementProgress' => __DIR__ . '/../..' . '/app/Models/RoadPavementProgress.php',
         'App\\Models\\RoadStatus' => __DIR__ . '/../..' . '/app/Models/RoadStatus.php',
         'App\\Models\\RoleAccess' => __DIR__ . '/../..' . '/app/Models/RoleAccess.php',
@@ -1875,6 +1893,32 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'Firebase\\JWT\\ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/src/ExpiredException.php',
         'Firebase\\JWT\\JWT' => __DIR__ . '/..' . '/firebase/php-jwt/src/JWT.php',
         'Firebase\\JWT\\SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/src/SignatureInvalidException.php',
+        'GeoIO\\Dimension' => __DIR__ . '/..' . '/geo-io/interface/src/Dimension.php',
+        'GeoIO\\Extractor' => __DIR__ . '/..' . '/geo-io/interface/src/Extractor.php',
+        'GeoIO\\Factory' => __DIR__ . '/..' . '/geo-io/interface/src/Factory.php',
+        'GeoIO\\WKB\\Parser\\Exception\\Exception' => __DIR__ . '/..' . '/geo-io/wkb-parser/src/Exception/Exception.php',
+        'GeoIO\\WKB\\Parser\\Exception\\ParserException' => __DIR__ . '/..' . '/geo-io/wkb-parser/src/Exception/ParserException.php',
+        'GeoIO\\WKB\\Parser\\Parser' => __DIR__ . '/..' . '/geo-io/wkb-parser/src/Parser.php',
+        'GeoIO\\WKB\\Parser\\Scanner' => __DIR__ . '/..' . '/geo-io/wkb-parser/src/Scanner.php',
+        'GeoJson\\BoundingBox' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/BoundingBox.php',
+        'GeoJson\\CoordinateReferenceSystem\\CoordinateReferenceSystem' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/CoordinateReferenceSystem/CoordinateReferenceSystem.php',
+        'GeoJson\\CoordinateReferenceSystem\\Linked' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/CoordinateReferenceSystem/Linked.php',
+        'GeoJson\\CoordinateReferenceSystem\\Named' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/CoordinateReferenceSystem/Named.php',
+        'GeoJson\\Exception\\Exception' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Exception/Exception.php',
+        'GeoJson\\Exception\\UnserializationException' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Exception/UnserializationException.php',
+        'GeoJson\\Feature\\Feature' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Feature/Feature.php',
+        'GeoJson\\Feature\\FeatureCollection' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Feature/FeatureCollection.php',
+        'GeoJson\\GeoJson' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/GeoJson.php',
+        'GeoJson\\Geometry\\Geometry' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/Geometry.php',
+        'GeoJson\\Geometry\\GeometryCollection' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/GeometryCollection.php',
+        'GeoJson\\Geometry\\LineString' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/LineString.php',
+        'GeoJson\\Geometry\\LinearRing' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/LinearRing.php',
+        'GeoJson\\Geometry\\MultiLineString' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/MultiLineString.php',
+        'GeoJson\\Geometry\\MultiPoint' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/MultiPoint.php',
+        'GeoJson\\Geometry\\MultiPolygon' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/MultiPolygon.php',
+        'GeoJson\\Geometry\\Point' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/Point.php',
+        'GeoJson\\Geometry\\Polygon' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/Geometry/Polygon.php',
+        'GeoJson\\JsonUnserializable' => __DIR__ . '/..' . '/jmikola/geojson/src/GeoJson/JsonUnserializable.php',
         'GuzzleHttp\\Client' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Client.php',
         'GuzzleHttp\\ClientInterface' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/ClientInterface.php',
         'GuzzleHttp\\Cookie\\CookieJar' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/Cookie/CookieJar.php',
@@ -4821,6 +4865,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'Ramsey\\Uuid\\UuidFactory' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidFactory.php',
         'Ramsey\\Uuid\\UuidFactoryInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidFactoryInterface.php',
         'Ramsey\\Uuid\\UuidInterface' => __DIR__ . '/..' . '/ramsey/uuid/src/UuidInterface.php',
+        'RoadMapviewSeeder' => __DIR__ . '/../..' . '/database/seeds/RoadMapviewSeeder.php',
         'SebastianBergmann\\CodeCoverage\\CodeCoverage' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/CodeCoverage.php',
         'SebastianBergmann\\CodeCoverage\\CoveredCodeNotExecutedException' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Exception/CoveredCodeNotExecutedException.php',
         'SebastianBergmann\\CodeCoverage\\Driver\\Driver' => __DIR__ . '/..' . '/phpunit/php-code-coverage/src/Driver/Driver.php',
