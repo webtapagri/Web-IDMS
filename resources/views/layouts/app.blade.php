@@ -46,7 +46,7 @@
 	<!-- /theme JS files -->
 </head>
 
-<body class="navbar-top" id="gttop">
+<body class="navbar-top sidebar-xs" id="gttop">
 
 	<!-- Main navbar -->
 	@include('layouts.header')

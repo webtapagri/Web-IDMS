@@ -141,6 +141,7 @@ class RoadController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil menyimpan data');
+		dispatch((new FlushCache)->onQueue('low'));
         return redirect()->route('master.road_status');
 	}
 	
@@ -161,6 +162,7 @@ class RoadController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil mengupdate data');
+		dispatch((new FlushCache)->onQueue('low'));
         return redirect()->route('master.road_status');
 	}
 	
@@ -174,13 +176,14 @@ class RoadController extends Controller
 			
 		}catch (\Throwable $e) {
             \Session::flash('error', throwable_msg($e));
-            return redirect()->back()->withInput($request->input());
+            return redirect()->back();
         }catch (\Exception $e) {
             \Session::flash('error', exception_msg($e));
-            return redirect()->back()->withInput($request->input());
+            return redirect()->back();
 		}
 		
 		\Session::flash('success', 'Berhasil menghapus data');
+		dispatch((new FlushCache)->onQueue('low'));
         return redirect()->route('master.road_status');
 	}
 	
@@ -242,6 +245,7 @@ class RoadController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil menyimpan data');
+		dispatch((new FlushCache)->onQueue('low'));
         return redirect()->route('master.road_category');
 	}
 	
@@ -263,6 +267,7 @@ class RoadController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil mengupdate data');
+		dispatch((new FlushCache)->onQueue('low'));
         return redirect()->route('master.road_category');
 	}
 	
@@ -282,6 +287,7 @@ class RoadController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil menghapus data');
+		dispatch((new FlushCache)->onQueue('low'));
         return redirect()->route('master.road_category');
 	}
 	
@@ -446,11 +452,9 @@ class RoadController extends Controller
 		}
 		
 		DB::commit();
-		
-		dispatch((new FlushCache)->onQueue('low'));
-		
 		\Session::flash('success', 'Berhasil menyimpan data');
 		\Session::flash('hl', 'Highlight');
+		dispatch((new FlushCache)->onQueue('low'));
         return redirect()->route('master.road');
 	}
 	
@@ -470,6 +474,7 @@ class RoadController extends Controller
 		}
 		
 		\Session::flash('success', 'Berhasil menghapus data');
+		dispatch((new FlushCache)->onQueue('low'));
         return redirect()->route('master.road');
 	}
 	
