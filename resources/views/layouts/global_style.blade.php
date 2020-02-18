@@ -40,5 +40,7 @@
 .sidebar-dark .nav-sidebar>.nav-item-open>.nav-link:not(.disabled){
 	background-color: rgba(38, 166, 154, 0);
 }
-
+.navbar-brand.navbar-brand-xs {
+    padding: 5px;
+}
 </style>
