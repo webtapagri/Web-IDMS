@@ -389,8 +389,8 @@ function loadGrid(){
 				columnDefs: [
 					{ 
 						orderable: false,
-						width: 250,
-						targets: [ 5 ]
+						width: 200,
+						targets: [ 0 ]
 					},
 					{ 
 						orderable: false,

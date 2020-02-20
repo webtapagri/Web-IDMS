@@ -95,7 +95,7 @@ class MasterController extends Controller
 								$block = Block::firstOrNew(array(
 									'afdeling_id' => $afd['id'],
 									'block_code' => $data['BLOCK_CODE'],
-									// 'start_valid' => $data['START_VALID'],									
+									'start_valid' => $data['START_VALID'],									
 									// 'end_valid' => $data['END_VALID'],									
 								));
 								$block->block_name = $data['BLOCK_NAME'];
@@ -426,7 +426,7 @@ class MasterController extends Controller
 			$d = explode('-',$werks);
 			$data = Block::
 							selectRaw('block_code, block_name')
-							->whereRaw("substring(werks_afd_block_code,5,1) = '$id' and werks = '{$d[0]}'")
+							->whereRaw("substring(werks_afd_block_code,5,1) = '$id' and werks = '{$d[0]}' and now() between start_valid and end_valid")
 							->get();
 			
 		}catch (\Throwable $e) {

@@ -427,9 +427,9 @@ function load_block(id,w,x=null){
 				var cont = rsp.contents
 				$.each(cont, (k,v)=>{
 					if(x==v.block_code+'-'+v.block_name){
-						$('.block_code').append('<option selected value="'+v.block_code+'-'+v.block_name+'">'+v.block_code+' - '+v.block_name+'</option>')
+						$('.block_code').append('<option selected value="'+v.block_code+'-'+v.block_name+'-'+v.block_id+'">'+v.block_code+' - '+v.block_name+'</option>')
 					}else{
-						$('.block_code').append('<option value="'+v.block_code+'-'+v.block_name+'">'+v.block_code+' - '+v.block_name+'</option>')
+						$('.block_code').append('<option value="'+v.block_code+'-'+v.block_name+'-'+v.block_id+'">'+v.block_code+' - '+v.block_name+'</option>')
 					}
 				})
 			}else{

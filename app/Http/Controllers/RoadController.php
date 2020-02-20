@@ -412,6 +412,7 @@ class RoadController extends Controller
 			
 			$blck 				= explode('-',$bcc);
 			$data['block_code']	= $blck[0];	
+			$data['block_id']	= $blck[2];	
 			$data['road_code']	= $request->company_code.$esw[1].$blck[0].$land_use_code.$stat->status_code.$cat->category_code.$request->segment;	
 			$data['road_name']	= $blck[1].$cat->category_initial.$request->segment;	
 			
@@ -548,6 +549,14 @@ class RoadController extends Controller
 					}
 					$data['company_name']	= $getCom->company_name;
 					
+					$grant = AccessRight::plants();
+					if($grant[0] != 'all'){
+						if( !in_array($dt['estate_code'], $grant) ){
+							$respon['error'][] = ['line'=>($k+1),'status'=>"you don't have privilege to insert this BA Code"];
+							continue;
+						}
+					}
+					
 					$getW = Estate::where('werks',$dt['werks'])->where('company_id',$getCom->id)->where('estate_code',$dt['estate_code'])->first();
 					if(!$getW){
 						$respon['error'][] = ['line'=>($k+1),'status'=>'estate code or plant not found'];
@@ -577,12 +586,16 @@ class RoadController extends Controller
 						}
 						$data['afdeling_name']	= $getAfd->afdeling_name;
 						
-						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$getAfd->id)->first();
+						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])
+									->where('afdeling_id',$getAfd->id)
+									->whereRaw('now() between start_valid and end_valid')
+									->first();
 						if(!$getBlc){
-							$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not found'];
+							$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not found or not valid'];
 							continue;
 						}
 						$data['block_name']		= $getBlc->block_name;
+						$data['block_id']		= $getBlc->block_id;
 						$bcc = $getBlc->block_code.'-'.$getBlc->block_name;
 					}
 					
