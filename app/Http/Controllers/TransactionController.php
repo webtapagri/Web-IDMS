@@ -190,7 +190,7 @@ class TransactionController extends Controller
 				throw new \ErrorException('Block Sudah Tidak Aktif');
 			}
 
-			if($werks = Road::select('werks')->where('id',$request->road_id)->first()){
+			if($werks = $RS){
 				$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$werks->werks)->first();
 				if($cek){
 					
