@@ -185,7 +185,7 @@ class TransactionController extends Controller
 
 			$RS = Road::find($request->road_id);
 			///	where('start_valid','<=',date("Y-m-d"))->where('end_valid','>=',date("Y-m-d")) // block_active
-			$block_inactive = Block::where('block_code',$RS->block_code)->where('werks', $RS->werks)->where('start_valid','<=',date("Y-m-d"))->where('end_valid','<=',date("Y-m-d"))->exist();  //block_inactive
+			$block_inactive = Block::where('block_code',$RS->block_code)->where('werks', $RS->werks)->where('start_valid','<=',date("Y-m-d"))->where('end_valid','<=',date("Y-m-d"))->exists();  //block_inactive
 			if ($block_inactive == "true"){
 				throw new \ErrorException('Block Sudah Tidak Aktif');
 			}
