@@ -501,7 +501,7 @@ function loadGrid(){
 						targets: [ 0,10,11 ]
 					},
 				],
-				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"rl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
 							text: 'Download CSV',
@@ -580,7 +580,7 @@ function loadGrid(){
         columns: col,
 		initComplete: function () {
 			this.api().columns().every(function (k) {
-				if(k >= 0 && k < 9){
+				if(k != 10 && k != 11){
 					if(k == 4){
 						var column = this;
 						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
