@@ -273,7 +273,7 @@ function loadGrid(){
 						targets: [ 0 ]
 					},
 				],
-				dom: '<"datatable-header"Bfrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Blfrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 					   {
 							extend: 'csv',
