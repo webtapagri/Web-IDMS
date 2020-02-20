@@ -750,6 +750,7 @@ class ComposerStaticInit4e2bc4c160c3a0d73d170af88a022287
         'Adldap\\Schemas\\Schema' => __DIR__ . '/..' . '/adldap2/adldap2/src/Schemas/Schema.php',
         'Adldap\\Schemas\\SchemaInterface' => __DIR__ . '/..' . '/adldap2/adldap2/src/Schemas/SchemaInterface.php',
         'Adldap\\Utilities' => __DIR__ . '/..' . '/adldap2/adldap2/src/Utilities.php',
+        'App\\Console\\Commands\\ClearData' => __DIR__ . '/../..' . '/app/Console/Commands/ClearData.php',
         'App\\Console\\Commands\\SchedulerMasterData' => __DIR__ . '/../..' . '/app/Console/Commands/SchedulerMasterData.php',
         'App\\Console\\Commands\\SchedulerMasterData2' => __DIR__ . '/../..' . '/app/Console/Commands/SchedulerMasterData2.php',
         'App\\Console\\Commands\\ViewGenerator' => __DIR__ . '/../..' . '/app/Console/Commands/ViewGenerator.php',

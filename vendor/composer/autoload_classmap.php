@@ -118,6 +118,7 @@ return array(
     'Adldap\\Schemas\\Schema' => $vendorDir . '/adldap2/adldap2/src/Schemas/Schema.php',
     'Adldap\\Schemas\\SchemaInterface' => $vendorDir . '/adldap2/adldap2/src/Schemas/SchemaInterface.php',
     'Adldap\\Utilities' => $vendorDir . '/adldap2/adldap2/src/Utilities.php',
+    'App\\Console\\Commands\\ClearData' => $baseDir . '/app/Console/Commands/ClearData.php',
     'App\\Console\\Commands\\SchedulerMasterData' => $baseDir . '/app/Console/Commands/SchedulerMasterData.php',
     'App\\Console\\Commands\\SchedulerMasterData2' => $baseDir . '/app/Console/Commands/SchedulerMasterData2.php',
     'App\\Console\\Commands\\ViewGenerator' => $baseDir . '/app/Console/Commands/ViewGenerator.php',
