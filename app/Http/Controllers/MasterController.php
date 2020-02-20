@@ -426,7 +426,7 @@ class MasterController extends Controller
 			$d = explode('-',$werks);
 			$data = Block::
 							selectRaw('block_code, block_name')
-							->whereRaw("substring(werks_afd_block_code,5,1) = '$id' and werks = '{$d[0]}' and now() between start_valid and end_valid")
+							->whereRaw("substring(werks_afd_block_code,5,1) = '$id' and werks = '{$d[0]}' and now() and start_valid <= now() and end_valid >= now()")
 							->get();
 			
 		}catch (\Throwable $e) {
