@@ -71,6 +71,19 @@ class TransactionController extends Controller
 						continue;
 					}
 					
+					$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$r->werks)->first();
+					if($cek){
+						$ym = $dt['year'].\DateTime::createFromFormat('m', $dt['month'])->format('m');
+						if($cek->close == $ym || (int)$ym < $cek->close){
+							$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has close'];
+							continue;
+						}else if((int)$ym > ($cek->close+1)){
+							$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has not yet open'];
+							continue;	
+						}
+						
+					}
+					
 					//cek length
 					$m_progress 	= RoadPavementProgress::selectRaw('ifnull(sum(length),0) progress')->where('road_id',$r->id)->first()->progress;
 					$m_total_length	= RoadLog::select('total_length')->where('road_id',$r->id)->orderBy('id','desc')->first()->total_length;
@@ -171,9 +184,15 @@ class TransactionController extends Controller
 		try {
 			
 			if($werks = Road::select('werks')->where('id',$request->road_id)->first()){
-				$cek = Period::where(['werks'=>$werks->werks,'month'=>$request->month,'year'=>$request->year])->exists();
+				$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$werks->werks)->first();
 				if($cek){
-					throw new \ErrorException("Priode {$request->month} {$request->month} untuk BA {$werks->werks} telah ditutup");
+					
+					if($cek->close == ( $request->year.$request->month ) || (int)( $request->year.$request->month ) < $cek->close){
+						throw new \ErrorException("Priode {$request->month} {$request->year} untuk BA {$werks->werks} telah ditutup");
+					}else if((int) ( $request->year.$request->month ) > ($cek->close+1)){
+						throw new \ErrorException("Priode {$request->month} {$request->year} untuk BA {$werks->werks} tidak boleh menginput 2 bulan setelah periode di close");
+					}
+					
 				}
 			}
 			
