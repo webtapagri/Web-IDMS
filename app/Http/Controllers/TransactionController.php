@@ -25,6 +25,7 @@ use Session;
 use AccessRight;
 use App\RoleAccess;
 use Illuminate\Support\Arr;
+use App\Models\Period;
 
 class TransactionController extends Controller
 {
@@ -56,7 +57,17 @@ class TransactionController extends Controller
 					//cek road code 
 					$r = Road::where('road_code',$dt['road_code'])->first();
 					if(!$r){
-						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'road_code_not_found'];
+						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'road code not found'];
+						continue;
+					}
+					
+					$cek = Period::where([
+						'werks'=>$r->werks,
+						'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m'),
+						'year'=>$dt['year']
+						])->exists();
+					if($cek){
+						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period ihas close'];
 						continue;
 					}
 					
@@ -64,7 +75,7 @@ class TransactionController extends Controller
 					$m_progress 	= RoadPavementProgress::selectRaw('ifnull(sum(length),0) progress')->where('road_id',$r->id)->first()->progress;
 					$m_total_length	= RoadLog::select('total_length')->where('road_id',$r->id)->orderBy('id','desc')->first()->total_length;
 					if( ($m_progress+$dt['length']) > $m_total_length ){
-						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'over_length'];
+						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'over length'];
 						continue;
 					}
 					
@@ -76,7 +87,7 @@ class TransactionController extends Controller
 								->first();
 
 					if($cek_prod_status['status_name'] != 'PRODUKSI'){
-						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'road_status_not_production'];
+						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'road status not production'];
 						continue;
 					}
 					
@@ -159,7 +170,6 @@ class TransactionController extends Controller
 	{
 		try {
 
-			//validasi block yang masih aktif sesuai bulan perkerasan jalan 
 			$RS = Road::find($request->road_id);
 			///	where('start_valid','<=',date("Y-m-d"))->where('end_valid','>=',date("Y-m-d")) // block_active
 			$block_inactive = Block::where('block_code',$RS->block_code)->where('werks', $RS->werks)->where('start_valid','<=',date("Y-m-d"))->where('end_valid','<=',date("Y-m-d"))->exist();  //block_inactive
@@ -167,14 +177,13 @@ class TransactionController extends Controller
 				throw new \ErrorException('Block Sudah Tidak Aktif');
 			}
 
-			// Tidak bisa iput bulan dan tahun yang sudah di close
-			// Tidak bisa input bulan dan tahun sebelum closing trakhir
-			// Tidak bisa input bulan dan tahun 2 bulan kedepan setelah closing period
-			$period = Period::where('werks',$RS->werks)->whereBetween('month', [date("m",date("m")-1),date("m",date("m")+2)])->where('year',date('Y'))->exist();
-			if ($period == "true"){
-				throw new \ErrorException('Jalan sedang dalam Closing period');
+			if($werks = Road::select('werks')->where('id',$request->road_id)->first()){
+				$cek = Period::where(['werks'=>$werks->werks,'month'=>$request->month,'year'=>$request->year])->exists();
+				if($cek){
+					throw new \ErrorException("Priode {$request->month} {$request->month} untuk BA {$werks->werks} telah ditutup");
+				}
 			}
-
+			
 			RoadPavementProgress::create($request->all()+['updated_by'=>\Session::get('user_id')]);
 			
 			dispatch((new FlushCache)->onQueue('low'));
