@@ -611,17 +611,20 @@ function loadGrid(){
 						var input = document.createElement("input");
 						
 						//Prevent click from sorting column
-						$(input).click((e)=>{
-							e.stopPropagation();
-						});
+						
 						$(input).css('padding','3px').css('margin-top','6px');
 						
 						$(input).appendTo($(column.header())
-                .empty()
-                .append('<div>' + header + '</div>'))
-						.on('change', function () {
-							column.search($(this).val(), false, false, true).draw();
-						}).attr('placeholder',' Search').addClass('tfsearch');
+							.empty()
+							.append('<div>' + header + '</div>'))
+							.on('change', function () {
+								column.search($(this).val(), false, false, true).draw();
+							})
+							.attr('placeholder',' Search')
+							.addClass('tfsearch')
+							.on('click', function (e) {
+								e.stopPropagation();
+							});
 					}
 					
 				}
