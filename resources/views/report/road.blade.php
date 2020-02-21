@@ -250,6 +250,29 @@ function loadGrid(){
 
 	//------- cache client --------
 
+
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+	
+			$( 'input', this ).on( 'click change', function () {
+					if ( table.column(i).search() !== this.value ) {
+						table
+							.column(i)
+							.search( this.value )
+							.draw();
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
+
+
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -268,6 +291,11 @@ function loadGrid(){
 						orderable: false,
 						width: 150,
 						targets: [ 7 ]
+					},
+					
+					{ 
+						"searchable": false, 
+						"targets": 11
 					},
 				],
 				dom: '<"datatable-header"Blfrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -298,31 +326,6 @@ function loadGrid(){
 															
 							}
 						},
-						// {
-						// 	text: '<i class="icon-file-excel mr-2"></i>Export to CSV',
-						// 	className: 'btn',
-						// 	action: function(e, dt, node, config) {
-								
-						// 		// dt.page.len( -1 ).draw()
-						// 		// donlot = true
-
-						// 		que = [];
-						// 		que_global = $('input[type="search"]').val()
-						// 		var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
-						// 		$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
-						// 			if( $(v).val() != '' ){
-						// 				que.push( { col: col[k]['name'], val : $(v).val()} )
-						// 			}    
-						// 		})
-								
-						// 		$('#exp').val('csvbaru')
-						// 		$('#que').val( JSON.stringify(que) )
-						// 		$('#que_global').val( que_global )
-						// 		$('#formDownload').submit()
-									
-															
-						// 	}
-						// },
 					],
 				"drawCallback": function( settings ) {
 					// var api = this.api();
@@ -362,6 +365,7 @@ function loadGrid(){
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
 		serverSide: true,
+		orderCellsTop: true,
         // ajax: '{{ route("report.road_datatables") }}',
 		ajax: $.fn.dataTable.pipeline( {
             url: '{{ route("report.road_datatables") }}',

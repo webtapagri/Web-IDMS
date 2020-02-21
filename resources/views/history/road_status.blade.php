@@ -69,7 +69,7 @@
 			</div>
 		@endif
 	</div>
-	<table class="table datatable-responsive table-xs">
+	<table class="table datatable-responsive table-xs display">
 		<thead>
 			<tr>
 				<th>Company</th> 
@@ -241,8 +241,8 @@ $(document).ready(()=>{
 	$('#reloadGrid').click(()=>{
 		table.destroy()
 		loadGrid()
-	})
-	
+	});
+		
 });
 
 $('#modal_edit').on('show.bs.modal', function () {
@@ -496,6 +496,26 @@ function loadGrid(){
 
 	//------- cache client --------
 
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+	
+			$( 'input', this ).on( 'click change', function (event) {
+					if ( table.column(i).search() !== this.value ) {
+						table
+							.column(i)
+							.search( this.value )
+							.draw();
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
+
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: false,
@@ -507,11 +527,11 @@ function loadGrid(){
 					},
 					{ 
 						orderable: false,
-						targets: [ 0 ]
+						targets: [ 11 ]
 					},
 					{ 
 						"searchable": false, 
-						"targets": 0 
+						"targets": 11
 					},
 				],
 				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -529,7 +549,8 @@ function loadGrid(){
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
 		'processing': true,
-        serverSide: true,
+		serverSide: true,
+		orderCellsTop: true,
         // ajax: '{{ route("history.road_status_datatables") }}',
 		ajax: $.fn.dataTable.pipeline( {
             url: '{{ route("history.road_status_datatables") }}',
@@ -582,10 +603,13 @@ function loadGrid(){
 							column.search($(this).val(), false, false, true).draw();
 						}).attr('placeholder',' Search').addClass('form-control tfsearch');
 					}
+
+
 				}
 			});
 		}
-    } );
+	} );
+	
 	
 	// table.on( 'order.dt search.dt page.dt', function () {
         // table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
