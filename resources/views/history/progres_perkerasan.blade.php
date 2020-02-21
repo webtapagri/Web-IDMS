@@ -599,13 +599,13 @@ function loadGrid(){
                 if (oldValue === '')
                     return;
                 // When this event is fired after clicking on the clear button // the value is not cleared yet. We have to wait for it.
-                setTimeout(function () {
-                    var newValue = that.value;
-                    if (newValue === '') {
-                        table.column($(that).parent().index() + ':visible').search(newValue).draw();
-                        e.preventDefault();
-                    }
-                }, 1);
+                // setTimeout(function () {
+                    // var newValue = that.value;
+                    // if (newValue === '') {
+                        // table.column($(that).parent().index() + ':visible').search(newValue).draw();
+                        // e.preventDefault();
+                    // }
+                // }, 1);
             });
             //Make nodes tabbable withtout selecting td
             input.parent().attr('tabindex', -1);
