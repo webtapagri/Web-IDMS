@@ -567,13 +567,13 @@ function loadGrid(){
         table.columns('.search_text').every(function () {
             var column = this;
             var header = $(column.header()).html();
-            var input = $('<input type="text" class="" placeholder=" search" style="height:30px;"/>')
+            var input = $('<input type="text" class="" placeholder="search" style="height:20px;padding:10px"/>')
                 .appendTo($(column.header())
                 .empty()
                 .append('<div>' + header + '</div>'));
             //Restoring state
             input.val(column.search());
-            input.on('keyup', function (e) {
+            input.on('change', function (e) {
                 //Ignore keys without value (like shift/ctrl/alt etc) to prevent extensive redraws
                 var ignore = [9, 13, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 91, 92, 112, 113, 114, 115, 116, 117, , 118, 119, 120, 121, 122, 123, 144, 145];
                 if (ignore.indexOf(e.which) != -1)
@@ -583,9 +583,10 @@ function loadGrid(){
             //Prevent enter key from sorting column
             input.on('keypress', function (e) {
                 if (e.which == 13) {
-                    e.preventDefault();
+                    table.column($(this).parent().index() + ':visible').search(this.value).draw();
                     return false;
                 }
+				
             });
             //Prevent click from sorting column
             input.on('click', function (e) {
