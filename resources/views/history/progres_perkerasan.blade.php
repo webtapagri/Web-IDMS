@@ -608,23 +608,48 @@ function loadGrid(){
 					}else{
 						var column = this;
 						var header = $(column.header()).html();
-						var input = document.createElement("input");
-						
-						//Prevent click from sorting column
-						
-						$(input).css('padding','3px').css('margin-top','6px');
-						
-						$(input).appendTo($(column.header())
+						var input = $('<input type="text" class="" placeholder="search" style="padding:3px; margin-top:6px"/>')
+							.appendTo($(column.header())
 							.empty()
-							.append('<div>' + header + '</div>'))
-							.on('change', function () {
-								column.search($(this).val(), false, false, true).draw();
-							})
-							.attr('placeholder',' Search')
-							.addClass('tfsearch')
-							.on('click', function (e) {
-								e.stopPropagation();
-							});
+							.append('<div>' + header + '</div>'));
+						//Restoring state
+						input.val(column.search());
+						input.on('change', function (e) {
+							//Ignore keys without value (like shift/ctrl/alt etc) to prevent extensive redraws
+							var ignore = [9, 13, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 91, 92, 112, 113, 114, 115, 116, 117, , 118, 119, 120, 121, 122, 123, 144, 145];
+							if (ignore.indexOf(e.which) != -1)
+								return;
+							table.column($(this).parent().index() + ':visible').search(this.value).draw();
+						});
+						//Prevent enter key from sorting column
+						input.on('keypress', function (e) {
+							if (e.which == 13) {
+								table.column($(this).parent().index() + ':visible').search(this.value).draw();
+								return false;
+							}
+							
+						});
+						//Prevent click from sorting column
+						input.on('click', function (e) {
+							e.stopPropagation();
+						});
+						// There are 2 events fired on input element when clicking on the clear button:// mousedown and mouseup.
+						input.on('mouseup', function (e) {
+							var that = this;
+							var oldValue = this.value;
+							if (oldValue === '')
+								return;
+							// When this event is fired after clicking on the clear button // the value is not cleared yet. We have to wait for it.
+							// setTimeout(function () {
+								// var newValue = that.value;
+								// if (newValue === '') {
+									// table.column($(that).parent().index() + ':visible').search(newValue).draw();
+									// e.preventDefault();
+								// }
+							// }, 1);
+						});
+						//Make nodes tabbable withtout selecting td
+						input.parent().attr('tabindex', -1);
 					}
 					
 				}
