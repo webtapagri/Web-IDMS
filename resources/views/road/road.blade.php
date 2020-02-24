@@ -9,6 +9,8 @@
 @section('theme_js')
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/fixed_columns.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/extensions/jquery_ui/interactions.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
@@ -16,7 +18,7 @@
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
-
+<script src="{{ asset('limitless/global_assets/js/plugins/forms/inputs/touchspin.min.js') }}"></script>
 @endsection
 
 @section('content')
@@ -63,7 +65,7 @@
 			</div>
 		@endif
 	</div>
-	<table class="table datatable-responsive table-xs">
+	<table class="table datatable-responsive table-xs display">
 		<thead>
 			<tr>
 				<th>Company</th>
@@ -383,9 +385,31 @@ function loadGrid(){
 		} );
 	} );
 
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+	
+			$( 'input', this ).on( 'click change', function (event) {
+					if ( table.column(i).search() !== this.value ) {
+						table
+							.column(i)
+							.search( this.value )
+							.draw();
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
+
+
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
-				responsive: true,
+				responsive: false,
 				columnDefs: [
 					{ 
 						orderable: false,
@@ -394,7 +418,7 @@ function loadGrid(){
 					},
 					{ 
 						orderable: false,
-						targets: [ 0 ]
+						targets: [ 0,11 ]
 					},
 				],
 				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -412,12 +436,19 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
+		orderCellsTop: true,
         // ajax: '{{ route("master.road_datatables") }}',
         ajax: $.fn.dataTable.pipeline( {
             url: '{{ route("master.road_datatables") }}',
             pages: 5 // number of pages to cache
         } ),
-		
+		scrollX: true,
+		// scrollY: '400px',
+		scrollCollapse: true,
+		fixedColumns: {
+			leftColumns: 0,
+			rightColumns: 1
+		},
 		// "order": [[1,"asc"],[2, "asc" ]],
 		
         columns: [
@@ -439,6 +470,7 @@ function loadGrid(){
 				// $($('tbody>tr')[0]).css('background-color','#d0eeff')
 			}
 			this.api().columns().every(function (k) {
+			if(k > -1 && k < 11){
 				if(k ==4){
 					var column = this;
 					var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
@@ -467,6 +499,7 @@ function loadGrid(){
 						column.search($(this).val(), false, false, true).draw();
 					}).attr('placeholder',' Search').addClass('form-control');
 				}
+			}
 			});
 			
 		}
