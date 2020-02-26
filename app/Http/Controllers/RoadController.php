@@ -88,21 +88,22 @@ class RoadController extends Controller
 		$delete_action ="";
 
 		if($access['update']==1){
-			$update_action ='<button class="btn btn-link text-primary-600" onclick="edit({{ $id }}, \'{{ $status_name }}\', \'{{ $status_code }}\'); return false;">
-								<i class="icon-pencil7"></i> Edit
+			$update_action ='<button class="btn btn-sm btn-primary " data-toggle="tooltip" data-placement="top" title="Edit" onclick="edit({{ $id }}, \'{{ $status_name }}\', \'{{ $status_code }}\'); return false;">
+								<i class="icon-pencil7"></i>
 							</button>';
 		}
 		if($access['delete']==1){
-			$delete_action = '<a class="btn btn-link text-danger-600" href="" onclick="del(\''.URL::to('master/road-status-delete/{{ $id }}').'\'); return false;">
-								<i class="icon-trash"></i> Hapus
+			$delete_action = '<a class="btn btn-sm btn-danger " data-toggle="tooltip" data-placement="top" title="Hapus" href="" onclick="del(\''.URL::to('master/road-status-delete/{{ $id }}').'\'); return false;">
+								<i class="icon-trash"></i>
 							</a>';
 		}
 
 		return Datatables::eloquent($model)
-			->addColumn('action', '<div class="text-center">'.
-					$update_action.
-					$delete_action.
-					'<div>')
+			->addColumn('action', '<div class="">
+					'.$update_action.'
+					'.$delete_action.'
+				<div>
+				')
 			->rawColumns(['action'])
 			->make(true);
 
@@ -209,15 +210,15 @@ class RoadController extends Controller
 		$delete_action = '';
 		if($access['update']==1){
 			$update_action = '
-					<button class="btn btn-link text-primary-600" onclick="edit({{ $id }}, \'{{ $category_name }}\', \'{{ $category_code }}\', \'{{ $category_initial }}\', \'{{ $status_id }}\'); return false;">
-						<i class="icon-pencil7"></i> Edit
+					<button class="btn btn-sm btn-primary " data-toggle="tooltip" data-placement="top" title="Edit" onclick="edit({{ $id }}, \'{{ $category_name }}\', \'{{ $category_code }}\', \'{{ $category_initial }}\', \'{{ $status_id }}\'); return false;">
+						<i class="icon-pencil7"></i>
 					</button>
 			';
 		}
 		if($access['delete']==1){
-			$delete_action = '
-					<a class="btn btn-link text-danger-600" href="" onclick="del(\''.URL::to('master/road-category-delete/{{ $id }}').'\'); return false;">
-						<i class="icon-trash"></i> Hapus
+			$delete_action = ' 
+					<a class="btn btn-sm btn-danger " data-toggle="tooltip" data-placement="top" title="Hapus" href="" onclick="del(\''.URL::to('master/road-category-delete/{{ $id }}').'\'); return false;">
+						<i class="icon-trash"></i> 
 					</a>
 			';
 		}
@@ -329,15 +330,15 @@ class RoadController extends Controller
 		$delete_action = '';
 		if($access['update']==1){
 			$update_action = '
-					<button class="btn btn-link text-primary-600" onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $asset_code }}\'); return false;">
-						<i class="icon-pencil7"></i> Edit
+					<button class="btn btn-sm btn-primary " data-toggle="tooltip" data-placement="top" title="Edit" onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $asset_code }}\'); return false;">
+						<i class="icon-pencil7"></i>
 					</button>
 			';
 		}
 		if($access['delete']==1){
 			$delete_action = '
-					<a class="btn btn-link text-danger-600" href="" onclick="del(\''.URL::to('master/road-delete/{{ $id }}').'\'); return false;">
-						<i class="icon-trash"></i> Hapus
+					<a class="btn btn-sm btn-danger " data-toggle="tooltip" data-placement="top" title="Hapus" href="" onclick="del(\''.URL::to('master/road-delete/{{ $id }}').'\'); return false;">
+						<i class="icon-trash"></i>
 					</a>
 			';
 		}

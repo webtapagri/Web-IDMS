@@ -156,8 +156,8 @@ class TransactionController extends Controller
 		$delete_action = '';
 		if($access['update']==1 || $access['create']==1){
 			$update_action = '
-					<button title="Tambah progress perkerasan jalan" class="btn btn-sm btn-primary " onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\'); return false;">
-						<i class="icon-plus2"></i> Tambah
+					<button title="Tambah progress perkerasan jalan"  class="btn btn-sm btn-primary " data-toggle="tooltip" data-placement="top" onclick="edit({{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\'); return false;">
+						<i class="icon-plus2"></i>
 					</button>
 			';
 		}
@@ -166,8 +166,8 @@ class TransactionController extends Controller
 		}
 		
 		$update_action .= '
-			<button title="List history perkerasan jalan" class="btn btn-sm btn-info " onclick="detail(this, {{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\', \'{{ $road_code }}\'); return false;">
-				<i class="icon-list3"></i> History
+			<button title="List history perkerasan jalan"  class="btn btn-sm btn-info " data-toggle="tooltip" data-placement="top" onclick="detail(this, {{ $id }}, \'{{ $total_length }}\', \'{{ $curr_progress }}\', \'{{ $road_code }}\'); return false;">
+				<i class="icon-list3"></i>
 			</button>
 		';
 		
@@ -273,8 +273,8 @@ class TransactionController extends Controller
 		$delete_action = '';
 		if($access['update']==1){
 			$update_action = '
-					<button title="Tambah perubahan status jalan" class="btn btn-sm btn-primary " onclick="edit({{ $id }}, \'{{ $status_id }}\'); return false;">
-						<i class="icon-plus2"></i> Tambah
+					<button title="Tambah perubahan status jalan"  class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" onclick="edit({{ $id }}, \'{{ $status_id }}\'); return false;">
+						<i class="icon-plus2"></i>
 					</button>
 			';
 		}
@@ -283,8 +283,8 @@ class TransactionController extends Controller
 		}
 		
 		$update_action .= '
-			<button title="List history status jalan" class="btn btn-sm btn-info " onclick="detail(this,{{ $id }},  \'{{ $status_id }}\'); return false;">
-				<i class="icon-list3"></i> History
+			<button title="List history status jalan"  class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="top" title="Edit" onclick="detail(this,{{ $id }},  \'{{ $status_id }}\'); return false;">
+				<i class="icon-list3"></i>
 			</button>
 		';
 		

@@ -86,22 +86,7 @@
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
-		<tfoot>
-			<tr>
-				<th>Company</th> 
-				<th>Estate</th>
-				<th>Afdeling</th>
-				<th>Block</th>
-				<th>Status</th>
-				<th>Category</th>
-				<th>Segment</th>
-				<th>Road Name</th>
-				<th>Road Code</th>
-				<th>Length</th>
-				<th>Asset Code</th>
-				<th class="text-center">Action</th>
-			</tr>
-		</tfoot>
+		
 	</table>
 </div>
 
@@ -279,7 +264,7 @@ function detail(btn,id,stat){
 	if(table_detail){
 		table_detail.destroy()
 	};
-	$(btn).html('<i class="icon-spinner spinner"></i> History')
+	$(btn).html('<i class="icon-spinner spinner"></i>')
 	loadGridDetail(btn, "{{ URL::to('api/history/road-status-detail') }}/"+id )
 	return false;
 }
@@ -534,7 +519,7 @@ function loadGrid(){
 						"targets": 11
 					},
 				],
-				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"rl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -595,14 +580,15 @@ function loadGrid(){
 									.draw();
 							} );
 						
-					}else{
-						var column = this;
-						var input = document.createElement("input");
-						$(input).appendTo($(column.footer()).empty())
-						.on('change', function () {
-							column.search($(this).val(), false, false, true).draw();
-						}).attr('placeholder',' Search').addClass('form-control tfsearch');
 					}
+					// else{
+					// 	var column = this;
+					// 	var input = document.createElement("input");
+					// 	$(input).appendTo($(column.footer()).empty())
+					// 	.on('change', function () {
+					// 		column.search($(this).val(), false, false, true).draw();
+					// 	}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					// }
 
 
 				}
@@ -633,7 +619,7 @@ function loadGridDetail(btn,url){
 						targets: [ 3]
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"rl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -669,7 +655,7 @@ function loadGridDetail(btn,url){
 					}).attr('placeholder',' Cari').addClass('form-control');
 				}
 			});
-			$(btn).html('<i class="icon-list3"></i> History')
+			$(btn).html('<i class="icon-list3"></i>')
 			$('#modal_detail').modal('show')
 		}
     } );
