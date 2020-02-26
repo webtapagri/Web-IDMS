@@ -514,6 +514,24 @@ function loadGrid(){
 						orderable: false,
 						targets: [ 11 ]
 					},
+					{
+						targets: [4],
+						"render": function (data, type, row, meta){
+												var $select = $("<select></select>", {
+												});
+												$.each(times, function (k, v) {
+			
+													var $option = $("<option></option>", {
+														"text": v,
+														"value": v
+													});
+													if (data === v) {
+														$option.attr("selected", "selected")
+													}
+													$select.append($option);
+												});
+												return $select.prop("outerHTML");
+					}
 					{ 
 						"searchable": false, 
 						"targets": 11
