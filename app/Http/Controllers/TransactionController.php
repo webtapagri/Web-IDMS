@@ -71,7 +71,9 @@ class TransactionController extends Controller
 						continue;
 					}
 					
-					$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$r->werks)->first();
+					// s$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$r->werks)->first();
+					$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$r->werks)->where('deleted_at',null)->first();
+					// dd($cek);
 					if($cek){
 						$ym = $dt['year'].\DateTime::createFromFormat('m', $dt['month'])->format('m');
 						if($cek->close == $ym || (int)$ym < $cek->close){
@@ -321,6 +323,11 @@ class TransactionController extends Controller
 			// today < end_validate < 9999-12-31
 			// 2020-02-19 < 2020-03-01 < 9999-12-31 => block ini masih bisa digunakan
 			// 2020-02-19 < 2020-01-31 < 9999-12-31 => block ini sudah tidak dapat digunakan, gunakan block baru yang aktif
+
+			//start_valid <= today and end_valid >= today
+			//2019-12-01 <= 2020-02-26 and 9999-12-31 >= 2020-02-26  true
+			//2020-01-01 <= 2020-02-26 and 9999-12-31 >= 2020-02-26  true
+			//ambil yg start_validnya paling baru dan start_valid <= today and end_valid >= today
 			
 			//insert into TM_ROAD
 			$company 			= $RS->company_code;

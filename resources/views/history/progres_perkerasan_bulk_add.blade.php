@@ -101,7 +101,8 @@ HotContextMenu = function() {
 				return;
 			}	
 		var car_data = [
-				{road_code: "", road_name: "", length: "", month: "", year: ""},
+				// {road_code: "", road_name: "", length: "", month: "", year: ""},
+				{road_code: "", length: "", month: "", year: ""},
 			];
 			
 		var hot_context_copy = document.getElementById('hot_context_copy');
@@ -154,7 +155,8 @@ HotContextMenu = function() {
 				data: car_data,
 				rowHeaders: true,
 				stretchH: 'all',
-				colHeaders: ['Road Code', 'Road Name', 'Length (m)', 'Month', 'Year'],
+				// colHeaders: ['Road Code', 'Road Name', 'Length (m)', 'Month', 'Year'],
+				colHeaders: ['Road Code', 'Length (m)', 'Month', 'Year'],
 				columns: [
 					{
 						data: 'road_code',
@@ -163,10 +165,10 @@ HotContextMenu = function() {
 						width: 50,
 						validator: cekNum
 					},
-					{
-						data: 'road_name',
-						validator: cekString
-					},
+					// {
+					// 	data: 'road_name',
+					// 	validator: cekString
+					// },
 					{
 						data: 'length',
 						type: 'numeric',
@@ -204,12 +206,13 @@ HotContextMenu = function() {
 				},
 				afterValidate: function(isValid, value, row, prop){
 					if(!isValid){
-						if(prop == 'road_name'){
-							new Noty({
-								text: 'Kolom '+prop+' baris ke '+(row+1)+' harus diisi.',
-								type: 'warning'
-							}).show();
-						}else if(prop == 'year'){
+						// if(prop == 'road_name'){
+						// 	new Noty({
+						// 		text: 'Kolom '+prop+' baris ke '+(row+1)+' harus diisi.',
+						// 		type: 'warning'
+						// 	}).show();
+						// }else 
+						if(prop == 'year'){
 							new Noty({
 								text: 'Format tahun baris ke '+(row+1)+' salah.',
 								type: 'warning'
@@ -279,7 +282,8 @@ function save(){
 			
 			let dataFix = [];
 			$.each(hot_context_copy_init.getData(), (k,v)=>{
-				dataFix.push({road_code: v[0], road_name: v[1], length: v[2], month: v[3], year: v[4]})
+				// dataFix.push({road_code: v[0], road_name: v[1], length: v[2], month: v[3], year: v[4]})
+				dataFix.push({road_code: v[0], length: v[1], month: v[2], year: v[3]})
 			});
 			
 			$.ajax({
