@@ -63,16 +63,7 @@
 				<th>City</th>
 			</tr>
 		</thead>
-		<!-- <tfoot>
-			<tr>
-				<th>Pencarian</th>
-				<th>Estate Code</th>
-				<th>Ba Code</th>
-				<th>Company Name</th>
-				<th>Werks</th>
-				<th>City</th>
-			</tr>
-		</tfoot> -->
+		
 	</table>
 </div>
 
@@ -318,18 +309,7 @@ function loadGrid(){
             { data: 'werks', 		name: 'werks' },
             { data: 'city', 		name: 'city' },
         ],
-		initComplete: function () {
-			this.api().columns().every(function (k) {
-				if(k > 0 && k < 6){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
-				}
-			});
-		}
+		
     } );
 }
 </script>

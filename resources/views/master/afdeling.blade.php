@@ -64,17 +64,7 @@
 				<th>BA Afdeling Code</th>
 			</tr>
 		</thead>
-		<!-- <tfoot>
-			<tr>
-				<th>Pencarian</th>
-				<th>Afdeling Code</th>
-				<th>Afdeling Name</th>
-				<th>Region Code</th>
-				<th>Company Name</th>
-				<th>BA Code</th>
-				<th>BA Afdeling Code</th>
-			</tr>
-		</tfoot> -->
+		
 	</table>
 </div>
 
@@ -320,18 +310,7 @@ function loadGrid(){
             { data: 'werks', 		name: 'werks' },
             { data: 'werks_afd_code', 		name: 'werks_afd_code' },
         ],
-		initComplete: function () {
-			this.api().columns().every(function (k) {
-				if(k > 0 && k < 7){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
-				}
-			});
-		}
+		
     } );
 }
 </script>

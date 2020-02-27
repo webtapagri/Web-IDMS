@@ -266,18 +266,7 @@ function loadGrid(){
             { data: 'status_code', 	name: 'status_code' },
             { data: 'action', 		name: 'action' },
         ],
-		initComplete: function () {
-			this.api().columns().every(function (k) {
-				if(k > 0 && k < 3){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
-				}
-			});
-		}
+		
     } );
 }
 </script>

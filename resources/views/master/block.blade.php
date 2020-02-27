@@ -67,19 +67,7 @@
 				<th>End Valid</th>
 			</tr>
 		</thead>
-		<!-- <tfoot>
-			<tr>
-				<th>Pencarian</th>
-				<th>Block Code</th>
-				<th>Block Name</th>
-				<th>Region Code</th>
-				<th>Company Name</th>
-				<th>BA Code</th>
-				<th>BA Afdeling Block Code</th>
-				<th>Start Valid</th>
-				<th>End Valid</th>
-			</tr>
-		</tfoot> -->
+		
 	</table>
 </div>
 @endsection
@@ -355,18 +343,7 @@ function loadGrid(){
             { data: 'start_valid', 		name: 'start_valid' },
             { data: 'end_valid', 		name: 'end_valid' },
         ],
-		initComplete: function () {
-			this.api().columns().every(function (k) {
-				if(k > 0 && k < 9){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
-				}
-			});
-		}
+		
     } );
 }
 </script>

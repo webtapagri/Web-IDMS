@@ -61,15 +61,7 @@
 				<th>Address</th>
 			</tr>
 		</thead>
-		<!-- <tfoot>
-			<tr>
-				<th>Pencarian</th>
-				<th>Company Code</th>
-				<th>Company Name</th>
-				<th>Region Code</th>
-				<th>Address</th>
-			</tr>
-		</tfoot> -->
+		
 	</table>
 </div>
 
@@ -312,18 +304,7 @@ function loadGrid(){
             { data: 'region_code', 	name: 'region_code' },
             { data: 'address', 		name: 'address' },
         ],
-		initComplete: function () {
-			this.api().columns().every(function (k) {
-				if(k > 0 && k < 5){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
-				}
-			});
-		}
+		
     } );
 }
 </script>

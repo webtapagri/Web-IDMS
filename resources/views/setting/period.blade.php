@@ -75,15 +75,7 @@
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
-		<!-- <tfoot>
-			<tr>
-				<th>Estate</th>
-				<th>BA Code</th>
-				<th>Month</th>
-				<th>Year</th>
-				<th class="text-center"></th>
-			</tr>
-		</tfoot> -->
+		
 	</table>
 </div>
 
@@ -433,18 +425,7 @@ function loadGrid(){
             { data: 'year', 	name: 'year' },
             { data: 'action', 		name: 'action' },
         ],
-		// initComplete: function () {
-		// 	this.api().columns().every(function (k) {
-		// 		if(k > -1 && k < 4){
-		// 			var column = this;
-		// 			var input = document.createElement("input");
-		// 			$(input).appendTo($(column.footer()).empty())
-		// 			.on('change', function () {
-		// 				column.search($(this).val(), false, false, true).draw();
-		// 			}).attr('placeholder',' Search').addClass('form-control');
-		// 		}
-		// 	});
-		// }
+		
     } );
 
 }

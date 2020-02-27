@@ -84,22 +84,7 @@
 				<th>Asset Code</th>
 			</tr>
 		</thead>
-		<!-- <tfoot>
-			<tr>
-				<th>Company</th>
-				<th>Estate</th>
-				<th>Afdeling</th>
-				<th>Block</th>
-				<th>Status</th>
-				<th>Category</th>
-				<th>Segment</th> 
-				<th>BA Code</th>
-				<th>Road Name</th>
-				<th>Road Code</th>
-				<th>Length</th>
-				<th>Asset Code</th>
-			</tr>
-		</tfoot> -->
+		
 	</table>
 </div>
 
@@ -398,34 +383,12 @@ function loadGrid(){
 							} );
 						
 					}
-					// else{
-					// 	var column = this;
-					// 	var input = document.createElement("input");
-					// 	$(input).appendTo($(column.footer()).empty())
-					// 	.on('change', function () {
-					// 		column.search($(this).val(), false, false, true).draw();
-					// 	}).attr('placeholder',' Search').addClass('form-control tfsearch');
-					// }
+				
 				}
 			});
 		}
 	} );
 
-	
-	// 'use strict';
-	// yadcf.init(table,
-    //     [
-    //         {
-    //             column_number : 0,
-	// 			filter_type: "multi_select",
-	// 			filter_default_label: "Company",
-	// 			select_type: 'select2',
-	// 		}
-    //     ],
-    //     {
-    //         cumulative_filtering: true
-    //     }
-	// );
 
 	
 }

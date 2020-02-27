@@ -185,18 +185,7 @@
 						<th>Insert Date</th>
 					</tr>
 				</thead>
-				<tfoot>
-					<tr>
-						<th>Status</th>
-						<th>Category</th>
-						<th>Segment</th>
-						<th>Road Name</th>
-						<th>Road Code</th>
-						<th>Total Length</th>
-						<th>Updated by</th>
-						<th>Insert Date</th>
-					</tr>
-				</tfoot>
+				
 			</table>
 		</div>
 	</div>
@@ -653,20 +642,7 @@ function loadGridDetail(btn,url){
             { data: 'updated_by', 	name: 'updated_by' },
             { data: 'created_at', 	name: 'created_at' },
         ],
-		initComplete: function () {
-			this.api().columns().every(function (k) {
-				if(k > -1 && k < 8){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Cari').addClass('form-control');
-				}
-			});
-			$(btn).html('<i class="icon-list3"></i>')
-			$('#modal_detail').modal('show')
-		}
+		
     } );
 }
 </script>

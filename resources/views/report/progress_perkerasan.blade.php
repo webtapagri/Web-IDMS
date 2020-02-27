@@ -79,24 +79,7 @@
 				<th>Asset Code</th>
 			</tr>
 		</thead>
-		<tfoot>
-			<tr>
-				<th>Company</th>
-				<th>Estate</th>
-				<th>Afdeling</th>
-				<th>Block</th>
-				<th>Month</th>
-				<th>Year</th>
-				<th>Status</th>
-				<th>Category</th>
-				<th>Segment</th>
-				<th>Road Name</th>
-				<th>Road Code</th>
-				<th>Length</th>
-				<th>Pavement Length (m)</th>
-				<th>Asset Code</th>
-			</tr>
-		</tfoot>
+		
 	</table>
 </div>
 
@@ -549,14 +532,7 @@ function loadGrid(){
 							} );
 						
 					}
-					// else{
-					// 	var column = this;
-					// 	var input = document.createElement("input");
-					// 	$(input).appendTo($(column.footer()).empty())
-					// 	.on('change', function () {
-					// 		column.search($(this).val(), false, false, true).draw();
-					// 	}).attr('placeholder',' Search').addClass('form-control tfsearch');
-					// }
+					
 				}
 			});
 		}
@@ -608,22 +584,7 @@ function loadGridDetail(btn, url, kode){
             { data: 'updated_by', 	name: 'updated_by' },
             { data: 'created_at', 	name: 'created_at' },
         ],
-		// initComplete: function () {
-		// 	this.api().columns().every(function (k) {
-		// 		if(k > -1 && k < 5){
-		// 			var column = this;
-		// 			var input = document.createElement("input");
-		// 			$(input).appendTo($(column.footer()).empty())
-		// 			.on('change', function () {
-		// 				column.search($(this).val(), false, false, true).draw();
-		// 			}).attr('placeholder',' Search').addClass('form-control');
-		// 		}
-		// 	});
-			
-		// 	$('#detailKodeJalan').html(kode)
-		// 	$('#modal_detail').modal('show')
-		// 	$(btn).html('<i class="icon-list3"></i> History')
-		// }
+		
     } );
 }
 </script>
