@@ -73,19 +73,19 @@
 	<table class="table datatable-responsive table-xs">
 		<thead>
 			<tr>
-				<th class="search_text">Company</th> 
-				<th class="search_text">Estate</th>
-				<th class="search_text">Afdeling</th>
-				<th class="search_text">Block</th>
-				<th class="search_text">Status</th>
-				<th class="search_text">Category</th>
-				<th class="search_text">Segment</th>
-				<th class="search_text">Road Name</th>
-				<th class="search_text">Road Code</th>
-				<th class="search_text">Length</th>
+				<th>Company</th> 
+				<th>Estate</th>
+				<th>Afdeling</th>
+				<th>Block</th>
+				<th>Status</th>
+				<th>Category</th>
+				<th>Segment</th>
+				<th>Road Name</th>
+				<th>Road Code</th>
+				<th>Length</th>
 				<th>Pavement Length</th>
 				<th>Progress</th>
-				<th class="search_text">Asset Code</th>
+				<th>Asset Code</th>
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
@@ -471,6 +471,32 @@ function loadGrid(){
 	} );
 
 	//------- cache client --------
+
+
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+			
+	
+			$( 'input', this ).on( 'click change', function (event) {
+					if ( table.column(i).search() !== this.value ) {
+						
+							table
+								.column(i)
+								.search( this.value )
+								.draw();
+							
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
+
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: false,
@@ -478,6 +504,11 @@ function loadGrid(){
 					{ 
 						width: 250,
 						targets: [ 5 ]
+					},
+					{ 
+						orderable: false,
+						width:150,
+						targets: [ 4 ]
 					},
 					{ 
 						orderable: false,
@@ -547,6 +578,7 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
+		orderCellsTop: true,
         // ajax: '{{ route("history.progres_perkerasan_datatables") }}',
 		ajax: $.fn.dataTable.pipeline( {
             url: '{{ route("history.progres_perkerasan_datatables") }}',
@@ -562,17 +594,13 @@ function loadGrid(){
 		"deferLoading": 10000,
         columns: col,
 		initComplete: function () {
-			this.api().columns('.search_text').every(function (k) {
-				
-				if(k != 10 && k != 11){
+			this.api().columns().every(function (k) {
+				if(k > -1 && k < 11){
 					if(k == 4){
 						var column = this;
-						var header = $(column.header()).html();
-						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
-						var select = $('<select style="padding: 5px;margin-top: 6px;" class=""><option value="">'+dStatus+'</option></select>')
-							.appendTo($(column.header())
-                .empty()
-                .append('<div>' + header + '</div>'))
+						var dStatus = '<option value="" disabled selected>Status</option><option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var select = $('<select class="form-control tfsearch"><option value="">'+dStatus+'</option></select>')
+							.appendTo( $(column.header()).empty() )
 							.on( 'change', function () {
 								var val = $.fn.dataTable.util.escapeRegex(
 									$(this).val()
@@ -582,58 +610,55 @@ function loadGrid(){
 									.search( val ? '^'+val+'$' : '', true, false )
 									.draw();
 							} );
-							
-						//Prevent click from sorting column
-						$(select).click((e)=>{
-							e.stopPropagation();
-						});
+							// $( table.column(4) ).replaceWith(select);
 						
-					}else{
-						var column = this;
-						var header = $(column.header()).html();
-						var input = $('<input type="text" class="" placeholder="search" style="padding:3px; margin-top:6px"/>')
-							.appendTo($(column.header())
-							.empty()
-							.append('<div>' + header + '</div>'));
-						//Restoring state
-						input.val(column.search());
-						input.on('change', function (e) {
-							//Ignore keys without value (like shift/ctrl/alt etc) to prevent extensive redraws
-							var ignore = [9, 13, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 91, 92, 112, 113, 114, 115, 116, 117, , 118, 119, 120, 121, 122, 123, 144, 145];
-							if (ignore.indexOf(e.which) != -1)
-								return;
-							table.column($(this).parent().index() + ':visible').search(this.value).draw();
-						});
-						//Prevent enter key from sorting column
-						input.on('keypress', function (e) {
-							if (e.which == 13) {
-								table.column($(this).parent().index() + ':visible').search(this.value).draw();
-								return false;
-							}
-							
-						});
-						//Prevent click from sorting column
-						input.on('click', function (e) {
-							e.stopPropagation();
-						});
-						// There are 2 events fired on input element when clicking on the clear button:// mousedown and mouseup.
-						input.on('mouseup', function (e) {
-							var that = this;
-							var oldValue = this.value;
-							if (oldValue === '')
-								return;
-							// When this event is fired after clicking on the clear button // the value is not cleared yet. We have to wait for it.
-							// setTimeout(function () {
-								// var newValue = that.value;
-								// if (newValue === '') {
-									// table.column($(that).parent().index() + ':visible').search(newValue).draw();
-									// e.preventDefault();
-								// }
-							// }, 1);
-						});
-						//Make nodes tabbable withtout selecting td
-						input.parent().attr('tabindex', -1);
 					}
+					// else{
+					// 	var column = this;
+					// 	var header = $(column.header()).html();
+					// 	var input = $('<input type="text" class="" placeholder="search" style="padding:3px; margin-top:6px"/>')
+					// 		.appendTo($(column.header())
+					// 		.empty()
+					// 		.append('<div>' + header + '</div>'));
+					// 	//Restoring state
+					// 	input.val(column.search());
+					// 	input.on('change', function (e) {
+					// 		//Ignore keys without value (like shift/ctrl/alt etc) to prevent extensive redraws
+					// 		var ignore = [9, 13, 16, 17, 18, 19, 20, 27, 33, 34, 35, 36, 37, 38, 39, 40, 45, 91, 92, 112, 113, 114, 115, 116, 117, , 118, 119, 120, 121, 122, 123, 144, 145];
+					// 		if (ignore.indexOf(e.which) != -1)
+					// 			return;
+					// 		table.column($(this).parent().index() + ':visible').search(this.value).draw();
+					// 	});
+					// 	//Prevent enter key from sorting column
+					// 	input.on('keypress', function (e) {
+					// 		if (e.which == 13) {
+					// 			table.column($(this).parent().index() + ':visible').search(this.value).draw();
+					// 			return false;
+					// 		}
+							
+					// 	});
+					// 	//Prevent click from sorting column
+					// 	input.on('click', function (e) {
+					// 		e.stopPropagation();
+					// 	});
+					// 	// There are 2 events fired on input element when clicking on the clear button:// mousedown and mouseup.
+					// 	input.on('mouseup', function (e) {
+					// 		var that = this;
+					// 		var oldValue = this.value;
+					// 		if (oldValue === '')
+					// 			return;
+					// 		// When this event is fired after clicking on the clear button // the value is not cleared yet. We have to wait for it.
+					// 		// setTimeout(function () {
+					// 			// var newValue = that.value;
+					// 			// if (newValue === '') {
+					// 				// table.column($(that).parent().index() + ':visible').search(newValue).draw();
+					// 				// e.preventDefault();
+					// 			// }
+					// 		// }, 1);
+					// 	});
+					// 	//Make nodes tabbable withtout selecting td
+					// 	input.parent().attr('tabindex', -1);
+					// }
 					
 				}
 			});
@@ -657,7 +682,6 @@ function loadGridDetail(btn, url, kode){
 						orderable: false,
 						targets: [ 0,1,2,3,4 ]
 					},
-					
 					{ 
 						class: 'alpha-primary',
 						targets: [ 0]
