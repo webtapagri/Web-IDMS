@@ -284,7 +284,8 @@ function detail(btn, id,max,cur, kode){
 	if(table_detail){
 		table_detail.destroy()
 	};
-	$(btn).html('<i class="icon-spinner spinner"></i> History')
+	// $(btn).html('<i class="icon-spinner spinner"></i> History')
+	$('#modal_detail').modal('show')
 	loadGridDetail(btn, "{{ URL::to('api/history/progress-perkerasan-detail') }}/"+id, kode )
 	return false;
 }

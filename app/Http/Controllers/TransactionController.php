@@ -205,7 +205,8 @@ class TransactionController extends Controller
 				}
 			}
 			
-			RoadPavementProgress::create($request->all()+['updated_by'=>\Session::get('user_id')]);
+			RoadPavementProgress::firstOrCreate(['road_id'=> $request->road_id, 'month'=> $request->month, 'year'=> $request->year],$request->all()+['updated_by'=>\Session::get('user_id')]);
+			// RoadPavementProgress::create($request->all()+['updated_by'=>\Session::get('user_id')]);
 			
 			dispatch((new FlushCache)->onQueue('low'));
 		}catch (\Throwable $e) {

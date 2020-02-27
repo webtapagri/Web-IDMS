@@ -253,7 +253,9 @@ function detail(btn,id,stat){
 	if(table_detail){
 		table_detail.destroy()
 	};
-	$(btn).html('<i class="icon-spinner spinner"></i>')
+	// $(btn).html('<i class="icon-spinner spinner"></i>')
+	
+	$('#modal_detail').modal('show')
 	loadGridDetail(btn, "{{ URL::to('api/history/road-status-detail') }}/"+id )
 	return false;
 }
