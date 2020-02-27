@@ -84,7 +84,7 @@
 				<th>Asset Code</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<!-- <tfoot>
 			<tr>
 				<th>Company</th>
 				<th>Estate</th>
@@ -99,7 +99,7 @@
 				<th>Length</th>
 				<th>Asset Code</th>
 			</tr>
-		</tfoot>
+		</tfoot> -->
 	</table>
 </div>
 
@@ -292,13 +292,18 @@ function loadGrid(){
 						width: 150,
 						targets: [ 7 ]
 					},
+					{ 
+						orderable: false,
+						width: 150,
+						targets: [ 4 ]
+					},
 					
 					{ 
 						"searchable": false, 
 						"targets": 11
 					},
 				],
-				dom: '<"datatable-header"Blfrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Blrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				
 				buttons: [
 					  	{
@@ -379,9 +384,9 @@ function loadGrid(){
 				if(k > -1 && k < 12){
 					if(k == 4){
 						var column = this;
-						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var dStatus = '<option value="" disabled selected>Status</option><option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
 						var select = $('<select class="form-control tfsearch"><option value="">'+dStatus+'</option></select>')
-							.appendTo( $(column.footer()).empty() )
+							.appendTo( $(column.header()).empty() )
 							.on( 'change', function () {
 								var val = $.fn.dataTable.util.escapeRegex(
 									$(this).val()
@@ -392,14 +397,15 @@ function loadGrid(){
 									.draw();
 							} );
 						
-					}else{
-						var column = this;
-						var input = document.createElement("input");
-						$(input).appendTo($(column.footer()).empty())
-						.on('change', function () {
-							column.search($(this).val(), false, false, true).draw();
-						}).attr('placeholder',' Search').addClass('form-control tfsearch');
 					}
+					// else{
+					// 	var column = this;
+					// 	var input = document.createElement("input");
+					// 	$(input).appendTo($(column.footer()).empty())
+					// 	.on('change', function () {
+					// 		column.search($(this).val(), false, false, true).draw();
+					// 	}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					// }
 				}
 			});
 		}

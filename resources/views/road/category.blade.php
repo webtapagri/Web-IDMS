@@ -66,15 +66,15 @@
 	<table class="table datatable-responsive">
 		<thead>
 			<tr>
-				<th>No</th> 
+				<!-- <th>No</th>  -->
 				<th>Road Status</th>
 				<th>Road Category</th>
 				<th>Kode Road Category</th>
 				<th>Initial Road Category</th>
-				<th class="text-center">Aksi</th>
+				<th class="text-center">Action</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<!-- <tfoot>
 			<tr>
 				<th>Pencarian</th> 
 				<th>Pencarian</th>
@@ -83,7 +83,7 @@
 				<th>Kode Road Category</th>
 				<th class="text-center"></th>
 			</tr>
-		</tfoot>
+		</tfoot> -->
 	</table>
 </div>
 
@@ -278,6 +278,32 @@ function loadStatus(){
 }
 
 function loadGrid(){
+
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+			
+	
+			$( 'input', this ).on( 'click change', function (event) {
+					if ( table.column(i).search() !== this.value ) {
+						
+							table
+								.column(i)
+								.search( this.value )
+								.draw();
+							
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
+
+
 	console.log('load grid')
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
@@ -285,8 +311,8 @@ function loadGrid(){
 				columnDefs: [
 					{ 
 						orderable: false,
-						width: 250,
-						targets: [ 5 ]
+						width: 150,
+						targets: [ 4 ]
 					},
 					{ 
 						orderable: false,
@@ -297,7 +323,7 @@ function loadGrid(){
 						"targets": 0 
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"rl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -311,10 +337,14 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
+		orderCellsTop: true,
         ajax: '{{ route("master.road_category_datatables") }}',
+		scrollX: true,
+		scrollY: '400px',
+		scrollCollapse: true,
 		// "order": [[1,"asc"],[2, "asc" ]],
         columns: [
-            { data: 'no', 	name: 'no' },
+            // { data: 'no', 	name: 'no' },
             { data: 'status_name', 	name: 'status_name' },
             { data: 'category_name', 	name: 'category_name' },
             { data: 'category_code', 	name: 'category_code' },

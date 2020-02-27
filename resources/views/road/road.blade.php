@@ -82,7 +82,7 @@
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<!-- <tfoot>
 			<tr>
 				<th>Company</th>
 				<th>Estate</th>
@@ -97,7 +97,7 @@
 				<th>Asset Code</th>
 				<th class="text-center">Action</th>
 			</tr>
-		</tfoot>
+		</tfoot> -->
 	</table>
 </div>
 
@@ -421,7 +421,7 @@ function loadGrid(){
 						targets: [ 0,11 ]
 					},
 				],
-				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"rl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -443,7 +443,7 @@ function loadGrid(){
             pages: 5 // number of pages to cache
         } ),
 		scrollX: true,
-		// scrollY: '400px',
+		scrollY: '400px',
 		scrollCollapse: true,
 		fixedColumns: {
 			leftColumns: 0,
@@ -473,7 +473,7 @@ function loadGrid(){
 			if(k > -1 && k < 11){
 				if(k ==4){
 					var column = this;
-					var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+					var dStatus = '<option value="" disabled selected>Status</option><option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
 					var select = $('<select class="form-control"><option value="">'+dStatus+'</option></select>')
 						.appendTo( $(column.footer()).empty() )
 						.on( 'change', function () {
@@ -491,14 +491,15 @@ function loadGrid(){
 					// } );
 				
 					
-				}else{
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
 				}
+				// else{
+				// 	var column = this;
+				// 	var input = document.createElement("input");
+				// 	$(input).appendTo($(column.footer()).empty())
+				// 	.on('change', function () {
+				// 		column.search($(this).val(), false, false, true).draw();
+				// 	}).attr('placeholder',' Search').addClass('form-control');
+				// }
 			}
 			});
 			

@@ -486,13 +486,16 @@ function loadGrid(){
 		var title = $(this).text();
 		if(title !="Action"){
 			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+			
 	
 			$( 'input', this ).on( 'click change', function (event) {
 					if ( table.column(i).search() !== this.value ) {
-						table
-							.column(i)
-							.search( this.value )
-							.draw();
+						
+							table
+								.column(i)
+								.search( this.value )
+								.draw();
+							
 					}
 			} );
 		}
@@ -514,24 +517,11 @@ function loadGrid(){
 						orderable: false,
 						targets: [ 11 ]
 					},
-					{
-						targets: [4],
-						"render": function (data, type, row, meta){
-												var $select = $("<select></select>", {
-												});
-												$.each(times, function (k, v) {
-			
-													var $option = $("<option></option>", {
-														"text": v,
-														"value": v
-													});
-													if (data === v) {
-														$option.attr("selected", "selected")
-													}
-													$select.append($option);
-												});
-												return $select.prop("outerHTML");
-					}
+					{ 
+						orderable: false,
+						targets: [ 4 ]
+					},
+					
 					{ 
 						"searchable": false, 
 						"targets": 11
@@ -585,9 +575,9 @@ function loadGrid(){
 				if(k > -1 && k < 11){
 					if(k == 4){
 						var column = this;
-						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
-						var select = $('<select class="form-control"><option value="">'+dStatus+'</option></select>')
-							.appendTo( $(column.footer()).empty() )
+						var dStatus = '<option value="" disabled selected>Status</option><option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var select = $('<select class="form-control tfsearch"><option value="">'+dStatus+'</option></select>')
+							.appendTo( $(column.header()).empty() )
 							.on( 'change', function () {
 								var val = $.fn.dataTable.util.escapeRegex(
 									$(this).val()
@@ -597,6 +587,7 @@ function loadGrid(){
 									.search( val ? '^'+val+'$' : '', true, false )
 									.draw();
 							} );
+							// $( table.column(4) ).replaceWith(select);
 						
 					}
 					// else{

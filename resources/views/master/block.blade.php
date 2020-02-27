@@ -56,7 +56,7 @@
 	<table class="table datatable-responsive">
 		<thead>
 			<tr>
-				<th>No.</th>
+				<!-- <th>No.</th> -->
 				<th>Block Code</th>
 				<th>Block Name</th>
 				<th>Region Code</th>
@@ -67,7 +67,7 @@
 				<th>End Valid</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<!-- <tfoot>
 			<tr>
 				<th>Pencarian</th>
 				<th>Block Code</th>
@@ -79,7 +79,7 @@
 				<th>Start Valid</th>
 				<th>End Valid</th>
 			</tr>
-		</tfoot>
+		</tfoot> -->
 	</table>
 </div>
 @endsection
@@ -255,6 +255,30 @@ function loadGrid(){
 	} );
 
 	//------- cache client --------
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+			
+	
+			$( 'input', this ).on( 'click change', function (event) {
+					if ( table.column(i).search() !== this.value ) {
+						
+							table
+								.column(i)
+								.search( this.value )
+								.draw();
+							
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
+
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -273,7 +297,7 @@ function loadGrid(){
 						targets: [ 0 ]
 					},
 				],
-				dom: '<"datatable-header"Blfrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"lr><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 					   {
 							extend: 'csv',
@@ -313,12 +337,15 @@ function loadGrid(){
 	
 
 	table = $('.datatable-responsive').DataTable( {
-        processing: true,
+		processing: true,
         serverSide: true,
+		orderCellsTop: true,
+		scrollX: true,
+		scrollY: '350px',
         ajax: '{{ route("master.block_datatables") }}',
 		// "order": [[1,"asc"],[2, "asc" ]],
         columns: [
-            { data: 'no', 	name: 'no' },
+            // { data: 'no', 	name: 'no' },
             { data: 'block_code', 	name: 'block_code' },
             { data: 'block_name', 	name: 'block_name' },
             { data: 'region_code', 	name: 'region_code' },

@@ -413,7 +413,29 @@ function loadGrid(){
 	} );
 
 	//------- cache client --------
-
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+			
+	
+			$( 'input', this ).on( 'click change', function (event) {
+					if ( table.column(i).search() !== this.value ) {
+						
+							table
+								.column(i)
+								.search( this.value )
+								.draw();
+							
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: false,
@@ -422,6 +444,10 @@ function loadGrid(){
 						orderable: false,
 						width: 250,
 						targets: [ 0 ]
+					},
+					{ 
+						orderable: false,
+						targets: [ 6 ]
 					},
 				],
 				dom: '<"datatable-header"Bfrl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
@@ -490,6 +516,7 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
+		orderCellsTop: true,
         // ajax: '{{ route("report.progress_perkerasan_datatables") }}',
 		ajax: $.fn.dataTable.pipeline( {
             url: '{{ route("report.progress_perkerasan_datatables") }}',
@@ -508,9 +535,9 @@ function loadGrid(){
 				if(k >= 0 && k < 12){
 					if(k == 6){
 						var column = this;
-						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var dStatus = '<option value="" disabled selected>Status</option><option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
 						var select = $('<select class="form-control tfsearch"><option value="">'+dStatus+'</option></select>')
-							.appendTo( $(column.footer()).empty() )
+							.appendTo( $(column.header()).empty() )
 							.on( 'change', function () {
 								var val = $.fn.dataTable.util.escapeRegex(
 									$(this).val()
@@ -521,14 +548,15 @@ function loadGrid(){
 									.draw();
 							} );
 						
-					}else{
-						var column = this;
-						var input = document.createElement("input");
-						$(input).appendTo($(column.footer()).empty())
-						.on('change', function () {
-							column.search($(this).val(), false, false, true).draw();
-						}).attr('placeholder',' Search').addClass('form-control tfsearch');
 					}
+					// else{
+					// 	var column = this;
+					// 	var input = document.createElement("input");
+					// 	$(input).appendTo($(column.footer()).empty())
+					// 	.on('change', function () {
+					// 		column.search($(this).val(), false, false, true).draw();
+					// 	}).attr('placeholder',' Search').addClass('form-control tfsearch');
+					// }
 				}
 			});
 		}
@@ -557,7 +585,7 @@ function loadGridDetail(btn, url, kode){
 						targets: [ 0]
 					},
 				],
-				dom: '<"datatable-header"frl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"rl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -580,22 +608,22 @@ function loadGridDetail(btn, url, kode){
             { data: 'updated_by', 	name: 'updated_by' },
             { data: 'created_at', 	name: 'created_at' },
         ],
-		initComplete: function () {
-			this.api().columns().every(function (k) {
-				if(k > -1 && k < 5){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
-				}
-			});
+		// initComplete: function () {
+		// 	this.api().columns().every(function (k) {
+		// 		if(k > -1 && k < 5){
+		// 			var column = this;
+		// 			var input = document.createElement("input");
+		// 			$(input).appendTo($(column.footer()).empty())
+		// 			.on('change', function () {
+		// 				column.search($(this).val(), false, false, true).draw();
+		// 			}).attr('placeholder',' Search').addClass('form-control');
+		// 		}
+		// 	});
 			
-			$('#detailKodeJalan').html(kode)
-			$('#modal_detail').modal('show')
-			$(btn).html('<i class="icon-list3"></i> History')
-		}
+		// 	$('#detailKodeJalan').html(kode)
+		// 	$('#modal_detail').modal('show')
+		// 	$(btn).html('<i class="icon-list3"></i> History')
+		// }
     } );
 }
 </script>

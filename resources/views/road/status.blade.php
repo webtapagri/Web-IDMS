@@ -61,20 +61,20 @@
 	<table class="table datatable-responsive">
 		<thead>
 			<tr>
-				<th>No.</th>
+				<!-- <th>No.</th> -->
 				<th>Road Status</th>
-				<th>Kode Road Status</th>
-				<th class="text-center">Aksi</th>
+				<th>Road Status Code</th>
+				<th class="text-center">Action</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<!-- <tfoot>
 			<tr>
 				<th>Pencarian</th>
 				<th>Road Status</th>
 				<th>Kode Road Status</th>
 				<th class="text-center"></th>
 			</tr>
-		</tfoot>
+		</tfoot> -->
 	</table>
 </div>
 
@@ -200,6 +200,32 @@ function del(url){
 }
 
 function loadGrid(){
+
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+			
+	
+			$( 'input', this ).on( 'click change', function (event) {
+					if ( table.column(i).search() !== this.value ) {
+						
+							table
+								.column(i)
+								.search( this.value )
+								.draw();
+							
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
+
+
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -207,7 +233,7 @@ function loadGrid(){
 					{ 
 						orderable: false,
 						width: 250,
-						targets: [ 3 ]
+						targets: [ 2 ]
 					},
 					{ 
 						orderable: false,
@@ -218,7 +244,7 @@ function loadGrid(){
 						targets: [ 0 ]
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"rl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -231,10 +257,11 @@ function loadGrid(){
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
         serverSide: true,
+		orderCellsTop: true,
         ajax: '{{ route("master.road_status_datatables") }}',
 		"order": [[1,"asc"],[2, "asc" ]],
         columns: [
-            { data: 'no', 	name: 'no' },
+            // { data: 'no', 	name: 'no' },
             { data: 'status_name', 	name: 'status_name' },
             { data: 'status_code', 	name: 'status_code' },
             { data: 'action', 		name: 'action' },

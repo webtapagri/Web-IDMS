@@ -75,7 +75,7 @@
 				<th class="text-center">Action</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<!-- <tfoot>
 			<tr>
 				<th>Estate</th>
 				<th>BA Code</th>
@@ -83,7 +83,7 @@
 				<th>Year</th>
 				<th class="text-center"></th>
 			</tr>
-		</tfoot>
+		</tfoot> -->
 	</table>
 </div>
 
@@ -371,6 +371,26 @@ function load_werks(){
 
 
 function loadGrid(){
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+	
+			$( 'input', this ).on( 'click change', function () {
+					if ( table.column(i).search() !== this.value ) {
+						table
+							.column(i)
+							.search( this.value )
+							.draw();
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: false,
@@ -384,8 +404,12 @@ function loadGrid(){
 						orderable: false,
 						targets: [ 0 ]
 					},
+					{ 
+						orderable: false,
+						targets: [ 4 ]
+					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"rl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -409,18 +433,18 @@ function loadGrid(){
             { data: 'year', 	name: 'year' },
             { data: 'action', 		name: 'action' },
         ],
-		initComplete: function () {
-			this.api().columns().every(function (k) {
-				if(k > -1 && k < 4){
-					var column = this;
-					var input = document.createElement("input");
-					$(input).appendTo($(column.footer()).empty())
-					.on('change', function () {
-						column.search($(this).val(), false, false, true).draw();
-					}).attr('placeholder',' Search').addClass('form-control');
-				}
-			});
-		}
+		// initComplete: function () {
+		// 	this.api().columns().every(function (k) {
+		// 		if(k > -1 && k < 4){
+		// 			var column = this;
+		// 			var input = document.createElement("input");
+		// 			$(input).appendTo($(column.footer()).empty())
+		// 			.on('change', function () {
+		// 				column.search($(this).val(), false, false, true).draw();
+		// 			}).attr('placeholder',' Search').addClass('form-control');
+		// 		}
+		// 	});
+		// }
     } );
 
 }

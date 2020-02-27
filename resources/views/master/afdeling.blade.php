@@ -64,7 +64,7 @@
 				<th>BA Afdeling Code</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<!-- <tfoot>
 			<tr>
 				<th>Pencarian</th>
 				<th>Afdeling Code</th>
@@ -74,7 +74,7 @@
 				<th>BA Code</th>
 				<th>BA Afdeling Code</th>
 			</tr>
-		</tfoot>
+		</tfoot> -->
 	</table>
 </div>
 
@@ -250,6 +250,31 @@ function loadGrid(){
 	} );
 
 	//------- cache client --------
+
+	
+	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
+    $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
+		var title = $(this).text();
+		if(title !="Action"){
+			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
+			
+	
+			$( 'input', this ).on( 'click change', function (event) {
+					if ( table.column(i).search() !== this.value ) {
+						
+							table
+								.column(i)
+								.search( this.value )
+								.draw();
+							
+					}
+			} );
+		}
+		else{
+			$(this).html( '' );
+		}
+	} );
+
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
 				responsive: true,
@@ -268,7 +293,7 @@ function loadGrid(){
 						targets: [ 0 ]
 					},
 				],
-				dom: '<"datatable-header"fl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"l><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				language: {
 					search: '<span>Filter:</span> _INPUT_',
 					searchPlaceholder: 'Type to filter...',
@@ -281,6 +306,9 @@ function loadGrid(){
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
         serverSide: true,
+		orderCellsTop: true,
+		scrollX: true,
+		scrollY: '350px',
         ajax: '{{ route("master.afdeling_datatables") }}',
 		// "order": [[1,"asc"],[2, "asc" ]],
         columns: [
