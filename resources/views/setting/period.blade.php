@@ -416,6 +416,7 @@ function loadGrid(){
         processing: true,
 		'processing': true,
         serverSide: true,
+		orderCellsTop: true,
         ajax: '{{ route("setting.period_datatables") }}',
 		"order": [[1,"asc"],[2, "asc" ]],
         columns: [
