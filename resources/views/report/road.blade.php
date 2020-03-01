@@ -67,7 +67,7 @@
 			</div>
 		@endif
 	</div>
-	<table class="table datatable-responsive">
+	<table class="table datatable-responsive table-xs">
 		<thead>
 			<tr>
 				<th>Company</th>
@@ -288,7 +288,7 @@ function loadGrid(){
 						"targets": 11
 					},
 				],
-				dom: '<"datatable-header"Blrt><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"lr><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				
 				buttons: [
 					  	{
@@ -354,7 +354,8 @@ function loadGrid(){
 
 	table = $('.datatable-responsive').DataTable( {
         processing: true,
-		serverSide: true,
+		'processing': true,
+        serverSide: true,
 		orderCellsTop: true,
 		scrollX: true,
 		scrollY: '350px',
