@@ -10,6 +10,13 @@
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
 @endsection
 
+<style>
+#modal_info {
+  width: 40%;
+  margin: auto;
+}
+</style>
+
 @section('content')
 
 <div class="card">
@@ -32,7 +39,7 @@
 			{{--
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
 			--}}
-				<button type="button" class="btn btn-primary save save-bulk">Simpan</button>
+				<button type="button" class="btn btn-primary save save-bulk" data-toggle="modal" data-target="#modal_info">Simpan</button>
 			</div>
 		</div>
 		
@@ -59,10 +66,33 @@
 	</div>
 </div>
 
+
+<div id="modal_info" class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Summary</h5>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			
+				<div class="modal-body">
+							<div class="col-sm-12" id="info"></div>
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+					<button type="submit" class="btn bg-primary savedata">Save</button>
+				</div>
+		</div>
+	</div>
+</div>
+
 @endsection
 
 @section('my_script')
-<script>
+<script  language="javascript" type="text/javascript">
 var HotContextMenu, hot_context_copy_init;
 $(document).ready(()=>{
 	HotContextMenu.init();
@@ -79,8 +109,18 @@ $(document).ready(()=>{
 	})
 	
 	$('.save').click(()=>{
-		save()
+		// save()
+		$('#modal_info').show();
+		$('.savedata').click(()=>{
+			save()
+		})
+		
+		$("#info").html('');
+		CountRows()
+		totallength()
 	})
+
+	
 	
 	$('.validation-check').click(()=>{
 		hot_context_copy_init.validateCells((isValid)=>{
@@ -93,6 +133,25 @@ $(document).ready(()=>{
 		})
 	})
 })
+
+
+function CountRows() {
+			var rowCount =  $(".htCore > tbody >tr").length / 2;
+			var message = "<h5>Jumlah data yang akan di upload " + rowCount + "</h5>";
+				$("#info").append(message);
+}
+function totallength(){
+	var total = 0;
+            $('table.htCore tbody tr').each(function() {
+                var value = parseInt($('td', this).eq(1).text());
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+			var message = "<h5>dengan Total Panjang Perkerasan Jalan " + total + " meter</h5>";
+				$("#info").append(message);
+}
+		
 
 HotContextMenu = function() {
 	var _componentHotContextMenu = function() {
@@ -152,6 +211,13 @@ HotContextMenu = function() {
 		}
 		
 		hot_context_copy_init = new Handsontable(hot_context_copy, {
+				// settings: {
+				// 	data: data,
+				// 	rowHeaders: true,
+				// 	colHeaders: true,
+				// 	licenseKey: '00000-00000-00000-00000-00000'
+				// },
+	
 				data: car_data,
 				rowHeaders: true,
 				stretchH: 'all',
@@ -195,6 +261,7 @@ HotContextMenu = function() {
 						validator: cekNumYear
 					},
 				],
+				
 				afterCopy: function(changes) {
 					clipboardCache = sheetclip.stringify(changes);
 				},
@@ -260,6 +327,7 @@ HotContextMenu = function() {
 					}
 				]
 			});
+
 	};
 	return {
 		init: function() {
@@ -268,9 +336,16 @@ HotContextMenu = function() {
 	}
 }();
 
+
 function distinct(value, index, self) { 
     return self.indexOf(value) === index;
 }
+
+
+$('.savedata').click(()=>{
+		save()
+});
+
 
 function save(){
 	
@@ -314,7 +389,12 @@ function save(){
 						if(cont.error.length > 0){
 							$('.error').removeClass('d-none');
 							$.each(cont.error, (k,v)=>{
-								$('.error_area').append('Road code '+v.value+' at line '+v.line+' error with status <strong>'+v.status+'<strong><br/>');
+								if(v.value == ''){
+									$('.error_area').append('Please check your data');
+								}
+								else{
+									$('.error_area').append('Road code '+v.value+' at line '+v.line+' error with status <strong>'+v.status+'<strong><br/>');
+								}
 							})
 						}
 						if(cont.success.length > 0){

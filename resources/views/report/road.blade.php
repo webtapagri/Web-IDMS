@@ -260,7 +260,7 @@ function loadGrid(){
 
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
-				responsive: true,
+				responsive: false,
 				columnDefs: [
 					{ 
 						orderable: false,
@@ -356,6 +356,9 @@ function loadGrid(){
         processing: true,
 		serverSide: true,
 		orderCellsTop: true,
+		scrollX: true,
+		scrollY: '350px',
+		scrollCollapse: true,
         // ajax: '{{ route("report.road_datatables") }}',
 		ajax: $.fn.dataTable.pipeline( {
             url: '{{ route("report.road_datatables") }}',

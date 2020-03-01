@@ -51,6 +51,7 @@ class TransactionController extends Controller
 			$respon['error'] 	= [];
 			$respon['success'] 	= [];
 			$data = $request->data;
+			$err = 0;
 			
 			if(count($data) > 0){
 				foreach($data as $k=>$dt){
@@ -58,6 +59,7 @@ class TransactionController extends Controller
 					$r = Road::where('road_code',$dt['road_code'])->first();
 					if(!$r){
 						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'road code not found'];
+						$err += 1;
 						continue;
 					}
 					
@@ -68,6 +70,7 @@ class TransactionController extends Controller
 						])->exists();
 					if($cek){
 						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period ihas close'];
+						$err += 1;
 						continue;
 					}
 					
@@ -78,10 +81,12 @@ class TransactionController extends Controller
 						$ym = $dt['year'].\DateTime::createFromFormat('m', $dt['month'])->format('m');
 						if($cek->close == $ym || (int)$ym < $cek->close){
 							$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has close'];
+							$err += 1;
 							continue;
 						}else if((int)$ym > ($cek->close+1)){
 							$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has not yet open'];
-							continue;	
+							$err += 1;
+							continue;
 						}
 						
 					}
@@ -91,6 +96,7 @@ class TransactionController extends Controller
 					$m_total_length	= RoadLog::select('total_length')->where('road_id',$r->id)->orderBy('id','desc')->first()->total_length;
 					if( ($m_progress+$dt['length']) > $m_total_length ){
 						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'over length'];
+						$err += 1;
 						continue;
 					}
 					
@@ -103,18 +109,31 @@ class TransactionController extends Controller
 
 					if($cek_prod_status['status_name'] != 'PRODUKSI'){
 						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'road status not production'];
+						$err += 1;
 						continue;
 					}
 					
 					//fon
-					$disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id,'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m')]+Arr::except($dt, ['month','road_code', 'road_name', 'length']) );
-					$disRoad->length 		= $dt['length'];
-					$disRoad->updated_by 	= \Session::get('user_id');
-					$disRoad->save();
-					
-					$respon['success'][] = $dt['road_code'];
+					// $disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id,'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m')]+Arr::except($dt, ['month','road_code', 'road_name', 'length']) );
+					// $disRoad->length 		= $dt['length'];
+					// $disRoad->updated_by 	= \Session::get('user_id');
+					// $disRoad->save();
 					
 				}
+
+				if($err > 0){ 
+					$respon['error'][] = ['value'=>'','line'=>'','status'=>''];
+					
+				}else{ // if has no error
+					foreach($data as $k=>$dt){
+						$disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id,'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m')]+Arr::except($dt, ['month','road_code', 'road_name', 'length']) );
+						$disRoad->length 		= $dt['length'];
+						$disRoad->updated_by 	= \Session::get('user_id');
+						$disRoad->save();
+						$respon['success'][] = $dt['road_code'];
+					}
+				}
+
 			}
 			
 		}catch (\Throwable $e) {
@@ -205,7 +224,7 @@ class TransactionController extends Controller
 				}
 			}
 			
-			RoadPavementProgress::firstOrCreate(['road_id'=> $request->road_id, 'month'=> $request->month, 'year'=> $request->year],$request->all()+['updated_by'=>\Session::get('user_id')]);
+			RoadPavementProgress::updateOrCreate(['road_id'=> $request->road_id, 'month'=> $request->month, 'year'=> $request->year],$request->all()+['updated_by'=>\Session::get('user_id')]);
 			// RoadPavementProgress::create($request->all()+['updated_by'=>\Session::get('user_id')]);
 			
 			dispatch((new FlushCache)->onQueue('low'));
