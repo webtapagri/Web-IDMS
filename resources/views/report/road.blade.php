@@ -288,7 +288,7 @@ function loadGrid(){
 						"targets": 11
 					},
 				],
-				dom: '<"datatable-header"lr><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Blr><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				
 				buttons: [
 					  	{
@@ -373,9 +373,9 @@ function loadGrid(){
 				if(k > -1 && k < 12){
 					if(k == 4){
 						var column = this;
-						var dStatus = '<option value="" disabled selected>Status</option><option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
 						var select = $('<select class="form-control tfsearch"><option value="">'+dStatus+'</option></select>')
-							.appendTo( $(column.header()).empty() )
+							.appendTo( $(".datatable-responsive thead tr:eq(1) th").eq(column.index()).empty() ) 
 							.on( 'change', function () {
 								var val = $.fn.dataTable.util.escapeRegex(
 									$(this).val()

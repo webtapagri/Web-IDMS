@@ -433,7 +433,7 @@ function loadGrid(){
 						targets: [ 6 ]
 					},
 				],
-				dom: '<"datatable-header"Bfrl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Brl><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 						{
 							text: '<i class="icon-file-excel"></i><o></o> Export to CSV',
@@ -518,9 +518,9 @@ function loadGrid(){
 				if(k >= 0 && k < 12){
 					if(k == 6){
 						var column = this;
-						var dStatus = '<option value="" disabled selected>Status</option><option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
+						var dStatus = '<option value="PRODUKSI">PRODUKSI</option><option value="NON PRODUKSI">NON PRODUKSI</option><option value="UMUM">UMUM</option>';
 						var select = $('<select class="form-control tfsearch"><option value="">'+dStatus+'</option></select>')
-							.appendTo( $(column.header()).empty() )
+							.appendTo( $(".datatable-responsive thead tr:eq(1) th").eq(column.index()).empty() ) 
 							.on( 'change', function () {
 								var val = $.fn.dataTable.util.escapeRegex(
 									$(this).val()
