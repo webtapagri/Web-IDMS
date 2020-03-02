@@ -9,7 +9,7 @@
 	<link href="{{ asset('img/icon.ico') }}" rel="shortcut icon">
 
 	<!-- Global stylesheets -->
-	<link href="{{ asset('limitless/global_assets/css/css.css?family=Roboto:400,300,100,500,700,900') }}" rel="stylesheet" type="text/css">
+	<!-- <link href="{{ asset('limitless/global_assets/css/css.css?family=Roboto:400,300,100,500,700,900') }}" rel="stylesheet" type="text/css"> -->
 	<link href="{{ asset('limitless/global_assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('limitless/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
 	<link href="{{ asset('limitless/assets/css/bootstrap_limitless.min.css') }}" rel="stylesheet" type="text/css">

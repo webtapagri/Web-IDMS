@@ -12,7 +12,7 @@
 
 <style>
 #modal_info {
-  width: 40%;
+  width: 50%;
   margin: auto;
 }
 </style>

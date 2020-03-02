@@ -52,7 +52,7 @@
     <![endif]-->
 
     <!-- Google Font -->
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/css.css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic') }}">
+    <!-- <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/css.css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic') }}"> -->
 	<link href="{{ asset('limitless/global_assets/css/icons/icomoon/styles.css') }}" rel="stylesheet" type="text/css">
 	@include('vendor.adminlte.limitlessMode')
 </head>

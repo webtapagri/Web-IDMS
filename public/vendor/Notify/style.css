@@ -5,7 +5,7 @@
     GitHub     : https://github.com/Helmesvs
 */
 
-@font-face {
+/* @font-face {
     font-family: Poppins;
     font-style: normal;
     font-weight: 500;
@@ -16,7 +16,7 @@
     font-style: normal;
     font-weight: 600;
     src: local('Poppins SemiBold'), local('Poppins-SemiBold'), url(https://fonts.gstatic.com/s/poppins/v1/zO07Oxe3SOlw0l2YX2sdIS3USBnSvpkopQaUR-2r7iU.ttf) format('truetype')
-}
+} */
 
 .toast:before{
     text-align: center
