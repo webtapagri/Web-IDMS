@@ -21,5 +21,7 @@ class Company extends Model
 		'region_code',
 		'address',
 		'national',
+		'insert_time_dw',
+		'update_time_dw',
 	];
 }

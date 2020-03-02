@@ -19,6 +19,11 @@ class Estate extends Model
 		'company_id',
 		'werks',
 		'city',
+		'region_code',
+		'start_valid',
+		'end_valid',
+		'insert_time_dw',
+		'update_time_dw',
 	];
 	
 	public function company()
