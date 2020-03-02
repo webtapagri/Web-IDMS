@@ -38,12 +38,12 @@ class MasterController extends Controller
 		$Master = new Master;
 		$token = $Master->token();
 		$RestAPI = $Master
-					->setEndpoint('afdeling/all')
+					// ->setEndpoint('afdeling/all')
+					->setEndpoint('afdeling')
 					->setHeaders([
 						'Authorization' => 'Bearer '.$token
 					])
 					->get();
-					
 		// return $RestAPI;
 		if(count($RestAPI['data']) > 0 ){
 			foreach($RestAPI['data'] as $data){
@@ -55,7 +55,8 @@ class MasterController extends Controller
 								$afd->company_code = $data['COMP_CODE'];
 								$afd->afdeling_name = $data['AFD_NAME'];
 								$afd->werks = $data['WERKS'];
-								$afd->werks_afd_code = $data['WERKS_AFD_CODE'];
+								// $afd->werks_afd_code = $data['WERKS_AFD_CODE'];
+								$afd->werks_afd_code = $data['AFD_CODE_GIS'];
 								$afd->save();
 						}catch (\Throwable $e) {
 							//
@@ -75,20 +76,26 @@ class MasterController extends Controller
 
 	public function sync_block()
 	{
-		// $Master = new Master;
-		// $token = $Master->token();
-		$RestAPI = API::exec(array(
-			'request' => 'GET',
-			'host' => 'api',
-			'method' => "block/all/raw/", 
-		));
+		$Master = new Master;
+		$token = $Master->token();
+		// $RestAPI = API::exec(array(
+		// 	'request' => 'GET',
+		// 	'host' => 'api',
+		// 	'method' => "block/all/raw/", 
+		// ));
+		$RestAPI = $Master
+					->setEndpoint('block')
+					->setHeaders([
+						'Authorization' => 'Bearer '.$token
+					])
+					->get();
 		// $RestAPI->data;
 		// dd($RestAPI);
-		if(count($RestAPI->data) > 0 ){
-			// 	if(count($RestAPI['data']) > 0 ){
-			// 		foreach($RestAPI['data'] as $data){
-			$d = json_decode(json_encode($RestAPI->data), true);
-			foreach( $d as $data){
+		// if(count($RestAPI->data) > 0 ){
+				if(count($RestAPI['data']) > 0 ){
+					foreach($RestAPI['data'] as $data){
+			// $d = json_decode(json_encode($RestAPI->data), true);
+			// foreach( $d as $data){
 				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
 					if($afd){
 						try {
@@ -103,9 +110,12 @@ class MasterController extends Controller
 								$block->company_code = $data['COMP_CODE'];
 								$block->estate_code = $data['EST_CODE'];
 								$block->werks = $data['WERKS'];
-								$block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
-								$block->latitude_block = $data['LATITUDE_BLOCK'];
-								$block->longitude_block = $data['LONGITUDE_BLOCK'];
+								// $block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
+								$block->werks_afd_block_code = $data['WERKS'].$data['AFD_CODE'].$data['BLOCK_CODE'];
+								// $block->latitude_block = $data['LATITUDE_BLOCK'];
+								// $block->longitude_block = $data['LONGITUDE_BLOCK'];
+								$block->latitude_block = '';
+								$block->longitude_block = '';
 								$block->start_valid = date("Y-m-d", strtotime($data['START_VALID']));
 								$block->end_valid = date("Y-m-d", strtotime($data['END_VALID']));
 								$block->save();
@@ -131,7 +141,8 @@ class MasterController extends Controller
 		$Master = new Master;
 		$token = $Master->token();
 		$RestAPI = $Master
-					->setEndpoint('comp/all')
+					// ->setEndpoint('comp/all')
+					->setEndpoint('company')
 					->setHeaders([
 						'Authorization' => 'Bearer '.$token
 					])
@@ -162,7 +173,8 @@ class MasterController extends Controller
 		$Master = new Master;
 		$token = $Master->token();
 		$RestAPI = $Master
-					->setEndpoint('est/all')
+					->setEndpoint('estate')
+					// ->setEndpoint('est/all')
 					->setHeaders([
 						'Authorization' => 'Bearer '.$token
 					])
