@@ -97,7 +97,7 @@ class MasterController extends Controller
 					foreach($RestAPI['data'] as $data){
 			// $d = json_decode(json_encode($RestAPI->data), true);
 			// foreach( $d as $data){
-				$afd = Afdeling::where('afdeling_code',$data['AFD_CODE'])->where('werks',$data['WERKS'])->first();
+				$afd = Afdeling::where('afdeling_code',$data['afd_code'])->where('werks',$data['werks'])->first();
 					if($afd){
 						try {
 								$block = Block::firstOrNew(array(
@@ -126,7 +126,7 @@ class MasterController extends Controller
 							//
 						}
 					}else{
-						\Log::info('Not found ini- '.$data['AFD_CODE'].' - '.$data['WERKS']);
+						\Log::info('Not found ini- '.$data['afd_code'].' - '.$data['werks']);
 						// masuk log  COMP_CODE  not found
 					}
 				
