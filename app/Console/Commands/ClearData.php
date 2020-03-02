@@ -13,14 +13,14 @@ class ClearData extends Command
      *
      * @var string
      */
-    protected $signature = 'data:clean';
+    protected $signature = 'idms:clean_master_idms';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command untuk menghapus data IDMS';
+    protected $description = 'Command untuk menghapus data master IDMS';
 
     /**
      * Create a new command instance.

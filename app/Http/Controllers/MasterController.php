@@ -18,6 +18,7 @@ use DB;
 use API;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redis;
+use App\Jobs\FlushCache;
 
 class MasterController extends Controller
 {
@@ -144,27 +145,46 @@ class MasterController extends Controller
 					// ->setEndpoint('comp/all')
 					->setEndpoint('company')
 					->setHeaders([
-						'Authorization' => 'Bearer '.$token
+						// 'Authorization' => 'Bearer '.$token
 					])
 					->get();
-		$jml = count($RestAPI['data']);
-		if($jml > 0 ){
-			foreach($RestAPI['data'] as $data){
-				try {
-					$comp = Company::firstOrNew(array('region_code' => $data['REGION_CODE'],'company_code' => $data['COMP_CODE']));
-					$comp->company_name = $data['COMP_NAME'];
-					$comp->address = $data['ADDRESS'];
-					$comp->national = $data['NATIONAL'];
-					$comp->save();
-				}catch (\Throwable $e) {
-					//
-				}catch (\Exception $e) {
-					//
+		if(isset($RestAPI['http_status_code'])){
+			if($RestAPI['http_status_code'] == 200){
+				$results = $RestAPI['data']['results'];
+				$jml 	 = count($results);
+				if($jml > 0 ){
+					foreach($results as $data){
+						try {
+							$comp = Company::firstOrNew(array(
+									'region_code' => $data['region_code'],
+									'company_code' => $data['comp_code']
+								));
+							$comp->company_name = $data['comp_name'];
+							$comp->address = $data['address'];
+							$comp->national = $data['national'];
+							$comp->insert_time_dw = $data['insert_time_dw'];
+							$comp->update_time_dw = $data['update_time_dw'];
+							$comp->save();
+						}catch (\Throwable $e) {
+							return response()->error('Error', 'Terjadi kesalahan server / API');
+						}catch (\Exception $e) {
+							return response()->error('Error', 'Terjadi kesalahan server / API');
+						}
+					}
+						
+				}else{
+					return response()->error('Success', 'API tidak memberikan data');
 				}
+					
+			}else{
+				return response()->error('Success', "Terjadi error sync master {$RestAPI['http_status_code']} ");
 			}
 				
-		}
-					
+		}else{
+			return response()->error('Error', 'Terjadi kesalahan server / API');
+		}			
+		
+		dispatch((new FlushCache)->onQueue('low'));			
 		return response()->success('Success', $jml);
 	}
 	
@@ -179,33 +199,54 @@ class MasterController extends Controller
 						'Authorization' => 'Bearer '.$token
 					])
 					->get();
-		$jml = count($RestAPI['data']);
-		if($jml > 0){
-			foreach($RestAPI['data'] as $data){
-				$comp = Company::where('company_code',$data['COMP_CODE'])->first();
-				
-				if($comp){
-					try {
-						$est = Estate::firstOrNew(array('company_id' => $comp['id'],'estate_code' => $data['EST_CODE']));
-						$est->estate_name 	= $data['EST_NAME'];
-						$est->werks 		= $data['WERKS'];
-						$est->city 			= $data['CITY'];
-						$est->save();
-					}catch (\Throwable $e) {
-						//
-					}catch (\Exception $e) {
-						//
-					}
-				}else{
-					// masuk log  COMP_CODE  not found
-				}
-				
-			}
-				
-		}else{
-			//
-		}		
 		
+		if(isset($RestAPI['http_status_code'])){
+			if($RestAPI['http_status_code'] == 200){
+				$results = $RestAPI['data']['results'];
+				$jml = count($results);
+				if($jml > 0){
+					foreach($results as $data){
+						$comp = Company::where('company_code',$data['comp_code'])->first();
+						
+						if($comp){
+							try {
+								$est = Estate::firstOrNew(array(
+											'company_id' 	=> $comp['id'],
+											'estate_code' 	=> $data['est_code'],
+											'werks' 		=> $data['werks'],
+											'start_valid' 	=> $data['start_valid'],
+										));
+								$est->estate_name 		= $data['est_name'];
+								$est->werks 			= $data['werks'];
+								$est->city 				= $data['city'];
+								$comp->start_valid 		= $data['start_valid'];
+								$comp->end_valid 		= $data['end_valid'];
+								$est->region_code 		= $data['region_code'];
+								$est->insert_time_dw 	= $data['insert_time_dw'];
+								$est->update_time_dw 	= $data['update_time_dw'];
+								$est->save();
+							}catch (\Throwable $e) {
+								return response()->error('Error', 'Terjadi kesalahan server / API');
+							}catch (\Exception $e) {
+								return response()->error('Error', 'Terjadi kesalahan server / API');
+							}
+						}else{
+							// masuk log  COMP_CODE  not found
+						}
+						
+					}
+						
+				}else{
+					return response()->error('Success', 'API tidak memberikan data');
+				}
+			}else{
+				return response()->error('Success', "Terjadi error sync master {$RestAPI['http_status_code']} ");
+			}	
+		}else{
+			return response()->error('Success', 'Terjadi kesalahan server / API');
+		}	
+		
+		dispatch((new FlushCache)->onQueue('low'));	
 		return response()->success('Success', $jml);
 		
 	}
