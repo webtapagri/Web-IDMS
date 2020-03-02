@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Road Status list')
+@section('title', 'Company list')
 
 @section('theme_js')
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>

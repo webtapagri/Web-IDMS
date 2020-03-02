@@ -50,13 +50,13 @@ class MasterController extends Controller
 				$est = Estate::where('werks',$data['WERKS'])->first();
 					if($est){
 						try {
-								$afd = Afdeling::firstOrNew(array('estate_id' => $est['id'],'afdeling_code' => $data['AFD_CODE']));
-								$afd->region_code = $data['REGION_CODE'];
-								$afd->company_code = $data['COMP_CODE'];
-								$afd->afdeling_name = $data['AFD_NAME'];
-								$afd->werks = $data['WERKS'];
+								$afd = Afdeling::firstOrNew(array('estate_id' => $est['id'],'afdeling_code' => $data['afd_code']));
+								$afd->region_code = $data['region_code'];
+								$afd->company_code = $data['comp_code'];
+								$afd->afdeling_name = $data['afd_name'];
+								$afd->werks = $data['werks'];
 								// $afd->werks_afd_code = $data['WERKS_AFD_CODE'];
-								$afd->werks_afd_code = $data['AFD_CODE_GIS'];
+								$afd->werks_afd_code = $data['werks'].$data['afd_code'];
 								$afd->save();
 						}catch (\Throwable $e) {
 							//
@@ -101,23 +101,23 @@ class MasterController extends Controller
 						try {
 								$block = Block::firstOrNew(array(
 									'afdeling_id' => $afd['id'],
-									'block_code' => $data['BLOCK_CODE'],
-									'start_valid' => $data['START_VALID'],									
+									'block_code' => $data['block_code'],
+									'start_valid' => $data['start_valid'],									
 									// 'end_valid' => $data['END_VALID'],									
 								));
-								$block->block_name = $data['BLOCK_NAME'];
-								$block->region_code = $data['REGION_CODE'];
-								$block->company_code = $data['COMP_CODE'];
-								$block->estate_code = $data['EST_CODE'];
-								$block->werks = $data['WERKS'];
+								$block->block_name = $data['block_name'];
+								$block->region_code = $data['region_code'];
+								$block->company_code = $data['comp_code'];
+								$block->estate_code = $data['est_code'];
+								$block->werks = $data['werks'];
 								// $block->werks_afd_block_code = $data['WERKS_AFD_BLOCK_CODE'];
-								$block->werks_afd_block_code = $data['WERKS'].$data['AFD_CODE'].$data['BLOCK_CODE'];
+								$block->werks_afd_block_code = $data['werks'].$data['afd_code'].$data['block_code'];
 								// $block->latitude_block = $data['LATITUDE_BLOCK'];
 								// $block->longitude_block = $data['LONGITUDE_BLOCK'];
 								$block->latitude_block = '';
 								$block->longitude_block = '';
-								$block->start_valid = date("Y-m-d", strtotime($data['START_VALID']));
-								$block->end_valid = date("Y-m-d", strtotime($data['END_VALID']));
+								$block->start_valid = date("Y-m-d", strtotime($data['start_valid']));
+								$block->end_valid = date("Y-m-d", strtotime($data['end_valid']));
 								$block->save();
 						}catch (\Throwable $e) {
 							//
