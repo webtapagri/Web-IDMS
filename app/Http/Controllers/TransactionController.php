@@ -69,7 +69,7 @@ class TransactionController extends Controller
 						'year'=>$dt['year']
 						])->exists();
 					if($cek){
-						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period ihas close'];
+						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has close'];
 						$err += 1;
 						continue;
 					}
@@ -121,10 +121,7 @@ class TransactionController extends Controller
 					
 				}
 
-				if($err > 0){ 
-					$respon['error'][] = ['value'=>'','line'=>'','status'=>''];
-					
-				}else{ // if has no error
+				if($err == 0){ 
 					foreach($data as $k=>$dt){
 						$disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id,'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m')]+Arr::except($dt, ['month','road_code', 'road_name', 'length']) );
 						$disRoad->length 		= $dt['length'];

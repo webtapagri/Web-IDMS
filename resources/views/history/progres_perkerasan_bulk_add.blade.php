@@ -113,6 +113,7 @@ $(document).ready(()=>{
 		$('#modal_info').show();
 		$('.savedata').click(()=>{
 			save()
+			$('#modal_info').modal('hide')
 		})
 		
 		$("#info").html('');
@@ -389,12 +390,8 @@ function save(){
 						if(cont.error.length > 0){
 							$('.error').removeClass('d-none');
 							$.each(cont.error, (k,v)=>{
-								if(v.value == ''){
-									$('.error_area').append('Please check your data');
-								}
-								else{
 									$('.error_area').append('Road code '+v.value+' at line '+v.line+' error with status <strong>'+v.status+'<strong><br/>');
-								}
+								
 							})
 						}
 						if(cont.success.length > 0){
@@ -427,6 +424,7 @@ function save(){
 		}
 
 	})
+	
 }
 </script>
 @endsection
