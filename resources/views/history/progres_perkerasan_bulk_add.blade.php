@@ -343,9 +343,9 @@ function distinct(value, index, self) {
 }
 
 
-$('.savedata').click(()=>{
-		save()
-});
+// $('.savedata').click(()=>{
+// 		save()
+// });
 
 
 function save(){
@@ -386,7 +386,7 @@ function save(){
 				},
 				success:function(rsp){
 					if(rsp.code==200){
-						let cont = rsp.contents
+						let cont = rsp.contents	
 						if(cont.error.length > 0){
 							$('.error').removeClass('d-none');
 							$.each(cont.error, (k,v)=>{
