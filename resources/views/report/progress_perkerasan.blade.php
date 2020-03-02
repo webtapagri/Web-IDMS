@@ -400,10 +400,11 @@ function loadGrid(){
 	$('.datatable-responsive thead tr').clone(true).appendTo( '.datatable-responsive thead' );
     $('.datatable-responsive thead tr:eq(1) th').each( function (i) {
 		var title = $(this).text();
-		if(title !="Action"){
+		if(title == "Length" || title == "Pavement Length (m)" ){
+			$(this).html( '' );
+		}
+		else{
 			$(this).html( '<input type="text" class ="form-control tfsearch" placeholder="Search" />' );
-			
-	
 			$( 'input', this ).on( 'click change', function (event) {
 					if ( table.column(i).search() !== this.value ) {
 						
@@ -414,9 +415,6 @@ function loadGrid(){
 							
 					}
 			} );
-		}
-		else{
-			$(this).html( '' );
 		}
 	} );
 	$.extend( $.fn.dataTable.defaults, {
