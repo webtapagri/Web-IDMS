@@ -232,6 +232,7 @@ HotContextMenu = function() {
 						type: 'numeric',
 						className: 'htLeft',
 						width: 50,
+						height: 35,
 						validator: cekNum
 					},
 					// {
@@ -247,6 +248,7 @@ HotContextMenu = function() {
 							pattern: '0'
 						},
 						width: 50,
+						height: 35,
 						validator: cekNum
 					},
 					{
@@ -254,6 +256,7 @@ HotContextMenu = function() {
 						type: 'numeric',
 						className: 'htLeft',
 						width: 50,
+						height: 35,
 						validator: cekNumMon
 					},
 					{
@@ -261,6 +264,7 @@ HotContextMenu = function() {
 						type: 'numeric',
 						className: 'htLeft',
 						width: 50,
+						height: 35,
 						validator: cekNumYear
 					},
 				],
