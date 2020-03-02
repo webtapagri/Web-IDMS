@@ -224,6 +224,8 @@ HotContextMenu = function() {
 				stretchH: 'all',
 				// colHeaders: ['Road Code', 'Road Name', 'Length (m)', 'Month', 'Year'],
 				colHeaders: ['Road Code', 'Length (m)', 'Month', 'Year'],
+				autoRowSize: true,
+				rowHeights: '35px',
 				columns: [
 					{
 						data: 'road_code',
