@@ -35,12 +35,20 @@ class MasterController extends Controller
 	*/
 
 	
-	public function sync_afd()
+	public function sync_afd($comp, $est)
 	{
+		$comp_code = $comp;
+		$est_code = $est;
+		if($est_code == 0){
+			$param = $comp_code;
+		}else{
+			$param = $est_code;
+		}
+
 		$Master = new Master;
 		$token = $Master->token();
 		$RestAPI = $Master
-					->setEndpoint('afdeling')
+					->setEndpoint('afdeling/'.$param)
 					// ->setEndpoint('est/all')
 					->setHeaders([
 						'Authorization' => 'Bearer '.$token
@@ -97,8 +105,6 @@ class MasterController extends Controller
 	{
 		$comp_code = $comp;
 		$est_code = $est;
-		// $Master = new Master;
-		// $token = $Master->token();
 		if($est_code == 0){
 			$param = $comp_code;
 		}else{

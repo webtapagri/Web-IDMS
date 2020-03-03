@@ -22,7 +22,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 			Route::get('/road-status', 				['as'=>'master.api_road_status', 'uses'=>'RoadController@api_status']);
 			Route::get('/road-category/{id}', 		['as'=>'master.api_road_category', 'uses'=>'RoadController@api_category']);
 			
-			Route::get('/sync-afd', 				['as'=>'master.api_sync_afd', 'uses'=>'MasterController@sync_afd']);
+			Route::get('/sync-afd/{comp}/{est}', 				['as'=>'master.api_sync_afd', 'uses'=>'MasterController@sync_afd']);
 			Route::get('/sync-comp', 				['as'=>'master.api_sync_comp', 'uses'=>'MasterController@sync_comp']);
 			// Route::get('/sync-block', 				['as'=>'master.api_sync_block', 'uses'=>'MasterController@sync_block']);
 			Route::get('/sync-block/{comp}/{est}', 				['as'=>'master.api_sync_block', 'uses'=>'MasterController@sync_block']);
