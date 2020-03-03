@@ -24,7 +24,8 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 			
 			Route::get('/sync-afd', 				['as'=>'master.api_sync_afd', 'uses'=>'MasterController@sync_afd']);
 			Route::get('/sync-comp', 				['as'=>'master.api_sync_comp', 'uses'=>'MasterController@sync_comp']);
-			Route::get('/sync-block', 				['as'=>'master.api_sync_block', 'uses'=>'MasterController@sync_block']);
+			// Route::get('/sync-block', 				['as'=>'master.api_sync_block', 'uses'=>'MasterController@sync_block']);
+			Route::get('/sync-block/{comp}/{est}', 				['as'=>'master.api_sync_block', 'uses'=>'MasterController@sync_block']);
 			Route::get('/sync-est', 				['as'=>'master.api_sync_est', 'uses'=>'MasterController@sync_est']);	
 			
 			Route::get('/company', 				'MasterController@api_company')->name('api.master.company');

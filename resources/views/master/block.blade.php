@@ -5,11 +5,24 @@
 @section('theme_js')
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/datatables.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/responsive.min.js') }}"></script>
-<script src="{{ asset('limitless/global_assets/js/plugins/tables/datatables/extensions/buttons.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/notifications/bootbox.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
 <script src="{{ asset('limitless/global_assets/js/plugins/notifications/sweet_alert.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/select2.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/forms/styling/uniform.min.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js') }}"></script>
+<script src="{{ asset('limitless/global_assets/js/plugins/forms/styling/switchery.min.js') }}"></script>
 
 
 @endsection
+
+<style>
+#modal_info {
+  width: 50%;
+  margin: auto;
+}
+</style>
+
 
 @section('content')
 
@@ -17,7 +30,7 @@
 <?php print_r(Session::get('job_code')); ?>
 	<div class="card-header header-elements-inline">
 		@if($data['access']->create == 1)
-		<button onclick="sync(this)"
+		<button  data-toggle="modal" data-target="#modal_info"
 			type="button" class="btn bg-teal-400 btn-labeled btn-labeled-left"><b><i class="icon-sync"></i></b> Sync</button>
 		@endif
 		<div class="header-elements">
@@ -70,6 +83,53 @@
 		
 	</table>
 </div>
+
+
+
+<div id="modal_info" class="modal fade" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Sync Option</h5>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			
+			
+			<!-- <form action="{{ route('history.progres_perkerasan_update') }}" method="post" class="form-horizontal f-detail needs-validation" novalidate> -->
+			<form action="" method="post" class="form-horizontal f-detail needs-validation">
+				@csrf
+				<div class="modal-body">
+					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Company</label>
+						<div class="col-sm-9">
+							<select required data-placeholder="Select Company" name="company_code" id="company_code"  class="form-control company_code">
+								<option value=""></option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Estate</label>
+						<div class="col-sm-9">
+							<select data-placeholder="Select Estate" name="estate_code" id="estate_code"  class="form-control estate_code">
+								<option value=""></option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
+					<button type="button"  onclick="sync(this)" class="btn btn-primary btn-ladda btn-ladda-spinner ladda-button legitRipple btn-f-detail" data-style="expand-left" data-spinner-color="#333" data-spinner-size="20">
+						<span class="ladda-label">Sync</span>
+						<span class="ladda-spinner"></span><div class="ladda-progress" style="width: 0px;"></div>
+					</button>
+				</div>
+			<!-- </form> -->
+		</div>
+	</div>
+</div>
+
 @endsection
 
 @section('my_script')
@@ -89,10 +149,115 @@ $(document).ready(()=>{
 	
 });
 
-function sync(dis){
+
+$('#modal_info').on('show.bs.modal', function () {
+	load_comp();
+		
+	$('.company_code').change(()=>{
+		var id = $('.company_code').val()
+		load_est(id)
+	})
+	// $('.savedata').click(()=>{
+	// 		sync(dis)
+	// 		$('#modal_info').modal('hide')
+	// })
+})
+
+
+function load_comp(x=null){
 	$.ajax({
 		type: 'GET',
-		url: "{{ URL::to('api/master/sync-block') }}/",
+		url: "{{ URL::to('api/master/company') }}/",
+		data: null,
+		cache:false,
+		beforeSend:function(){
+			$('.company_code').html('<option value=""></option>')
+		},
+		complete:function(){
+			
+		},
+		headers: {
+			"X-CSRF-TOKEN": "{{ csrf_token() }}"
+		}
+	}).done(function(rsp){
+		
+		if(rsp.code=200){
+			var cont = rsp.contents
+			$.each(cont, (k,v)=>{
+				if(x==v.company_code){
+					$('.company_code').append('<option selected value="'+v.company_code+'">'+v.company_code+' - '+v.company_name+'</option>')
+				}else{
+					$('.company_code').append('<option value="'+v.company_code+'">'+v.company_code+' - '+v.company_name+'</option>')
+				}
+				
+			})
+		}else{
+			$('.company_code').html(rsp.code+' - '+rsp.contents)
+		}
+	}).fail(function(errors) {
+		
+		alert("Gagal Terhubung ke Server");
+		
+	});
+}
+
+
+function load_est(id, x=null){
+	$.ajax({
+		param:{
+			elTarget:'.estate_code',
+			elValue:'<option value=""></option>',
+		},
+		type: 'GET',
+		url: "{{ URL::to('api/master/estate_tree/') }}/"+id,
+		data: null,
+		cache:true,
+		beforeSend:function(){
+			$('.estate_code').html('<option value=""></option>')
+			HoldOn(light)
+		},
+		complete:function(){
+			HoldOff(light)
+		},
+		headers: {
+			"X-CSRF-TOKEN": "{{ csrf_token() }}"
+		},
+		success:(rsp)=>{
+			if(rsp.code=200){
+				var cont = rsp.contents
+				$.each(cont, (k,v)=>{
+					
+					if(x == v.werks+'-'+v.estate_code){
+						$('.estate_code').append('<option selected value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+					}else{
+						$('.estate_code').append('<option value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+					}
+				})
+			}else{
+				$('.estate_code').html(rsp.code+' - '+rsp.contents)
+			}
+		},
+		error:(xhr, ajaxOptions, thrownError)=>{
+			swal({
+				title: xhr.status.toString(),
+				text: 'Oops.. '+thrownError,
+				type: 'error',
+				padding: 30
+			});
+		}
+	});
+}
+
+
+function sync(dis){
+	var company = $('.company_code').val()
+	var estate = ($('.estate_code').val()).substring(0, 4)
+	if(estate == ''){
+		var est = 0;
+	}
+	$.ajax({
+		type: 'GET',
+		url: "{{ URL::to('api/master/sync-block') }}/"+ company + "/" + est,
 		data: null,
 		cache:false,
 		beforeSend:function(){
@@ -124,6 +289,7 @@ function sync(dis){
 		alert("Gagal Terhubung ke Server");
 		
 	});
+	$('#modal_info').modal('hide')
 }
 
 function loadGrid(){

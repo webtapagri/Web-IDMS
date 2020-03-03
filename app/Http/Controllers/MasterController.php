@@ -33,24 +33,30 @@ class MasterController extends Controller
 			region/all
 	
 	*/
+
 	
 	public function sync_afd()
 	{
 		$Master = new Master;
 		$token = $Master->token();
 		$RestAPI = $Master
-					// ->setEndpoint('afdeling/all')
 					->setEndpoint('afdeling')
+					// ->setEndpoint('est/all')
 					->setHeaders([
 						'Authorization' => 'Bearer '.$token
 					])
 					->get();
-		// return $RestAPI;
-		if(count($RestAPI['data']) > 0 ){
-			foreach($RestAPI['data'] as $data){
-				$est = Estate::where('werks',$data['WERKS'])->first();
-					if($est){
-						try {
+		
+		if(isset($RestAPI['http_status_code'])){
+			if($RestAPI['http_status_code'] == 200){
+				$results = $RestAPI['data']['results'];
+				$jml = count($results);
+				if($jml > 0){
+					foreach($results as $data){
+						$est = Estate::where('werks',$data['WERKS'])->first();
+						
+						if($est){
+							try {
 								$afd = Afdeling::firstOrNew(array('estate_id' => $est['id'],'afdeling_code' => $data['afd_code']));
 								$afd->region_code = $data['region_code'];
 								$afd->company_code = $data['comp_code'];
@@ -59,47 +65,66 @@ class MasterController extends Controller
 								// $afd->werks_afd_code = $data['WERKS_AFD_CODE'];
 								$afd->werks_afd_code = $data['werks'].$data['afd_code'];
 								$afd->save();
-						}catch (\Throwable $e) {
-							//
-						}catch (\Exception $e) {
-							//
+							}catch (\Throwable $e) {
+								return response()->error('Error', 'Terjadi kesalahan server / API');
+							}catch (\Exception $e) {
+								return response()->error('Error', 'Terjadi kesalahan server / API');
+							}
+						}else{
+							// masuk log  COMP_CODE  not found
 						}
-					}else{
-						// masuk log  COMP_CODE  not found
-					}
-				
-			}
-		}
 						
-		return 1;
+					}
+						
+				}else{
+					return response()->error('Success', 'API tidak memberikan data');
+				}
+			}else{
+				return response()->error('Success', "Terjadi error sync master {$RestAPI['http_status_code']} ");
+			}	
+		}else{
+			return response()->error('Success', 'Terjadi kesalahan server / API');
+		}	
+		
+		dispatch((new FlushCache)->onQueue('low'));	
+		return response()->success('Success', $jml);
 		
 	}
+	
 
-	public function sync_block()
+	
+	public function sync_block($comp, $est)
 	{
+		$comp_code = $comp;
+		$est_code = $est;
+		// $Master = new Master;
+		// $token = $Master->token();
+		if($est_code == 0){
+			$param = $comp_code;
+		}else{
+			$param = $est_code;
+		}
+
 		$Master = new Master;
 		$token = $Master->token();
-		// $RestAPI = API::exec(array(
-		// 	'request' => 'GET',
-		// 	'host' => 'api',
-		// 	'method' => "block/all/raw/", 
-		// ));
 		$RestAPI = $Master
-					->setEndpoint('block')
+					->setEndpoint('block/'.$param)
+					// ->setEndpoint('est/all')
 					->setHeaders([
 						'Authorization' => 'Bearer '.$token
 					])
 					->get();
-		// $RestAPI->data;
-		// dd($RestAPI);
-		// if(count($RestAPI->data) > 0 ){
-				if(count($RestAPI['data']) > 0 ){
-					foreach($RestAPI['data'] as $data){
-			// $d = json_decode(json_encode($RestAPI->data), true);
-			// foreach( $d as $data){
-				$afd = Afdeling::where('afdeling_code',$data['afd_code'])->where('werks',$data['werks'])->first();
-					if($afd){
-						try {
+		
+		if(isset($RestAPI['http_status_code'])){
+			if($RestAPI['http_status_code'] == 200){
+				$results = $RestAPI['data']['results'];
+				$jml = count($results);
+				if($jml > 0){
+					foreach($results as $data){
+						$afd = Afdeling::where('afdeling_code',$data['afd_code'])->where('werks',$data['werks'])->first();
+						
+						if($afd){
+							try {
 								$block = Block::firstOrNew(array(
 									'afdeling_id' => $afd['id'],
 									'block_code' => $data['block_code'],
@@ -121,20 +146,31 @@ class MasterController extends Controller
 								$block->end_valid = date("Y-m-d", strtotime($data['end_valid']));
 								$block->save();
 						}catch (\Throwable $e) {
-							//
-						}catch (\Exception $e) {
-							//
+								return response()->error('Error', 'Terjadi kesalahan server / API');
+							}catch (\Exception $e) {
+								return response()->error('Error', 'Terjadi kesalahan server / API');
+							}
+						}else{
+							// masuk log  COMP_CODE  not found
 						}
-					}else{
-						\Log::info('Not found ini- '.$data['afd_code'].' - '.$data['werks']);
-						// masuk log  COMP_CODE  not found
+						
 					}
-				
-			}
-		}
-		return 1;
+						
+				}else{
+					return response()->error('Success', 'API tidak memberikan data');
+				}
+			}else{
+				return response()->error('Success', "Terjadi error sync master {$RestAPI['http_status_code']} ");
+			}	
+		}else{
+			return response()->error('Success', 'Terjadi kesalahan server / API');
+		}	
+		
+		dispatch((new FlushCache)->onQueue('low'));	
+		return response()->success('Success', $jml);
 		
 	}
+	
 
 
 	public function sync_comp()

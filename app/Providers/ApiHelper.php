@@ -19,7 +19,7 @@ class ApiHelper extends ServiceProvider
         );
         
         // $api = "http://149.129.213.146:8080/api/";
-        $api = "http://app.tap-agri.com/mobileinspectiondev/ins-msa-dev-hectarestatement/api/v2.0/";
+        $api = "http://tap-ldapdev.tap-agri.com/master/";
         $ldap = "http://tap-ldapdev.tap-agri.com/";
             
         if (!empty($param['host'])) {
