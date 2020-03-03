@@ -97,13 +97,13 @@
 			
 			
 			<!-- <form action="{{ route('history.progres_perkerasan_update') }}" method="post" class="form-horizontal f-detail needs-validation" novalidate> -->
-			<form action="" method="post" class="form-horizontal f-detail needs-validation">
+			<form onsubmit="sync(this)" method="get" class="form-horizontal f-detail needs-validation">
 				@csrf
 				<div class="modal-body">
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Company</label>
 						<div class="col-sm-9">
-							<select required data-placeholder="Select Company" name="company_code" id="company_code"  class="form-control company_code">
+							<select required="" data-placeholder="Select Company" name="company_code" id="company_code"  class="form-control company_code">
 								<option value=""></option>
 							</select>
 						</div>
@@ -120,7 +120,7 @@
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-link" data-dismiss="modal">Cancel</button>
-					<button type="button"  onclick="sync(this)" class="btn btn-primary btn-ladda btn-ladda-spinner ladda-button legitRipple btn-f-detail" data-style="expand-left" data-spinner-color="#333" data-spinner-size="20">
+					<button type="submit"   class="btn btn-primary btn-ladda btn-ladda-spinner ladda-button legitRipple btn-f-detail" data-style="expand-left" data-spinner-color="#333" data-spinner-size="20">
 						<span class="ladda-label">Sync</span>
 						<span class="ladda-spinner"></span><div class="ladda-progress" style="width: 0px;"></div>
 					</button>
