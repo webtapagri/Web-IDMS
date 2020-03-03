@@ -438,7 +438,7 @@ function loadGrid(){
 
 	$.extend( $.fn.dataTable.defaults, {
 				autoWidth: false,
-				responsive: true,
+				responsive: false,
 				columnDefs: [
 					{ 
 						orderable: false,
@@ -454,7 +454,7 @@ function loadGrid(){
 						targets: [ 0 ]
 					},
 				],
-				dom: '<"datatable-header"lr><"datatable-scroll-wrap"t><"datatable-footer"ip>',
+				dom: '<"datatable-header"Blr><"datatable-scroll-wrap"t><"datatable-footer"ip>',
 				buttons: [
 					   {
 							extend: 'csv',
