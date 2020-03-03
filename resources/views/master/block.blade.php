@@ -125,7 +125,7 @@
 						<span class="ladda-spinner"></span><div class="ladda-progress" style="width: 0px;"></div>
 					</button>
 				</div>
-			<!-- </form> -->
+			</form>
 		</div>
 	</div>
 </div>
