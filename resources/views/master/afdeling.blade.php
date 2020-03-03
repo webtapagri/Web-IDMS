@@ -215,9 +215,9 @@ function load_est(id, x=null){
 				$.each(cont, (k,v)=>{
 					
 					if(x == v.werks+'-'+v.estate_code){
-						$('.estate_code').append('<option selected value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+						$('.estate_code').append('<option selected value="'+v.werks+'">'+v.werks+' - '+v.estate_name+'</option>')
 					}else{
-						$('.estate_code').append('<option value="'+v.werks+'-'+v.estate_code+'">'+v.werks+' - '+v.estate_name+'</option>')
+						$('.estate_code').append('<option value="'+v.werks+'">'+v.werks+' - '+v.estate_name+'</option>')
 					}
 				})
 			}else{
@@ -238,10 +238,14 @@ function load_est(id, x=null){
 
 function sync(dis){
 	var company = $('.company_code').val()
-	var estate = ($('.estate_code').val()).substring(0, 4)
+	var estate = ($('.estate_code').val())
+	var est = 0;
 	if(estate == ''){
-		var est = 0;
+		est = 0;
+	}else{
+		est = estate
 	}
+	alert(est)
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/sync-afd') }}/"+ company + "/" + est,
