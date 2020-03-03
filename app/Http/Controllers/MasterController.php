@@ -35,33 +35,33 @@ class MasterController extends Controller
 	*/
 
 	
-	public function sync_afd($comp, $est)
+	public function sync_afd($comp)
 	{
-		$comp_code = $comp;
-		$est_code = $est;
-		if($est_code == 0){
-			$param = $comp_code;
-		}else{
-			$param = $est_code;
-		}
-
+		// $comp_code = $comp;
+		// $est_code = $est;
+		// if($est_code == 0){
+		// 	$param = $comp_code;
+		// }else{
+		// 	$param = $est_code;
+		// }
+		// dd($comp);
+		$param = $comp;
 		$Master = new Master;
 		$token = $Master->token();
 		$RestAPI = $Master
 					->setEndpoint('afdeling/'.$param)
 					// ->setEndpoint('est/all')
 					->setHeaders([
-						'Authorization' => 'Bearer '.$token
+						// 'Authorization' => 'Bearer '.$token
 					])
 					->get();
-		
-		if(isset($RestAPI['http_status_code'])){
+		// if(isset($RestAPI['http_status_code'])){
 			if($RestAPI['http_status_code'] == 200){
 				$results = $RestAPI['data']['results'];
 				$jml = count($results);
 				if($jml > 0){
 					foreach($results as $data){
-						$est = Estate::where('werks',$data['WERKS'])->first();
+						$est = Estate::where('werks',$data['werks'])->first();
 						
 						if($est){
 							try {
@@ -83,6 +83,8 @@ class MasterController extends Controller
 						}
 						
 					}
+					
+		// dd($afd);
 						
 				}else{
 					return response()->error('Success', 'API tidak memberikan data');
@@ -90,15 +92,57 @@ class MasterController extends Controller
 			}else{
 				return response()->error('Success', "Terjadi error sync master {$RestAPI['http_status_code']} ");
 			}	
-		}else{
-			return response()->error('Success', 'Terjadi kesalahan server / API');
-		}	
+		// }else{
+		// 	return response()->error('Success', 'Terjadi kesalahan server / API');
+		// }	
 		
 		dispatch((new FlushCache)->onQueue('low'));	
 		return response()->success('Success', $jml);
 		
 	}
 	
+	// public function sync_afd($param)
+	// {
+	// 	// $Master = new Master;
+	// 	// $token = $Master->token();
+	// 	$RestAPI = API::exec(array(
+	// 		'request' => 'GET',
+	// 		'host' => 'api',
+	// 		'method' => "afdeling/".$param, 
+	// 	));
+	// 	// $RestAPI->data;
+	// 	// dd($RestAPI);
+	// 	if(count($RestAPI->data) > 0 ){
+	// 		// 	if(count($RestAPI['data']) > 0 ){
+	// 		// 		foreach($RestAPI['data'] as $data){
+	// 		$d = json_decode(json_encode($RestAPI->data), true);
+	// 		foreach( $d as $data){
+	// 			$afd = Estate::where('werks',$data['werks'])->first();
+	// 					if($afd){
+	// 						try {
+	// 							$afd = Afdeling::firstOrNew(array('estate_id' => $est['id'],'afdeling_code' => $data['afd_code']));
+	// 							$afd->region_code = $data['region_code'];
+	// 							$afd->company_code = $data['comp_code'];
+	// 							$afd->afdeling_name = $data['afd_name'];
+	// 							$afd->werks = $data['werks'];
+	// 							// $afd->werks_afd_code = $data['WERKS_AFD_CODE'];
+	// 							$afd->werks_afd_code = $data['werks'].$data['afd_code'];
+	// 							$afd->save();
+	// 					}catch (\Throwable $e) {
+	// 						//
+	// 					}catch (\Exception $e) {
+	// 						//
+	// 					}
+	// 				}else{
+	// 					// masuk log  COMP_CODE  not found
+	// 				}
+				
+	// 		}
+	// 	}
+	// 	return 1;
+		
+	// }
+
 
 	
 	public function sync_block($comp, $est)
@@ -150,7 +194,7 @@ class MasterController extends Controller
 								$block->longitude_block = '';
 								$block->start_valid = date("Y-m-d", strtotime($data['start_valid']));
 								$block->end_valid = date("Y-m-d", strtotime($data['end_valid']));
-								$block->save();
+								// $block->save();
 						}catch (\Throwable $e) {
 								return response()->error('Error', 'Terjadi kesalahan server / API');
 							}catch (\Exception $e) {

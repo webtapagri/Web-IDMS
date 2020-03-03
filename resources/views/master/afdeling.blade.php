@@ -90,9 +90,16 @@
 			
 			<!-- <form action="{{ route('history.progres_perkerasan_update') }}" method="post" class="form-horizontal f-detail needs-validation" novalidate> -->
 			<form onsubmit="sync(this)" method="get" class="form-horizontal f-detail needs-validation">
+			<!-- <form onsubmit="sync(this)" method="get" class="form-horizontal f-detail needs-validation"> -->
 				@csrf
 				<div class="modal-body">
 					<div class="form-group row">
+						<label class="col-form-label col-sm-3">Company or Estate Code</label>
+						<div class="col-sm-9">
+							<input type="number" required="" data-placeholder="Company or Estate Code" name="code" id="code"  class="form-control code">
+						</div>
+					</div>
+					<!-- <div class="form-group row">
 						<label class="col-form-label col-sm-3">Company</label>
 						<div class="col-sm-9">
 							<select required="" data-placeholder="Select Company" name="company_code" id="company_code"  class="form-control company_code">
@@ -107,7 +114,7 @@
 								<option value=""></option>
 							</select>
 						</div>
-					</div>
+					</div> -->
 				</div>
 
 				<div class="modal-footer">
@@ -237,17 +244,20 @@ function load_est(id, x=null){
 
 
 function sync(dis){
-	var company = $('.company_code').val()
-	var estate = ($('.estate_code').val())
-	var est = 0;
-	if(estate == ''){
-		est = 0;
-	}else{
-		est = estate
-	}
+	var code = $('.code').val()
+	
+	// var company = $('.company_code').val()
+	// var estate = ($('.estate_code').val())
+	// var est = 0;
+	// if(estate == ''){
+	// 	est = 0;
+	// }else{
+	// 	est = estate
+	// }
 	$.ajax({
 		type: 'GET',
-		url: "{{ URL::to('api/master/sync-afd') }}/"+ company + "/" + est,
+		// url: "{{ URL::to('api/master/sync-afd') }}/"+ company + "/" + est,
+		url: "{{ URL::to('api/master/sync-afd/') }}"+"/"+ code,
 		data: null,
 		cache:false,
 		beforeSend:function(){
