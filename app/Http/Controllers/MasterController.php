@@ -194,7 +194,7 @@ class MasterController extends Controller
 								$block->longitude_block = '';
 								$block->start_valid = date("Y-m-d", strtotime($data['start_valid']));
 								$block->end_valid = date("Y-m-d", strtotime($data['end_valid']));
-								// $block->save();
+								$block->save();
 						}catch (\Throwable $e) {
 								return response()->error('Error', 'Terjadi kesalahan server / API');
 							}catch (\Exception $e) {

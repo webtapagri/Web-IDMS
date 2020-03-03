@@ -260,7 +260,7 @@ function sync(dis){
 	}
 	$.ajax({
 		type: 'GET',
-		url: "{{ URL::to('api/master/sync-block') }}/"+ company + "/" + est,
+		url: "{{ URL::to('api/master/sync-block') }}"+"/"+ + company + "/" + est,
 		data: null,
 		cache:false,
 		beforeSend:function(){
