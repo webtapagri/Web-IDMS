@@ -245,7 +245,6 @@ function sync(dis){
 	}else{
 		est = estate
 	}
-	alert(est)
 	$.ajax({
 		type: 'GET',
 		url: "{{ URL::to('api/master/sync-afd') }}/"+ company + "/" + est,
