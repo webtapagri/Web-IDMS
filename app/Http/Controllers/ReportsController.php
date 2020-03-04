@@ -23,7 +23,7 @@ use App\Exports\ProgressPerkerasan;
 use App\Exports\RoadMaster;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Support\Facades\Input;
-use NahidulHasan\Html2pdf\Facades\Pdf;
+// use NahidulHasan\Html2pdf\Facades\Pdf;
 
 class ReportsController extends Controller
 {
@@ -476,7 +476,7 @@ class ReportsController extends Controller
 	{
 		try{
 		
-			$data = VReportProgressPerkerasan::select(DB::raw('distinct year as tahun'))->get();
+			$data = VReportProgressPerkerasan::select(DB::raw('distinct year as tahun'))->orderBy('year','DESC')->get();
 			
 		}catch (\Throwable $e) {
             return response()->error('Error',throwable_msg($e));
