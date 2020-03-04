@@ -149,8 +149,12 @@ function totallength(){
                     total += value;
                 }
             });
-			var message = "<h5>dengan Total Panjang Perkerasan Jalan " + total + " meter</h5>";
+			var message = "<h5>dengan Total Panjang Perkerasan Jalan " + numberWithCommas(total) + " meter</h5>";
 				$("#info").append(message);
+}
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 		
 

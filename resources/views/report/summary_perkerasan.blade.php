@@ -32,22 +32,22 @@ table.table.table-condensed {
 			<tr>	
 				<td></td>
 				<td>Total Jalan Produksi</td>
-				<td>{{ $data['jum_produksi'] }} Unit</td>
+				<td>{{  number_format($data['jum_produksi']) }} Unit</td>
 			</tr>
 			<tr>	
 				<td></td>
 				<td>&Sigma; Panjang Jalan Produksi</td>
-				<td>{{ $data['len_produksi'] }}  M</td>
+				<td>{{  number_format($data['len_produksi']) }}  M</td>
 			</tr>
 			<tr>	
 				<td></td>
 				<td>&Sigma; Panjang Jalan Sudah Diperkeras</td>
-				<td>{{ $data['len_pavement'] }} M</td>
+				<td>{{  number_format($data['len_pavement']) }} M</td>
 			</tr>
 			<tr>	
 				<td></td>
 				<td>&Sigma; Panjang Jalan Belum Diperkeras</td>
-				<td>{{ $data['len_produksi'] - $data['len_pavement'] }} M</td>
+				<td>{{  number_format($data['len_produksi'] - $data['len_pavement']) }} M</td>
 			</tr>
 
 			<tr>
@@ -56,12 +56,12 @@ table.table.table-condensed {
 			<tr>	
 				<td></td>
 				<td>Total Jalan Non Produksi</td>
-				<td>{{ $data['jum_non_produksi'] }} Unit</td>
+				<td>{{  number_format($data['jum_non_produksi']) }} Unit</td>
 			</tr>
 			<tr>	
 				<td></td>
 				<td>&Sigma; Panjang Jalan Non Produksi</td>
-				<td>{{ $data['len_non_produksi'] }} M</td>
+				<td>{{  number_format($data['len_non_produksi']) }} M</td>
 			</tr>
 
 			<tr>
@@ -70,12 +70,12 @@ table.table.table-condensed {
 			<tr>	
 				<td></td>
 				<td>Total Jalan Umum</td>
-				<td>{{ $data['jum_umum'] }} Unit</td>
+				<td>{{  number_format($data['jum_umum']) }} Unit</td>
 			</tr>
 			<tr>	
 				<td></td>
 				<td>&Sigma; Panjang Jalan Umum</td>
-				<td>{{ $data['len_umum'] }} M</td>
+				<td>{{  number_format($data['len_umum']) }} M</td>
 			</tr>
 		</table>
 	</div>
@@ -87,8 +87,8 @@ table.table.table-condensed {
 			@foreach($data['perkerasan'] as $dp)
    
 			<tr>	
-				<td>{{$dp->bulan}}</td>
-				<td>{{$dp->len_perkerasan}} M</td>
+				<td>{{ $dp->bulan }}</td>
+				<td>{{ number_format($dp->len_perkerasan) }} M</td>
 			</tr>
 			@endforeach
 	</table>
