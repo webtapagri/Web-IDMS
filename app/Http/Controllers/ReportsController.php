@@ -13,12 +13,17 @@ use AccessRight;
 use App\RoleAccess;
 use URL;
 use DB;
+use App\Models\Company;
+use App\Models\Estate;
+use App\Models\Afdeling;
+use App\Models\Block;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ProgressPerkerasan;
 use App\Exports\RoadMaster;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Illuminate\Support\Facades\Input;
+use NahidulHasan\Html2pdf\Facades\Pdf;
 
 class ReportsController extends Controller
 {
@@ -453,5 +458,103 @@ class ReportsController extends Controller
         return $response;
 	}
 	
+
+
+
+	
+    public function summary(Request $request)
+	{
+		$access = AccessRight::roleaccess();
+		$title = 'Pavement Summary';
+		$data['ctree'] = '/report/summary';
+		$data["access"] = (object)$access['access'];
+		return view('report.summary', compact('data','title'));
+    }
+	
+	
+	public function get_year()
+	{
+		try{
+		
+			$data = VReportProgressPerkerasan::select(DB::raw('distinct year as tahun'))->get();
+			
+		}catch (\Throwable $e) {
+            return response()->error('Error',throwable_msg($e));
+        }catch (\Exception $e) {
+            return response()->error('Error',exception_msg($e));
+		}
+		return response()->success('Success', $data);
+	}
+
+
+	
+    public function summary_data($werks, $year)
+	{
+		$werks ;
+		if($year == 0){
+			$tahun = date('Y');
+		}else{
+			$tahun = $year ;
+		}
+			
+			$access = AccessRight::roleaccess();
+
+			$plant = Estate::select(DB::raw('concat(werks," - ",estate_name) as business_area'))
+                           ->whereRaw("werks = $werks")
+						   ->pluck('business_area');
+							
+			$products = DB::table('TM_ROAD AS tr')
+							->join('TM_ROAD_STATUS AS trs', 'tr.status_id', '=', 'trs.id')
+							->selectRaw('COUNT(DISTINCT road_code) AS jum_produksi, SUM(total_length) AS len_produksi')
+							->whereRaw ("tr.deleted_at IS NULL AND status_name = 'PRODUKSI' AND werks = $werks")
+							->get();
+
+			$pavement = DB::table('TM_ROAD AS tr')
+							->join('TM_ROAD_STATUS AS trs', 'tr.status_id', '=', 'trs.id')
+							->join('TR_ROAD_PAVEMENT_PROGRESS AS trpp', 'tr.id', '=', 'trpp.road_id')
+							->selectRaw('SUM(length) AS len_pavement')
+							->whereRaw ("tr.deleted_at IS NULL AND status_name = 'PRODUKSI' AND werks = $werks")
+							->get();
+
+			$nonprod = DB::table('TM_ROAD AS tr')
+							->join('TM_ROAD_STATUS AS trs', 'tr.status_id', '=', 'trs.id')
+							->selectRaw('COUNT(DISTINCT road_code) AS jum_non_produksi,SUM(total_length) AS len_non_produksi')
+							->whereRaw ("tr.deleted_at IS NULL AND status_name = 'NON PRODUKSI' AND werks = $werks")
+							->get();
+
+			$umum = DB::table('TM_ROAD AS tr')
+							->join('TM_ROAD_STATUS AS trs', 'tr.status_id', '=', 'trs.id')
+							->selectRaw('COUNT(DISTINCT road_code) AS jum_umum, SUM(total_length) AS len_umum')
+							->whereRaw ("tr.deleted_at IS NULL AND status_name = 'UMUM' AND werks = $werks")
+							->get();
+
+
+
+			$dp = DB::table('TR_ROAD_PAVEMENT_PROGRESS AS trpp')
+							->join('TM_ROAD AS tr', 'tr.id', '=', 'trpp.road_id')
+							->selectRaw("SUM(length) AS len_perkerasan, MONTHNAME(str_to_date(month, '%m')) AS bulan")
+							->whereRaw ("tr.werks = $werks AND year = $tahun")
+							->groupBy('month')
+							->orderBy('month','ASC')
+							->get();
+				
+			$data['werks'] = $plant;
+			$data['year'] = $tahun;	
+			$data['jum_produksi'] = (int)$products[0]->jum_produksi;
+			$data['len_produksi'] = (int)$products[0]->len_produksi;
+			$data['len_pavement'] = (int)$pavement[0]->len_pavement;
+			$data['jum_non_produksi'] = (int)$nonprod[0]->jum_non_produksi;
+			$data['len_non_produksi'] = (int)$nonprod[0]->len_non_produksi;
+			$data['jum_umum'] = (int)$umum[0]->jum_umum;
+			$data['len_umum'] = (int)$umum[0]->len_umum;
+			$data['perkerasan'] = $dp;
+			$view = view("report.summary_perkerasan",compact('data'))->render();
+
+			return response()->json(['html'=>$view]);
+	}
+	
+    // function print_pdf($data){
+	// 	$document =  Pdf::generatePdf(view('report.summary_perkerasan',compact('data')));
+	// }
 	
 }
