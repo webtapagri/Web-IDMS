@@ -9,21 +9,6 @@ table.table.table-condensed {
 </style>
 
 <div class="form-group row">
-	<div class="col-sm-5">
-		<table class="table table-borderless">
-			<tr>
-				<td>Plant</td><td>:</td><td>{{ $data['werks'][0] }}</td>
-			</tr>
-			<tr>
-				<td>Tahun</td><td>:</td><td>{{ $data['year'] }}</td>
-			</tr>
-		</table>
-	</div>
-	<!-- <div class="col-sm-5">
-	<button type="button" onclick="load_pdf()" class="btn btn-primary" data-style="expand-left" data-spinner-color="#333" data-spinner-size="20">Print PDF</button>
-	</div> -->
-</div>
-<div class="form-group row">
 	<div class="col-sm-7">
 		<table class="table table-condensed">
 			<tr>
