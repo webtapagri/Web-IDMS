@@ -81,6 +81,7 @@
 							<ul class="nav nav-group-sub" data-submenu-title="{{ $row['module'] }}">
 								@foreach($row["menu"] as $menu)
 								<li class="nav-item ">
+									<!-- <a href="{{ url('/page/'.Crypt::encryptString($menu->url)) }}" class="nav-link {{ ( @$data['ctree'] == $menu->url ? 'active':'' ) }}"> -->
 									<a href="{{ url($menu->url) }}" class="nav-link {{ ( @$data['ctree'] == $menu->url ? 'active':'' ) }}">
 										<i class="icon-arrow-right5"></i>	{{ $menu->name }}
 									</a>
