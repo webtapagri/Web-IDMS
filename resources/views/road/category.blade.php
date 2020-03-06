@@ -198,7 +198,10 @@ $(document).ready(()=>{
 	loadStatus()
 	
 	$('#reloadGrid').click(()=>{
-		table.destroy()
+		// table.destroy()
+		fixedColumns().update();
+		$('.table').dataTable().clear();
+   		$('.table').dataTable().destroy();
 		loadGrid()
 		console.log(123)
 	})
