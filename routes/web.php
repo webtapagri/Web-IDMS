@@ -83,7 +83,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 
 	Route::group(['prefix'=>'history'], function () {
 		
-		Route::get('/progres-perkerasan', 	'TransactionController@progres_perkerasan')->name(Crypt::encryptString('history.progres_perkerasan'));
+		Route::get('/progres-perkerasan', 	'TransactionController@progres_perkerasan')->name('history.progres_perkerasan');
 		Route::get('/progres-perkerasan/bulkadd', 	'TransactionController@progres_perkerasan_bulkadd')->name('history.progres_perkerasan_bulkadd');
 		Route::post('/progres-perkerasan/bulksave', 	'TransactionController@progres_perkerasan_bulksave')->name('history.progres_perkerasan_bulksave');
 		Route::get('/progres-perkerasan-datatables', 	'TransactionController@progres_perkerasan_datatables')->name('history.progres_perkerasan_datatables');
