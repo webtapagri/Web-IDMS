@@ -113,8 +113,7 @@ function sync(dis){
                 type: 'success'
             });
 			
-			table.destroy()
-			loadGrid()
+			table.draw();
 		}else{
 			alert("Gagal sync");
 			console.log(rsp);
