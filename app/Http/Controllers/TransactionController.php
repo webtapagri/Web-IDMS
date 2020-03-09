@@ -87,8 +87,10 @@ class TransactionController extends Controller
 							$err += 1;
 							continue;
 						}else if((int)$ym > ($cek->close+1)){
-							$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has not yet open'];
-							$err += 1;
+							if((int)$ym - $cek->close != "89"){
+								$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has not yet open'];
+								$err += 1;
+							}
 							continue;
 						}
 						
