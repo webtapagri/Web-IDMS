@@ -133,6 +133,12 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		Route::get('/period-datatables', 			['as'=>'setting.period_datatables', 'uses'=>'ConfigurationController@period_datatables']);
 	});
 
+	Route::group(['prefix'=>'cmd'], function () {
+		Route::get('/{cmd}', 	'CommandsController@run')->name('cmd.run');
+	});
+	
+	Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 
 });
 

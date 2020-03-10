@@ -194,6 +194,7 @@ return [
         Yajra\DataTables\ButtonsServiceProvider::class,
         App\Providers\ResponseServiceProvider::class,
 		Barryvdh\Debugbar\ServiceProvider::class,
+		Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
     ],
 
