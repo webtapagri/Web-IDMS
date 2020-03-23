@@ -1,6 +1,6 @@
 <?php 
 
-if (App::environment('local')) {
+if (env('APP_ENV')=='local') {
 
 	return [
 		
