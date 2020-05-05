@@ -214,6 +214,7 @@ class TransactionController extends Controller
 				throw new \ErrorException('Block Sudah Tidak Aktif');
 			}
 
+			//cek periode close
 			if($werks = $RS){
 				$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$werks->werks)->first();
 				if($cek){
@@ -267,6 +268,13 @@ class TransactionController extends Controller
 	/////
 	public function road_status(Request $request)
 	{
+		// if (empty(Session::get('authenticated'))){
+		// 	return redirect('/login');
+		// }
+		// if (AccessRight::granted($request) === false) {
+		// 	$data['page_title'] = 'Oops! Unauthorized.';
+		// 	return response(view('errors.403')->with(compact('data')), 403);
+		// }
 		$access = access($request);
 		$data['ctree'] = '/history/road-status';
 		return view('history.road_status', compact('access','data'));
