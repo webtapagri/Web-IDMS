@@ -98,7 +98,7 @@ class TransactionController extends Controller
 					
 					//cek length
 					// $m_progress 	= RoadPavementProgress::selectRaw('ifnull(0,sum(length)) progress')->where('road_id',$r->id)->first()->progress;
-					$m_progress 	= RoadPavementProgress::selectRaw('ifnull(sum(length),0) progress')->where('road_id',$r->id)->where('month','<',$dt['month'])->where('year',$dt['year'])->first()->progress;
+					$m_progress 	= RoadPavementProgress::selectRaw('ifnull(0,sum(length)) progress')->where('road_id',$r->id)->where('month','<',$dt['month'])->where('year',$dt['year'])->first()->progress;
 					$m_total_length	= RoadLog::select('total_length')->where('road_id',$r->id)->orderBy('id','desc')->first()->total_length;
 					if( ($m_progress+$dt['length']) > $m_total_length ){
 						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'over length'];
