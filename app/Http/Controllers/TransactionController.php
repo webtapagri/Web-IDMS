@@ -80,8 +80,9 @@ class TransactionController extends Controller
 					// s$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$r->werks)->first();
 					$cek = Period::selectRaw('max(cast(concat(year , month)as SIGNED )) as close')->where('werks',$r->werks)->where('deleted_at',null)->first();
 					// dd($cek);
+					
+					$ym = $dt['year'].\DateTime::createFromFormat('m', $dt['month'])->format('m');
 					if($cek){
-						$ym = $dt['year'].\DateTime::createFromFormat('m', $dt['month'])->format('m');
 						if($cek->close == $ym || (int)$ym < $cek->close){
 							$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has close'];
 							$err += 1;
@@ -97,8 +98,8 @@ class TransactionController extends Controller
 					}
 					
 					//cek length
-					// $m_progress 	= RoadPavementProgress::selectRaw('ifnull(0,sum(length)) progress')->where('road_id',$r->id)->first()->progress;
-					$m_progress 	= RoadPavementProgress::selectRaw('ifnull(0,sum(length)) progress')->where('road_id',$r->id)->where('month','<',$dt['month'])->where('year',$dt['year'])->first()->progress;
+					// $m_progress 	= RoadPavementProgress::selectRaw('ifnull(sum(length),0) progress')->where('road_id',$r->id)->first()->progress;
+					$m_progress 	= RoadPavementProgress::selectRaw('ifnull(sum(length),0) progress')->where('road_id',$r->id)->whereraw("cast(concat(year , month)as SIGNED ) < '$ym'" )->first()->progress;
 					$m_total_length	= RoadLog::select('total_length')->where('road_id',$r->id)->orderBy('id','desc')->first()->total_length;
 					if( ($m_progress+$dt['length']) > $m_total_length ){
 						$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'over length'];
@@ -227,8 +228,16 @@ class TransactionController extends Controller
 					}
 					
 				}
+
 			}
-			
+			//disini
+			$ym  = $request->year.$request->month;
+			$m_progress 	= RoadPavementProgress::selectRaw('ifnull(sum(length),0) progress')->where('road_id',$request->road_id)->whereraw("cast(concat(year , month)as SIGNED ) < '$ym'" )->first()->progress;
+			// $m_total_length	= RoadLog::select('total_length')->where('road_id',$request->road_id)->orderBy('id','desc')->first()->total_length;
+			if( ($m_progress+$request->length) > $RS->total_length ){
+				throw new \ErrorException("Please check your data, Road Code '$RS->road_code' is over length");
+			}
+				// dd($request->road_id,$m_progress,$request->length,$RS->total_length);
 			RoadPavementProgress::updateOrCreate(['road_id'=> $request->road_id, 'month'=> $request->month, 'year'=> $request->year],$request->all()+['updated_by'=>\Session::get('user_id')]);
 			// RoadPavementProgress::create($request->all()+['updated_by'=>\Session::get('user_id')]);
 			
