@@ -112,7 +112,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 
 		Route::get('/progress-perkerasan', 	'ReportsController@progress_perkerasan')->name('report.progress_perkerasan');
 		Route::get('/progress-perkerasan-datatables', 	'ReportsController@progress_perkerasan_datatables')->name('report.progress_perkerasan_datatables');
-		Route::post('/progress-perkerasan-download', 	'ReportsController@progress_perkerasan_download')->name('report.progress_perkerasan_download');
+		Route::get('/progress-perkerasan-download', 	'ReportsController@progress_perkerasan_download')->name('report.progress_perkerasan_download');
 
 		Route::get('/summary', 	'ReportsController@summary')->name('report.summary');
 		Route::get('/get_year', 	'ReportsController@get_year')->name('report.get_year');
