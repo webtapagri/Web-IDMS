@@ -24,4 +24,8 @@ class Company extends Model
 		'insert_time_dw',
 		'update_time_dw',
 	];
+	
+	function coba(){
+		return 123;
+	}
 }
