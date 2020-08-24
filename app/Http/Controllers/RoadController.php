@@ -589,11 +589,24 @@ class RoadController extends Controller
 						
 						$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])
 									->where('afdeling_id',$getAfd->id)
-									->whereRaw('start_valid <= now() and end_valid >= now()')
+									//->whereRaw('start_valid <= now() and end_valid >= now()')
 									->first();
-						if(!$getBlc){
-							$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not found or not valid'];
+						if($getBlc){
+							if($request->validasiBlok=="true"){
+								$g = collect($getBlc);
+								$getBlcc = $g->whereRaw('start_valid <= now() and end_valid >= now()')->count();
+								if($getBlcc < 1){
+									$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not valid'];
+									continue;
+								}
+							}
+							
+						}else{
+							$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not found'];
 							continue;
+						}
+						if(!$getBlc){
+							
 						}
 						$data['block_name']		= $getBlc->block_name;
 						$data['block_id']		= $getBlc->block_id;

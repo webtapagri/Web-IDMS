@@ -32,7 +32,12 @@
 			{{-- 
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
 			--}}
-				<button type="submit" class="btn btn-primary save-bulk">Simpan</button>
+				<div class="form-check"> 
+					<label class="form-check-label"> 
+						<input type="checkbox" id="validasiBlok" class="" > <code>(Centang untuk validasi Blok)</code> </label> 
+					<button type="submit" class="btn btn-primary save-bulk">Simpan</button>
+				</div>
+				
 			</div>
 		</div>
 		
@@ -281,11 +286,11 @@ function save(){
 						asset_code: v[9]
 				})
 			});
-			
+			console.log($('#validasiBlok').is(":checked"))
 			$.ajax({
 				type:'post',
 				url:"{{ URL::to('master/road-bulk-save') }}",
-				data:{ data: dataFix },
+				data:{ data: dataFix, validasiBlok: $('#validasiBlok').is(":checked") },
 				cache:false,
 				beforeSend:function(){
 					HoldOn();
