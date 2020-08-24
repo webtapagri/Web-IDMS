@@ -87,7 +87,7 @@
 			</div>
 
 			<form action="{{ route('master.road_status_save') }}" method="post" class="form-horizontal">
-				@csrf
+				@crsf
 				<div class="modal-body">
 					<div class="form-group row">
 						<label class="col-form-label col-sm-3">Road Status</label>

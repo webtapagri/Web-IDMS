@@ -58,6 +58,16 @@ class AccessRightHelper extends ServiceProvider
         }
     }
 
+    // static public function granted($request) {
+    //     $current = str_replace(url('/') . '/', '', url()->current());
+    //     $access = access($request);
+    //     if($access['read'] == '1') {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
     static public function access() {
         $current = str_replace(url('/') . '/', '', url()->current());
         $operation = Session::get($current);

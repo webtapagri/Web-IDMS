@@ -449,14 +449,14 @@ function loadGrid(){
 								var tbll = $('.datatable-responsive').find('.tfsearch').length / 2
 								$('.datatable-responsive').find('.tfsearch').each((k,v)=>{
 									if( $(v).val() != '' ){
-										console.log(k-tbll)
-										que.push( { col: col[k-tbll]['name'], val : $(v).val()} )
+										que.push( { col: col[k]['name'], val : $(v).val()} )
 									}    
 								})
 								
 								$('#que').val( JSON.stringify(que) )
 								$('#que_global').val( que_global )
 								$('#formDownload').submit()
+									
 															
 							}
 						}

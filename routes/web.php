@@ -102,7 +102,7 @@ Route::group(['middleware' => [ 'auth' ]], function () {
 		// 	return URL::secure(Crypt::decryptString("$encrypt"));
 		// });
 		// Route::get('/page/{encrypt}', ['as'=>'page.encrypt', 'uses'=>'HashController@index']);
-		
+		Route::get('/page/{encrypt)', ['as'=>'page.encrypt', 'uses'=>'HashController@index']);
 
 	
 	Route::group(['prefix'=>'report'], function () {

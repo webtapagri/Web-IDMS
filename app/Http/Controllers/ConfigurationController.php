@@ -19,8 +19,17 @@ use Carbon\Carbon;
 class ConfigurationController extends Controller
 {
     //
-    public function period()
+    public function period(Request $request)
 	{
+
+		// if (empty(Session::get('authenticated'))){
+		// 	return redirect('/login');
+		// }
+		// if (AccessRight::granted($request) === false) {
+		// 	$data['page_title'] = 'Oops! Unauthorized.';
+		// 	return response(view('errors.403')->with(compact('data')), 403);
+		// }
+
 		$access = AccessRight::roleaccess();
 		$title = 'Period Configuration';
 		$data['ctree'] = '/setting/period';

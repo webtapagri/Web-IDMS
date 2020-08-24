@@ -275,7 +275,7 @@ function edit(id,max,cur){
 	$('.tsp').html('<input required type="number" value="1" min="1"	 name="length" id="rc_length" placeholder="Total Length" class="touchspin-vertical'+id+' form-control">')
 	
 	$('.touchspin-vertical'+id).TouchSpin({
-			max: maxi,
+			max: max,
             verticalbuttons: true,
             verticalupclass: 'icon-arrow-up22',
             verticaldownclass: 'icon-arrow-down22'
