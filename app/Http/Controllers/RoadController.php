@@ -594,7 +594,7 @@ class RoadController extends Controller
 									//->whereRaw('start_valid <= now() and end_valid >= now()')
 									->first();
 						if($getBlc){
-							if($request->validasiBlok=="true"){
+							if($request->validasiBlok!="true"){
 								$g = collect($getBlc);
 								$getBlcc = $g->whereRaw('start_valid <= now() and end_valid >= now()')->count();
 								if($getBlcc < 1){

@@ -34,7 +34,7 @@
 			--}}
 				<div class="form-check"> 
 					<label class="form-check-label"> 
-						<input type="checkbox" id="validasiBlok" class="" > <code>(Centang untuk validasi Blok)</code> </label> 
+						<input type="checkbox" id="validasiBlok" class="" > <code>(Data Opening Balance)</code> </label> 
 					<button type="submit" class="btn btn-primary save-bulk">Simpan</button>
 				</div>
 				
