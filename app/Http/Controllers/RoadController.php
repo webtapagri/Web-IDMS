@@ -514,6 +514,8 @@ class RoadController extends Controller
 	public function road_bulk_save(Request $request)
 	{		
 		ini_set('memory_limit', '-1');
+		ini_set('max_execution_time', 0);
+		
 		DB::beginTransaction();
 		try {
 			$respon['error'] 	= [];
