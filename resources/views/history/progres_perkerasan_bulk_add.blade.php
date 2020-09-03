@@ -40,10 +40,11 @@
 				<button type="button" class="btn btn-default validation-check">Cek Validasi</button>
 			--}}
 			
-			<div class="form-check"> 
-				<label class="form-check-label"> 
-					<input type="checkbox" id="validasiClosing" class="" > <code>(Data Opening Balance)</code> </label> 
+				<div class="form-check"> 
+					<label class="form-check-label"> 
+						<input type="checkbox" id="validasiClosing" class="" > <code>(Data Opening Balance)</code> </label> 
 				<button type="button" class="btn btn-primary save save-bulk" data-toggle="modal" data-target="#modal_info">Simpan</button>
+				</div>
 			</div>
 		</div>
 		
@@ -376,12 +377,9 @@ function save(){
 				dataFix.push({road_code: v[0], length: v[1], month: v[2], year: v[3]})
 			});
 			
-			console.log($('#validasiClosing').is(":checked"))
-			
 			$.ajax({
 				type:'post',
 				url:"{{ URL::to('history/progres-perkerasan/bulksave') }}",
-				// data:{ data: dataFix },
 				data:{ data: dataFix, validasiClosing: $('#validasiClosing').is(":checked") },
 				cache:false,
 				beforeSend:function(){
