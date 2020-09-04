@@ -82,17 +82,20 @@ class TransactionController extends Controller
 					// dd($cek);
 					
 					$ym = $dt['year'].\DateTime::createFromFormat('m', $dt['month'])->format('m');
-					if($cek){
-						if($cek->close == $ym || (int)$ym < $cek->close){
-							$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has close'];
-							$err += 1;
-							continue;
-						}else if((int)$ym > ($cek->close+1)){
-							if((int)$ym - $cek->close != "89"){
-								$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has not yet open'];
+					if($request->validasiClosing!="true"){					
+						if($cek){
+							if($cek->close == $ym || (int)$ym < $cek->close){
+								$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has close'];
 								$err += 1;
+								continue;
+							}else if((int)$ym > ($cek->close+1)){
+								if((int)$ym - $cek->close != "89"){
+									$respon['error'][] = ['value'=>$dt['road_code'],'line'=>($k+1),'status'=>'period has not yet open'];
+									$err += 1;
+								}
+								continue;
 							}
-							continue;
+							
 						}
 						
 					}
