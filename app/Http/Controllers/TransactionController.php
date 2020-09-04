@@ -134,7 +134,8 @@ class TransactionController extends Controller
 				if($err == 0){ 
 					foreach($data as $k=>$dt){
 						$r = Road::where('road_code',$dt['road_code'])->first();
-						$disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id,'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m')]+Arr::except($dt, ['month','road_code', 'road_name', 'length']) );
+						// $disRoad = RoadPavementProgress::firstOrNew( ['road_id'	=>$r->id,'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m')]+Arr::except($dt, ['month','road_code', 'road_name', 'length']) );
+						$disRoad = RoadPavementProgress::updateOrCreate( ['road_id'	=>$r->id,'month'=>\DateTime::createFromFormat('m', $dt['month'])->format('m')]+Arr::except($dt, ['month','road_code', 'road_name', 'length']) );
 						$disRoad->length 		= $dt['length'];
 						$disRoad->updated_by 	= \Session::get('user_id');
 						$disRoad->save();
