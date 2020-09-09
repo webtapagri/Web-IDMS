@@ -610,6 +610,7 @@ class RoadController extends Controller
 						if(!$getBlc){
 							
 						}
+						$getBlcc = (object) $getBlcc;
 						$data['block_name']		= $getBlcc->block_name;
 						$data['block_id']		= $getBlcc->block_id;
 						$bcc = $getBlcc->block_code.'-'.$getBlcc->block_name;
