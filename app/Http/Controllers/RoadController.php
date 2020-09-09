@@ -596,8 +596,8 @@ class RoadController extends Controller
 						if(count($getBlc) > 0){
 							if($request->validasiBlok!="true"){
 								$g = collect($getBlc);
-								$getBlcc = $g->where('start_valid','<=',date('Y-m-d H:i:s'))->where('end_valid','>=',date('Y-m-d H:i:s'))->all();
-								if(count($getBlcc) < 1){
+								$getBlcc = $g->where('start_valid','<=',date('Y-m-d H:i:s'))->where('end_valid','>=',date('Y-m-d H:i:s'))->first();
+								if($getBlcc){
 									$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not valid'];
 									continue;
 								}
@@ -610,9 +610,9 @@ class RoadController extends Controller
 						if(!$getBlc){
 							
 						}
-						$data['block_name']		= $getBlc->block_name;
-						$data['block_id']		= $getBlc->block_id;
-						$bcc = $getBlc->block_code.'-'.$getBlc->block_name;
+						$data['block_name']		= $getBlcc->block_name;
+						$data['block_id']		= $getBlcc->block_id;
+						$bcc = $getBlcc->block_code.'-'.$getBlcc->block_name;
 					}
 					
 					$blck 				= explode('-',$bcc);
