@@ -596,7 +596,7 @@ class RoadController extends Controller
 						if(count($getBlc) > 0){
 							if($request->validasiBlok!="true"){
 								$g = collect($getBlc);
-								$getBlcc = $g->where('start_valid','<=',date('Y-m-d H:i:s'))->where('end_valid','>=',date('Y-m-d H:i:s'))->get();
+								$getBlcc = $g->where('start_valid','<=',date('Y-m-d H:i:s'))->where('end_valid','>=',date('Y-m-d H:i:s'))->all();
 								if(count($getBlcc) < 1){
 									$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not valid'];
 									continue;
