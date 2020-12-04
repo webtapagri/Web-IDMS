@@ -603,7 +603,9 @@ class RoadController extends Controller
 									$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not valid'];
 									continue;
 								}else{
-									$getBlcc = $g->whereRaw('start_valid <= now() and end_valid >= now()')->first();
+									$getBlcc = $g->where('start_valid','<=',date('Y-m-d H:i:s'))
+													where('end_valid','>=',date('Y-m-d H:i:s'))
+													->first();
 								}
 							}
 							
