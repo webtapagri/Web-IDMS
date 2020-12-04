@@ -604,7 +604,7 @@ class RoadController extends Controller
 									continue;
 								}else{
 									$getBlcc = $g->where('start_valid','<=',date('Y-m-d H:i:s'))
-													where('end_valid','>=',date('Y-m-d H:i:s'))
+													->where('end_valid','>=',date('Y-m-d H:i:s'))
 													->first();
 								}
 							}
