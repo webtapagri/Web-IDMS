@@ -42,17 +42,19 @@ return [
 
         'mysql' => [
             'read' => [
-                'host' => env('DB_HOST', 'idms.tap-agri.com'),
+                // 'host' => env('DB_HOST', 'idms.tap-agri.com'),
+                'host' => env('DB_HOST', 'amsdev.tap-agri.com'),
             ],
             'write' => [
-                'host' => env('DB_HOST', 'idms.tap-agri.com')
+                'host' => env('DB_HOST', 'amsdev.tap-agri.com')
+                // 'host' => env('DB_HOST', 'idms.tap-agri.com')
             ],
             'strict' => false,
             'driver'    => 'mysql',
             'database'  => env('DB_DATABASE','IDMS'),
-            'username'  => env('DB_USERNAME','app_idms'),
+            'username'  => env('DB_USERNAME','idms_dev'),
             'port'      => env('DB_PORT', '3306'),
-            'password'  => env('DB_PASSWORD', 'Tapagri123~!'),
+            'password'  => env('DB_PASSWORD', '1dmsD3v88!/.,'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

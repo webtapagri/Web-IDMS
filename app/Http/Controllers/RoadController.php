@@ -401,8 +401,16 @@ class RoadController extends Controller
 				if(!$getGD){
 					throw new \Exception('Company code belum didaftarkan di <a href="'.URL::to('setting/general-data').'">General Data</a>.');
 				}
+
+
+				if($dt['block_code'] != '000' or $dt['block_code'] != ''){
+					$getBlc = Block::where('block_code',$request->block_code)->where('werks',$request->werks)->where('afdeling_id',$request->afdeling_code)->first();
+					$bcc = $dt['block_code'].'-'.$getBlc->block_name;
+				}else{
+					$bcc = '000-'.$getGD->description;
+				}
 				
-				$bcc = '000-'.$getGD->description;
+				// $bcc = '000-'.$getGD->description;
 			}else{
 				$getAfd = Afdeling::where('company_code',$request->company_code)->where('werks',$esw[0])->where('afdeling_code',$request->afdeling_code)->first();
 				$data['afdeling_name']	= $getAfd->afdeling_name;
@@ -579,8 +587,14 @@ class RoadController extends Controller
 							$respon['error'][] = ['line'=>($k+1),'status'=>'company code not found in general data'];
 							continue;
 						}
-						
-						$bcc = '000-'.$getGD->description;
+
+						if($dt['block_code'] != '000' or $dt['block_code'] != ''){
+							$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$dt['afdeling_code'])->first();
+							$bcc = $dt['block_code'].'-'.$getBlc->block_name;
+						}else{
+							$bcc = '000-'.$getGD->description;
+						}
+						// $bcc = '000-'.$getGD->description;
 					}else{
 						$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
 						if(!$getAfd){
