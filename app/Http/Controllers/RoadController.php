@@ -403,9 +403,13 @@ class RoadController extends Controller
 				}
 
 
-				if($dt['block_code'] != '000' or $dt['block_code'] != ''){
-					$getBlc = Block::where('block_code',$request->block_code)->where('werks',$request->werks)->where('afdeling_id',$request->afdeling_code)->first();
-					$bcc = $dt['block_code'].'-'.$getBlc->block_name;
+				if($request->block_code != '000' or $request->block_code != null){
+					$getAfd = Afdeling::where('company_code',$request->company_code)->where('werks',$esw[0])->where('afdeling_code',$request->afdeling_code)->first();
+					$data['afdeling_name']	= $getAfd->afdeling_name;
+					$blckx 				= explode('-',$bcc);
+					$getBlc = Block::where('block_code',$blckx[0])->where('werks',$esw[0])->where('afdeling_id',$getAfd->id)->where('end_valid','9999-12-31')->first();
+					$data['block_name']		= $getBlc->block_name;
+					// $bcc = $request->block_code.'-'.$getBlc->block_name;
 				}else{
 					$bcc = '000-'.$getGD->description;
 				}
@@ -523,7 +527,6 @@ class RoadController extends Controller
 	{		
 		ini_set('memory_limit', '-1');
 		ini_set('max_execution_time', 0);
-		
 		DB::beginTransaction();
 		try {
 			$respon['error'] 	= [];
@@ -588,9 +591,49 @@ class RoadController extends Controller
 							continue;
 						}
 
+
 						if($dt['block_code'] != '000' or $dt['block_code'] != ''){
-							$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])->where('afdeling_id',$dt['afdeling_code'])->first();
-							$bcc = $dt['block_code'].'-'.$getBlc->block_name;
+							$getAfd = Afdeling::where('company_code',$dt['company_code'])->where('werks',$dt['werks'])->where('afdeling_code',$dt['afdeling_code'])->first();
+							if(!$getAfd){
+								$respon['error'][] 	= ['line'=>($k+1),'status'=>'afdeling code not found'];
+								continue;
+							}
+							$data['afdeling_name']	= $getAfd->afdeling_name;
+							
+							$getBlc = Block::where('block_code',$dt['block_code'])->where('werks',$dt['werks'])
+									->where('afdeling_id',$getAfd->id)
+									//->whereRaw('start_valid <= now() and end_valid >= now()')
+									->get();
+							if(count($getBlc) > 0){
+								$vd=false;
+								if($request->validasiBlok!="true"){
+									$vd=true;
+									$g = collect($getBlc);
+									$getBlcc = $g->where('end_valid','>',date('Y-m-d H:i:s'))->first();
+									if(!$getBlcc){
+										$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not valid'];
+										continue;
+									}else{
+										$getBlcc = $g->where('start_valid','<=',date('Y-m-d H:i:s'))
+														->where('end_valid','>=',date('Y-m-d H:i:s'))
+														->first();
+									}
+								}
+								
+								if($vd){
+									$getBlcc = (object) $getBlcc;
+								}else{
+									$getBlcc = (object) $getBlc[0];
+								}
+								
+								$data['block_name']		= $getBlcc->block_name;
+								$data['block_id']		= $getBlcc->block_id;
+								$bcc = $getBlcc->block_code.'-'.$getBlcc->block_name;
+								
+							}else{
+								$respon['error'][] 	= ['line'=>($k+1),'status'=>'block code not found'];
+								continue;
+							}
 						}else{
 							$bcc = '000-'.$getGD->description;
 						}

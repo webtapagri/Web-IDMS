@@ -128,7 +128,7 @@
 				<div class="form-group row fg-block d-none">
 					<label class="col-form-label col-sm-3">Block</label>
 					<div class="col-sm-9">
-						<select required data-placeholder="Select Block" name="block_code"  class="form-control select-clear block_code" data-fouc>
+						<select data-placeholder="Select Block" name="block_code"  class="form-control select-clear block_code" data-fouc>
 							<option value=""></option>
 						</select>
 						<div class="invalid-feedback">
@@ -234,6 +234,8 @@ $(document).ready(()=>{
 		hideBlock();
 	})
 	
+	$('.fg-block').removeClass('d-none')
+	$('.fg-afdeling').removeClass('d-none')
 	
 });
 
@@ -299,10 +301,10 @@ function hideBlock(){
 	let v = $('select[name="category_id"]').val()    
 	let htm = $('select[name="category_id"]').find('option[value='+v+']').html() 
 	if( $.inArray( htm.toUpperCase(), [ "JALAN AKSES", "JALAN DESA", "JALAN NEGARA" ] ) != -1 ){
-		$('.block_code').removeAttr('required')
-		$('.fg-block').addClass('d-none')
+		// $('.block_code').removeAttr('required')
+		// $('.fg-block').addClass('d-none')
 		$('.afdeling_code').removeAttr('required')
-		$('.fg-afdeling').addClass('d-none')
+		// $('.fg-afdeling').addClass('d-none')
 	}else{
 		$('.block_code').attr('required','required')
 		$('.fg-block').removeClass('d-none')
